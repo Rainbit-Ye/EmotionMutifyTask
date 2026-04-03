@@ -1,0 +1,11 @@
+# PyTorch CUDA 12.1 版本安装（先运行下面命令）:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+transformers>=4.30.0
+peft>=0.4.0
+accelerate>=0.20.0
+tqdm>=4.65.0
+datasets>=2.10.0
+scikit-learn>=1.0.0
+matplotlib>=3.5.0
+seaborn>=0.12.0
