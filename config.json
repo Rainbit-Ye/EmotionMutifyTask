@@ -40,7 +40,14 @@
         "warmup_ratio": 0.1,
         "max_length": 256,
         "weight_decay": 0.01,
-        "logging_steps": 10
+        "logging_steps": 10,
+        "loss_weights": {
+            "main": 1.0,
+            "turn": 0.3,
+            "consistency": 0.2,
+            "contrastive": 0.1,
+            "next": 0.2
+        }
     },
     "data": {
         "sft_train_path": "/home/user1/liuduanye/EmotionClassify/data/sft_train.json",

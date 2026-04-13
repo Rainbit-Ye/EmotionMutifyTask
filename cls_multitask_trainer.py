@@ -73,7 +73,11 @@ class MultiTaskEmotionDataset(Dataset):
         conversation = item["conversation"]
         main_emotion = item["main_emotion"]
 
-        # 格式化对话并记录每轮的位置
+        # 获取下一轮情绪标签（最后一轮的情绪）
+        # 训练时用前 n-1 轮预测第 n 轮
+        next_emotion = conversation[-1].get("emotion", "neutral") if len(conversation) > 1 else main_emotion
+
+        # 格式化对话并记录每轮的位置（使用前 n-1 轮进行训练）
         text, turn_positions, turn_emotions = self._format_conversation(conversation)
 
         # Tokenize
@@ -91,6 +95,7 @@ class MultiTaskEmotionDataset(Dataset):
         # 转换情绪标签
         main_label = LABEL2ID[main_emotion]
         turn_labels = [LABEL2ID[e] for e in turn_emotions]
+        next_label = LABEL2ID[next_emotion]
 
         return {
             'input_ids': input_ids,
@@ -98,6 +103,7 @@ class MultiTaskEmotionDataset(Dataset):
             'main_label': main_label,
             'turn_positions': turn_positions,  # 每轮最后一个token的位置
             'turn_labels': turn_labels,  # 每轮的情绪标签
+            'next_label': next_label,  # 下一轮情绪标签
             'num_turns': len(turn_labels),
             'main_emotion': main_emotion
         }
@@ -142,6 +148,7 @@ def collate_fn(batch):
     input_ids = torch.stack([item['input_ids'] for item in batch])
     attention_mask = torch.stack([item['attention_mask'] for item in batch])
     main_labels = torch.tensor([item['main_label'] for item in batch])
+    next_labels = torch.tensor([item['next_label'] for item in batch])
     num_turns = [item['num_turns'] for item in batch]
     max_turns = max(num_turns)
 
@@ -150,6 +157,7 @@ def collate_fn(batch):
     turn_positions = torch.zeros(batch_size, max_turns, dtype=torch.long)
     turn_labels = torch.zeros(batch_size, max_turns, dtype=torch.long)
     turn_mask = torch.zeros(batch_size, max_turns, dtype=torch.float)
+    last_turn_idx = torch.zeros(batch_size, dtype=torch.long)  # 最后一轮的索引
 
     for i, item in enumerate(batch):
         # 调整位置（考虑[CLS] token）
@@ -158,15 +166,19 @@ def collate_fn(batch):
             turn_positions[i, j] = pos
             turn_labels[i, j] = label
             turn_mask[i, j] = 1.0
+        # 记录最后一轮的索引
+        last_turn_idx[i] = len(positions) - 1
 
     return {
         'input_ids': input_ids,
         'attention_mask': attention_mask,
         'main_labels': main_labels,
+        'next_labels': next_labels,
         'turn_positions': turn_positions,
         'turn_labels': turn_labels,
         'turn_mask': turn_mask,
         'num_turns': num_turns,
+        'last_turn_idx': last_turn_idx,
         'main_emotions': [item['main_emotion'] for item in batch]
     }
 
@@ -201,13 +213,22 @@ class MultiTaskEmotionClassifier(nn.Module):
             nn.Linear(hidden_size // 2, num_labels)
         )
 
-    def forward(self, input_ids, attention_mask, turn_positions=None, turn_mask=None):
+        # 新增：下一轮情绪预测分类头
+        self.next_classifier = nn.Sequential(
+            nn.Dropout(0.1),
+            nn.Linear(hidden_size, hidden_size // 2),
+            nn.ReLU(),
+            nn.Linear(hidden_size // 2, num_labels)
+        )
+
+    def forward(self, input_ids, attention_mask, turn_positions=None, turn_mask=None, last_turn_idx=None):
         """
         前向传播
 
         Returns:
             main_logits: 整体情绪的logits [batch_size, num_labels]
             turn_logits: 每轮情绪的logits [batch_size, max_turns, num_labels]
+            next_logits: 下一轮情绪的logits [batch_size, num_labels]
             main_hidden: [CLS] hidden state
             turn_hiddens: 每轮的 hidden states
         """
@@ -219,6 +240,7 @@ class MultiTaskEmotionClassifier(nn.Module):
         main_logits = self.main_classifier(main_hidden)  # [batch_size, num_labels]
 
         # 辅助任务：使用每轮最后一个 token
+        next_logits = None
         if turn_positions is not None:
             batch_size, max_turns = turn_positions.shape
             turn_hiddens = torch.zeros(batch_size, max_turns, hidden_states.size(-1), device=hidden_states.device)
@@ -230,11 +252,29 @@ class MultiTaskEmotionClassifier(nn.Module):
                         turn_hiddens[i, j] = hidden_states[i, pos, :]
 
             turn_logits = self.turn_classifier(turn_hiddens)  # [batch_size, max_turns, num_labels]
+
+            # 新增：下一轮情绪预测 - 使用最后一轮的 hidden state
+            if last_turn_idx is not None:
+                # 使用指定的最后一轮位置
+                last_hiddens = torch.zeros(batch_size, hidden_states.size(-1), device=hidden_states.device)
+                for i in range(batch_size):
+                    idx = last_turn_idx[i]
+                    last_hiddens[i] = turn_hiddens[i, idx]
+                next_logits = self.next_classifier(last_hiddens)  # [batch_size, num_labels]
+            else:
+                # 默认使用 turn_hiddens 的最后一个有效位置
+                last_hiddens = torch.zeros(batch_size, hidden_states.size(-1), device=hidden_states.device)
+                for i in range(batch_size):
+                    # 找到该样本最后一个有效的 turn
+                    valid_turns = (turn_mask[i] > 0).sum().int().item()
+                    if valid_turns > 0:
+                        last_hiddens[i] = turn_hiddens[i, valid_turns - 1]
+                next_logits = self.next_classifier(last_hiddens)  # [batch_size, num_labels]
         else:
             turn_logits = None
             turn_hiddens = None
 
-        return main_logits, turn_logits, main_hidden, turn_hiddens
+        return main_logits, turn_logits, next_logits, main_hidden, turn_hiddens
 
 
 class FocalLoss(nn.Module):
@@ -519,12 +559,17 @@ class MultiTaskTrainer:
 
         main_criterion = FocalLoss(alpha=class_weights, gamma=2.0, reduction='none')
         turn_criterion = FocalLoss(alpha=class_weights, gamma=2.0, reduction='none')
+        next_criterion = FocalLoss(alpha=class_weights, gamma=2.0, reduction='none')  # 新增
         contrastive_criterion = ContrastiveLoss(CONFUSING_PAIRS, temperature=0.5)
 
-        # 损失权重
-        alpha = 0.3  # 辅助任务权重
-        beta = 0.2   # 一致性损失权重
-        gamma = 0.1  # 对比学习损失权重
+        # 损失权重（从配置文件读取，或使用默认值）
+        loss_weights = cls_config.get('loss_weights', {})
+        alpha = loss_weights.get('turn', 0.3)  # 辅助任务权重
+        beta = loss_weights.get('consistency', 0.2)   # 一致性损失权重
+        gamma = loss_weights.get('contrastive', 0.1)  # 对比学习损失权重
+        delta = loss_weights.get('next', 0.2)  # 新增：下一轮预测损失权重
+
+        print(f"损失权重: turn={alpha}, consistency={beta}, contrastive={gamma}, next={delta}")
 
         print(f"\n训练集大小: {len(train_dataset)}")
         if val_dataloader:
@@ -538,9 +583,11 @@ class MultiTaskTrainer:
             total_loss = 0
             total_main_loss = 0
             total_turn_loss = 0
+            total_next_loss = 0  # 新增
             total_consistency_loss = 0
             total_contrastive_loss = 0
             total_correct = 0
+            total_next_correct = 0  # 新增
             total_samples = 0
             hard_samples = 0  # 困难样本数
 
@@ -550,13 +597,15 @@ class MultiTaskTrainer:
                 input_ids = batch['input_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 main_labels = batch['main_labels'].to(self.device)
+                next_labels = batch['next_labels'].to(self.device)  # 新增
                 turn_positions = batch['turn_positions'].to(self.device)
                 turn_labels = batch['turn_labels'].to(self.device)
                 turn_mask = batch['turn_mask'].to(self.device)
+                last_turn_idx = batch['last_turn_idx'].to(self.device)  # 新增
 
                 # 前向传播
-                main_logits, turn_logits, _, _ = self.model(
-                    input_ids, attention_mask, turn_positions, turn_mask
+                main_logits, turn_logits, next_logits, _, _ = self.model(
+                    input_ids, attention_mask, turn_positions, turn_mask, last_turn_idx
                 )
 
                 # 计算动态样本权重（基于相似度）
@@ -587,8 +636,11 @@ class MultiTaskTrainer:
                 # 对比学习损失（区分相似情绪）
                 contrastive_loss = contrastive_criterion(main_logits, main_labels)
 
+                # 新增：下一轮情绪预测损失
+                next_loss = next_criterion(next_logits, next_labels).mean()
+
                 # 总损失
-                loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss
+                loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss + delta * next_loss
 
                 # 反向传播
                 optimizer.zero_grad()
@@ -601,29 +653,42 @@ class MultiTaskTrainer:
                 total_loss += loss.item()
                 total_main_loss += main_loss.item()
                 total_turn_loss += turn_loss.item()
+                total_next_loss += next_loss.item()
                 total_consistency_loss += consistency_loss.item()
                 total_contrastive_loss += contrastive_loss.item()
 
                 preds = torch.argmax(main_logits, dim=1)
                 total_correct += (preds == main_labels).sum().item()
+
+                # 新增：统计下一轮预测准确率
+                next_preds = torch.argmax(next_logits, dim=1)
+                total_next_correct += (next_preds == next_labels).sum().item()
+
                 total_samples += main_labels.size(0)
 
                 # 更新进度条
                 accuracy = total_correct / total_samples
+                next_accuracy = total_next_correct / total_samples if total_samples > 0 else 0
                 progress_bar.set_postfix({
                     'loss': f'{loss.item():.4f}',
                     'main': f'{main_loss.item():.4f}',
-                    'turn': f'{turn_loss.item():.4f}',
-                    'acc': f'{accuracy:.4f}'
+                    'next': f'{next_loss.item():.4f}',
+                    'acc': f'{accuracy:.4f}',
+                    'next_acc': f'{next_accuracy:.4f}'
                 })
 
             # 验证
             if val_dataloader:
-                val_acc, val_loss = self._validate(val_dataloader, main_criterion, turn_criterion, contrastive_criterion, alpha, beta, gamma)
+                val_acc, val_next_acc, val_loss = self._validate(
+                    val_dataloader, main_criterion, turn_criterion, next_criterion,
+                    contrastive_criterion, alpha, beta, gamma, delta
+                )
                 print(f"Epoch {epoch + 1} 完成 - "
                       f"训练损失: {total_loss / len(train_dataloader):.4f}, "
                       f"训练准确率: {accuracy:.4f}, "
+                      f"下一轮预测准确率: {next_accuracy:.4f}, "
                       f"验证准确率: {val_acc:.4f}, "
+                      f"验证下一轮准确率: {val_next_acc:.4f}, "
                       f"困难样本: {hard_samples}")
 
                 if val_acc > best_val_acc:
@@ -632,7 +697,8 @@ class MultiTaskTrainer:
             else:
                 print(f"Epoch {epoch + 1} 完成 - "
                       f"平均损失: {total_loss / len(train_dataloader):.4f}, "
-                      f"准确率: {accuracy:.4f}")
+                      f"准确率: {accuracy:.4f}, "
+                      f"下一轮预测准确率: {next_accuracy:.4f}")
 
             self._save_checkpoint(epoch + 1, is_epoch=True)
 
@@ -641,11 +707,12 @@ class MultiTaskTrainer:
 
         return self.model
 
-    def _validate(self, val_dataloader, main_criterion, turn_criterion, contrastive_criterion, alpha, beta, gamma):
+    def _validate(self, val_dataloader, main_criterion, turn_criterion, next_criterion, contrastive_criterion, alpha, beta, gamma, delta):
         """验证集评估"""
         self.model.eval()
         total_loss = 0
         total_correct = 0
+        total_next_correct = 0
         total_samples = 0
 
         with torch.no_grad():
@@ -653,12 +720,14 @@ class MultiTaskTrainer:
                 input_ids = batch['input_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 main_labels = batch['main_labels'].to(self.device)
+                next_labels = batch['next_labels'].to(self.device)
                 turn_positions = batch['turn_positions'].to(self.device)
                 turn_labels = batch['turn_labels'].to(self.device)
                 turn_mask = batch['turn_mask'].to(self.device)
+                last_turn_idx = batch['last_turn_idx'].to(self.device)
 
-                main_logits, turn_logits, _, _ = self.model(
-                    input_ids, attention_mask, turn_positions, turn_mask
+                main_logits, turn_logits, next_logits, _, _ = self.model(
+                    input_ids, attention_mask, turn_positions, turn_mask, last_turn_idx
                 )
 
                 # 主任务损失
@@ -678,15 +747,25 @@ class MultiTaskTrainer:
                 # 对比学习损失
                 contrastive_loss = contrastive_criterion(main_logits, main_labels)
 
-                loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss
+                # 下一轮预测损失
+                next_loss = next_criterion(next_logits, next_labels).mean()
+
+                loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss + delta * next_loss
                 total_loss += loss.item()
 
                 preds = torch.argmax(main_logits, dim=1)
                 total_correct += (preds == main_labels).sum().item()
+
+                # 下一轮预测准确率
+                next_preds = torch.argmax(next_logits, dim=1)
+                total_next_correct += (next_preds == next_labels).sum().item()
+
                 total_samples += main_labels.size(0)
 
         self.model.train()
-        return total_correct / total_samples, total_loss / len(val_dataloader)
+        main_acc = total_correct / total_samples
+        next_acc = total_next_correct / total_samples
+        return main_acc, next_acc, total_loss / len(val_dataloader)
 
     def _save_checkpoint(self, step, is_epoch=False, is_best=False):
         """保存检查点"""

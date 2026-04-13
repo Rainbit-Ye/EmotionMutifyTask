@@ -53,18 +53,31 @@ class MultiTaskEmotionClassifier(nn.Module):
             nn.ReLU(),
             nn.Linear(hidden_size // 2, num_labels)
         )
+        # 新增：下一轮情绪预测分类头
+        self.next_classifier = nn.Sequential(
+            nn.Dropout(0.1),
+            nn.Linear(hidden_size, hidden_size // 2),
+            nn.ReLU(),
+            nn.Linear(hidden_size // 2, num_labels)
+        )
 
-    def forward(self, input_ids, attention_mask, return_turn_hidden=False):
+    def forward(self, input_ids, attention_mask, return_turn_hidden=False, return_next=False):
         outputs = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
         hidden_states = outputs.last_hidden_state
-        
+
         # 主任务：整体情绪
         main_hidden = hidden_states[:, 0, :]
         main_logits = self.main_classifier(main_hidden)
-        
+
+        # 新增：下一轮情绪预测
+        next_logits = None
+        if return_next:
+            # 使用 [CLS] hidden state 预测下一轮情绪
+            next_logits = self.next_classifier(main_hidden)
+
         if return_turn_hidden:
-            return main_logits, hidden_states
-        return main_logits
+            return main_logits, hidden_states, next_logits
+        return main_logits, next_logits
 
 
 class EmotionTracker:
@@ -227,45 +240,59 @@ class DynamicEmotionAnalyzer:
         
         print("动态情感分析器加载完成")
     
-    def analyze_turn(self, text: str, role: str = "user") -> Dict:
+    def analyze_turn(self, text: str, role: str = "user", predict_next: bool = True) -> Dict:
         """
         分析单轮对话的情感
-        
+
         Args:
             text: 对话文本
             role: 说话者角色 (user/assistant)
-        
+            predict_next: 是否预测下一轮情绪
+
         Returns:
             情感分析结果
         """
         inputs = self.tokenizer(
-            text, return_tensors='pt', max_length=256, 
+            text, return_tensors='pt', max_length=256,
             truncation=True, padding=True
         )
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
-        
+
         with torch.no_grad():
-            logits = self.model(**inputs)
-            
+            main_logits, next_logits = self.model(**inputs, return_next=predict_next)
+
             # 应用敏感度调整
-            adjusted_logits = logits * self.sensitivity
+            adjusted_logits = main_logits * self.sensitivity
             probs = F.softmax(adjusted_logits, dim=-1)[0]
-            
+
             pred_idx = torch.argmax(probs).item()
             confidence = probs[pred_idx].item()
-            
+
             # 获取所有情绪概率
             all_probs = {EMOTION_LIST[i]: probs[i].item() for i in range(len(EMOTION_LIST))}
-        
+
+            # 预测下一轮情绪（使用模型）
+            next_prediction = None
+            if predict_next and next_logits is not None:
+                next_probs = F.softmax(next_logits, dim=-1)[0]
+                next_pred_idx = torch.argmax(next_probs).item()
+                next_confidence = next_probs[next_pred_idx].item()
+                next_all_probs = {EMOTION_LIST[i]: next_probs[i].item() for i in range(len(EMOTION_LIST))}
+                next_prediction = {
+                    'emotion': EMOTION_LIST[next_pred_idx],
+                    'confidence': next_confidence,
+                    'probabilities': next_all_probs
+                }
+
         predicted_emotion = EMOTION_LIST[pred_idx]
-        
+
         # 记录到追踪器
         self.tracker.add(predicted_emotion, confidence)
-        
+
         # 检测异常
         anomaly = self.tracker.detect_anomaly()
-        
-        return {
+
+        result = {
             'emotion': predicted_emotion,
             'confidence': confidence,
             'probabilities': all_probs,
@@ -273,36 +300,41 @@ class DynamicEmotionAnalyzer:
             'anomaly': anomaly,
             'trend': self.tracker.get_trend()
         }
+
+        if next_prediction:
+            result['model_next_prediction'] = next_prediction
+
+        return result
     
     def analyze_conversation(self, conversation: List[Dict]) -> Dict:
         """
         分析完整对话的情感走向
-        
+
         Args:
             conversation: 对话列表 [{"role": "user/assistant", "content": "..."}]
-        
+
         Returns:
             完整分析结果
         """
         # 重置追踪器
         self.tracker = EmotionTracker()
-        
+
         turn_results = []
-        
+
         for turn in conversation:
             role = turn.get("role", "user")
             content = turn.get("content", "")
-            
+
             # 格式化文本
             if role == "user":
                 text = f"User: {content}"
             else:
                 text = f"Assistant: {content}"
-            
-            result = self.analyze_turn(text, role)
+
+            result = self.analyze_turn(text, role, predict_next=False)
             turn_results.append(result)
-        
-        # 获取整体预测
+
+        # 获取整体预测（包含下一轮预测）
         full_text = ""
         for turn in conversation:
             role = turn.get("role", "user")
@@ -311,12 +343,15 @@ class DynamicEmotionAnalyzer:
                 full_text += f"User: {content}\n"
             else:
                 full_text += f"Assistant: {content}\n"
-        
-        overall_result = self.analyze_turn(full_text, "overall")
-        
-        # 预测下一轮情感
-        next_emotion, next_confidence = self.tracker.predict_next()
-        
+
+        overall_result = self.analyze_turn(full_text, "overall", predict_next=True)
+
+        # 预测下一轮情感 - 基于效价趋势
+        trend_next_emotion, trend_next_confidence = self.tracker.predict_next()
+
+        # 获取模型的下一轮预测
+        model_next_prediction = overall_result.get('model_next_prediction', None)
+
         return {
             'overall_emotion': overall_result['emotion'],
             'overall_confidence': overall_result['confidence'],
@@ -324,8 +359,14 @@ class DynamicEmotionAnalyzer:
             'emotion_trajectory': [t['emotion'] for t in turn_results],
             'summary': self.tracker.get_summary(),
             'next_prediction': {
-                'emotion': next_emotion,
-                'confidence': next_confidence
+                'emotion': model_next_prediction['emotion'] if model_next_prediction else trend_next_emotion,
+                'confidence': model_next_prediction['confidence'] if model_next_prediction else trend_next_confidence,
+                'probabilities': model_next_prediction['probabilities'] if model_next_prediction else None,
+                'method': 'model' if model_next_prediction else 'trend'
+            },
+            'trend_based_prediction': {
+                'emotion': trend_next_emotion,
+                'confidence': trend_next_confidence
             }
         }
     
@@ -410,9 +451,20 @@ def demo():
     print(f"  趋势方向: {trend['trend']}")
     print(f"  平均效价: {trend['avg_valence']:.2f}")
     print(f"  波动性: {trend['volatility']:.2f}")
-    
-    print(f"\n预测下一轮情感: {result['next_prediction']['emotion']} "
-          f"(置信度: {result['next_prediction']['confidence']:.2f})")
+
+    print(f"\n预测下一轮情感:")
+    next_pred = result['next_prediction']
+    print(f"  方法: {next_pred.get('method', 'unknown')}")
+    print(f"  预测情绪: {next_pred['emotion']} (置信度: {next_pred['confidence']:.2f})")
+    if next_pred.get('probabilities'):
+        print(f"  概率分布:")
+        for emo, prob in sorted(next_pred['probabilities'].items(), key=lambda x: -x[1]):
+            print(f"    {emo}: {prob:.4f}")
+
+    # 对比趋势预测和模型预测
+    if 'trend_based_prediction' in result:
+        trend_pred = result['trend_based_prediction']
+        print(f"\n  [对比] 基于趋势的预测: {trend_pred['emotion']} (置信度: {trend_pred['confidence']:.2f})")
 
 
 if __name__ == '__main__':
