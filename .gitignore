@@ -1,6 +1,7 @@
 # Model weights
 Model/
-
+AAC2Text/checkpoints/aac_model
+bertscore_model/
 # Output files
 output/
 

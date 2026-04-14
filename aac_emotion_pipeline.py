@@ -39,7 +39,7 @@ EMOTION_VALENCE = {
 class AACIconPredictor:
     """基于语义嵌入匹配预测可能的AAC图标"""
 
-    def __init__(self, ontology_path: str = None, embedding_model: str = '/home/user1/liuduanye/EmotionClassify/Model/all-MiniLM-L6-v2'):
+    def __init__(self, ontology_path: str = None, embedding_model: str = './Model/all-MiniLM-L6-v2'):
         self.ontology = {}
         self.icon_list = []
         self.icon_embeddings = None
@@ -704,7 +704,7 @@ class AACEmotionPipeline:
 
         # 加载图标预测器
         if ontology_path is None:
-            ontology_path = "/home/user1/liuduanye/AgentPipeline/EmotionClassify/AAC2Text/data/processed/aac_full_ontology.json"
+            ontology_path = "./AAC2Text/data/processed/aac_full_ontology.json"
         self.icon_predictor = AACIconPredictor(ontology_path)
 
         # 对话历史
@@ -898,15 +898,15 @@ def main():
 
     # AAC2Text 模型路径
     parser.add_argument('--aac_model_path', type=str,
-                        default='/home/user1/liuduanye/AgentPipeline/EmotionClassify/AAC2Text/checkpoints/aac_model')
+                        default='./AAC2Text/checkpoints/aac_model')
     parser.add_argument('--aac_base_model_path', type=str,
                         default='/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct')
 
     # EmotionClassify 模型路径
     parser.add_argument('--emotion_model_path', type=str,
-                        default='/home/user1/liuduanye/EmotionClassify/output/cls_final')
+                        default='./output/cls_final')
     parser.add_argument('--emotion_base_model_path', type=str,
-                        default='/home/user1/liuduanye/EmotionClassify/Model/roberta-base')
+                        default='./Model/roberta-base')
 
     # 运行模式
     parser.add_argument('--interactive', action='store_true', help='Interactive mode')

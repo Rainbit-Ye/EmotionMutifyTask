@@ -1,0 +1,49 @@
+# AAC 模型训练配置
+
+# 数据配置
+data:
+  train_data: "./AAC2Text/data/processed/training_data.json"
+  val_data: "./AAC2Text/data/processed/val_data.json"
+  num_train: null  # 训练数据数量，null表示全部
+  val_ratio: 0.1   # 验证集比例
+
+# 模型配置
+model:
+  # Qwen基座模型路径（外部依赖，需要配置）
+  base_model: "/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct"
+  output_dir: "./AAC2Text/checkpoints/aac_model"
+  max_length: 128
+
+# 训练配置
+training:
+  epochs: 3
+  batch_size: 8
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_steps: 100
+  gradient_accumulation_steps: 4
+  logging_steps: 50      # 每50步打印日志
+  eval_steps: 200        # 每200步评估一次
+  save_steps: 400        # 每400步保存模型 (必须是eval_steps的整数倍)
+  save_total_limit: 3
+
+# LoRA 配置
+lora:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.1
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+
+# 测试配置
+test:
+  test_samples:
+    - ["I", "want_to", "water"]
+    - ["I", "am", "happy"]
+    - ["I", "eat_to", "apple"]
+    - ["I", "go_to", "school"]
+    - ["doctor", "help_to", "patient"]
+    - ["I", "need_to", "medicine"]

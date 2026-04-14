@@ -12,8 +12,9 @@ import json
 import sys
 import os
 
-# 添加路径
-sys.path.insert(0, '/home/user1/liuduanye/EmotionClassify')
+# 获取脚本所在目录
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, SCRIPT_DIR)
 
 from aac_emotion_pipeline import AACEmotionPipeline
 
@@ -169,17 +170,17 @@ def analyze_lambda_effect(pipeline, sample):
 
 def main():
     # 加载验证数据
-    val_path = '/home/user1/liuduanye/AgentPipeline/EmotionClassify/AAC2Text/data/processed/val_data.json'
+    val_path = os.path.join(SCRIPT_DIR, 'AAC2Text/data/processed/val_data.json')
     val_data = load_val_data(val_path, limit=20)
     
     print(f"加载验证数据: {len(val_data)} 条")
     
     # 初始化 Pipeline
     pipeline = AACEmotionPipeline(
-        aac_model_path='/home/user1/liuduanye/AgentPipeline/EmotionClassify/AAC2Text/checkpoints/aac_model',
+        aac_model_path=os.path.join(SCRIPT_DIR, 'AAC2Text/checkpoints/aac_model'),
         aac_base_model_path='/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct',
-        emotion_model_path='/home/user1/liuduanye/EmotionClassify/output/cls_final',
-        emotion_base_model_path='/home/user1/liuduanye/EmotionClassify/Model/roberta-base'
+        emotion_model_path=os.path.join(SCRIPT_DIR, 'output/cls_final'),
+        emotion_base_model_path=os.path.join(SCRIPT_DIR, 'Model/roberta-base')
     )
     
     # 1. 测试单个样本

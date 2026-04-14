@@ -121,31 +121,39 @@ EmotionClassify/
 ├── aac_emotion_pipeline.py         # 整合Pipeline（主入口）
 ├── test_emotional_rag.py           # Emotional RAG 测试脚本
 ├── config.json                      # 配置文件
+├── README.md                        # 说明文档
+├── requirements.txt                 # 依赖
 │
-├── # 情感分类模块
-├── cls_trainer.py                   # LoRA训练
-├── cls_multitask_trainer.py         # 多任务训练
-├── simple_trainer.py                # 全参数训练
-├── cls_evaluate.py                  # 模型评估
-├── cls_inference.py                 # 模型推理
-├── dynamic_emotion_analyzer.py      # 动态情感分析
-├── evaluate_full_comparison.py      # 完整对比评估
-├── evaluate_next_emotion.py         # 下一轮预测评估
+├── AAC2Text/                        # AAC翻译模块
+│   ├── checkpoints/                 # 翻译模型权重
+│   ├── data/processed/              # AAC本体数据
+│   ├── scripts/                     # 训练脚本
+│   └── config.yaml                  # 翻译配置
 │
-├── data/
-│   ├── sft_train.json              # 训练数据
-│   ├── sft_val.json                # 验证数据
-│   ├── sft_test.json               # 测试数据
-│   └── emotion_weights.json        # 类别权重
+├── emotion_classify/                # 情感分类模块
+│   ├── cls_trainer.py               # LoRA训练
+│   ├── cls_multitask_trainer.py     # 多任务训练
+│   ├── simple_trainer.py            # 全参数训练
+│   ├── cls_evaluate.py              # 模型评估
+│   ├── cls_inference.py             # 模型推理
+│   ├── dynamic_emotion_analyzer.py  # 动态情感分析
+│   ├── evaluate_full_comparison.py  # 完整对比评估
+│   └── evaluate_next_emotion.py     # 下一轮预测评估
 │
-├── Model/
-│   ├── roberta-base/               # RoBERTa基座模型
-│   └── all-MiniLM-L6-v2/           # 语义嵌入模型
+├── data/                            # 情感分类数据
+│   ├── sft_train.json
+│   ├── sft_val.json
+│   ├── sft_test.json
+│   └── emotion_weights.json
 │
-└── output/
-    ├── cls_best/                   # LoRA最佳模型
-    ├── cls_final/                  # 多任务最终模型
-    └── simple_best/                # 全参数最佳模型
+├── Model/                           # 基座模型
+│   ├── roberta-base/                # RoBERTa基座
+│   └── all-MiniLM-L6-v2/            # 语义嵌入模型
+│
+└── output/                          # 训练输出
+    ├── cls_best/                    # LoRA最佳模型
+    ├── cls_final/                   # 多任务最终模型
+    └── simple_best/                 # 全参数最佳模型
 ```
 
 ---
@@ -436,6 +444,24 @@ Emotional RAG (λ=0.3):
   [Action] drink_to: sim_combined=0.420 (orig=0.390, emo=0.510)
   [Action] water_plants_to: sim_combined=0.405 (orig=0.410, emo=0.380)
   [Entity] water_bowl: sim_combined=0.395 (orig=0.380, emo=0.450)
+```
+
+---
+
+## 外部依赖
+
+运行此项目需要以下外部模型：
+
+| 模型 | 路径 | 说明 |
+|------|------|------|
+| Qwen2.5-1.5B-Instruct | `/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct` | AAC翻译基座模型 |
+
+**修改路径**：
+
+在 `aac_emotion_pipeline.py` 或 `test_emotional_rag.py` 中修改：
+
+```python
+aac_base_model_path='/path/to/Qwen2.5-1.5B-Instruct'
 ```
 
 ---
