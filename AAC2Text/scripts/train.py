@@ -430,7 +430,7 @@ def test_model(config: dict):
         import sys
         script_dir = os.path.dirname(os.path.abspath(__file__))
         sys.path.insert(0, script_dir)
-        from EmotionClassify.AAC2Text.scripts.bleu.bleu import Bleu
+        from bleu.bleu import Bleu
         
         bleu_scorer = Bleu()
         
@@ -491,7 +491,7 @@ def main():
     args = parser.parse_args()
     
     # 加载配置
-    config_path = args.config or "/home/user1/liuduanye/AgentPipeline/EmotionClassify/AAC2Text/config.yaml"
+    config_path = args.config or "/home/user1/liuduanye/EmotionClassify/AAC2Text/config.yaml"
     config = load_config(config_path)
     
     # 命令行参数覆盖配置

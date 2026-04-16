@@ -90,7 +90,7 @@ def compute_all_metrics(preds, refs):
     # ---- BERTScore ----
     print("计算 BERTScore...")
     from bert_score import score as bert_score_fn
-    bertscore_model_path = "/home/user1/liuduanye/AgentPipeline/bertscore_model"
+    bertscore_model_path = "/home/user1/liuduanye/EmotionClassify/bertscore_model"
     P, R, F1 = bert_score_fn(preds, ref_strs, lang="en", model_type=bertscore_model_path, num_layers=17, verbose=False)
     results["bertscore_precision"] = P.mean().item()
     results["bertscore_recall"] = R.mean().item()
@@ -267,7 +267,7 @@ def main():
     args = parser.parse_args()
 
     # 加载配置
-    config_path = args.config or "../../config.yaml"
+    config_path = args.config or "/home/user1/liuduanye/EmotionClassify/AAC2Text/config.yaml"
     config = load_config(config_path)
 
     test_model(config, args.num)
