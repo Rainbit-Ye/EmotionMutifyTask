@@ -170,7 +170,54 @@ Qwen2.5-1.5B-Instruct + LoRA
 输出: "I want water."
 ```
 
-**训练数据生成**：随机符号组合 + LLM翻译/过滤
+**训练数据生成**：随机符号组合 + LLM翻译/量化验证
+
+#### 训练数据生成与量化验证
+
+训练数据通过 `AAC2Text/scripts/generate_training_data.py` 生成，采用 **翻译Agent自评 + 量化验证器** 的双重过滤机制：
+
+**流程**：
+```
+随机符号组合 → Qwen翻译(附带自评) → 量化验证 → accept/reject → reject丢弃补全
+```
+
+**翻译Agent改造**：一次 Qwen 调用同时输出句子和语义合理性自评分数：
+
+```
+输入: Symbols: [doctor, help, patient]
+输出:
+  Sentence: The doctor helps the patient.
+  Naturalness: 5
+```
+
+```
+输入: Symbols: [lady, flip, coin, broomstick, dentist]
+输出:
+  Sentence: The worried lady flips the coin with a broomstick after the dentist.
+  Naturalness: 2
+```
+
+模型对语义荒谬的组合会给出低分或直接 REJECT，无需额外模型调用。
+
+**量化验证器 (QuantitativeValidator)**：
+
+| 指标 | 权重 | 计算方式 | 作用 |
+|------|------|----------|------|
+| 模型自评 (Naturalness) | 0.50 | 翻译时模型自评1-5分，归一化 `(n-1)/4` | 检测语义荒谬——语法正确但逻辑离谱的句子 |
+| 标签覆盖率 (Coverage) | 0.35 | 字符串匹配 + 简单词形变化(-s/-ed/-ing) | 检测标签遗漏 |
+| 标签密度 (Density) | 0.15 | `exp(-0.5*((d-0.3)/0.25)^2)` | 检测标签堆砌或稀释 |
+
+综合得分 `S = 0.50×naturalness + 0.35×coverage + 0.15×density`
+
+- **一票否决**: `coverage < 0.5` 直接 reject
+- **阈值**: `S >= 0.55` → accept，否则 reject
+- reject 的数据丢弃，继续随机组合补全目标数量
+
+**设计原理**：
+- **零额外模型开销**：自评分数复用翻译调用，coverage/density 是纯 Python 字符串计算
+- **语义荒谬检测**：仅靠语法/字符串指标无法检测"医生建议失眠女性喝蔓越莓"这类语法正确但逻辑荒谬的句子，必须依赖模型自身的语义理解能力
+- **组合模式扩展**：支持 svo, sv, svo_emo, sv_emo, svo_place, svo_time, sv_time 七种组合模式
+
 **评估指标**：BLEU=0.53, BERTScore-F1=0.96
 
 ### 2. 情感分析 (EmotionClassify)

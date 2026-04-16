@@ -2,8 +2,8 @@
 
 # 数据配置
 data:
-  train_data: "./AAC2Text/data/processed/training_data.json"
-  val_data: "./AAC2Text/data/processed/val_data.json"
+  train_data: "/home/user1/liuduanye/EmotionClassify/AAC2Text/data/processed/training_data.json"
+  val_data: "/home/user1/liuduanye/EmotionClassify/AAC2Text/data/processed/val_data.json"
   num_train: null  # 训练数据数量，null表示全部
   val_ratio: 0.1   # 验证集比例
 
@@ -11,7 +11,7 @@ data:
 model:
   # Qwen基座模型路径（外部依赖，需要配置）
   base_model: "/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct"
-  output_dir: "./AAC2Text/checkpoints/aac_model"
+  output_dir: "/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_model"
   max_length: 128
 
 # 训练配置

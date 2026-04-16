@@ -2,60 +2,72 @@
 # 所有 Agent 的提示词统一管理
 
 translation_agent:
-  name: "翻译专家"
+  name: "翻译+自评专家"
   role: |
-    你是一位专业的AAC翻译专家，负责将象形图符号组合翻译成自然流畅的英文句子。
+    你是一位专业的AAC翻译专家，负责将象形图符号组合翻译成自然流畅的英文句子，
+    并评估这些符号组合在一起是否语义合理。
 
     核心规则：必须使用所有给定的符号，不能遗漏任何一个。
+    如果符号组合在逻辑上说不通，应该拒绝并输出REJECT。
 
 translation_prompt: |
-  Translate these AAC symbols into ONE simple English sentence.
+  Translate these AAC symbols into ONE simple English sentence. You MUST use ALL symbols.
 
   Symbols: {labels}
 
   CRITICAL RULES:
   1. You MUST use ALL symbols in your sentence. Do NOT skip any symbol.
-  2. Output ONLY the sentence, nothing else.
-  3. Add articles and prepositions as needed.
-  4. If you cannot make a sensible sentence using ALL symbols, output: "REJECT"
+  2. Add articles and prepositions as needed.
+  3. If the symbols CANNOT be combined into a logically sensible sentence, output: "REJECT"
+     - "Logically sensible" means the combination makes real-world sense, not just grammatically correct
+     - Example of REJECT: symbols that create absurd/nonsensical scenarios even if grammatically possible
+  4. After your sentence, rate how naturally and logically these symbols combine:
+     1 = completely absurd/nonsensical (e.g., "the dentist uses a broomstick to clean the coin")
+     2 = very forced/unnatural (e.g., "the worried lady flips the coin with a broomstick after the dentist")
+     3 = somewhat acceptable but odd (e.g., "the lady reads a book about cooking")
+     4 = natural and reasonable (e.g., "the doctor helps the patient")
+     5 = perfectly natural and common (e.g., "I want water")
+
+  Output format (two lines):
+  Sentence: <your sentence>
+  Naturalness: <1-5>
 
   Examples:
-  - ["I", "want", "water"] → I want water.
-  - ["doctor", "help", "patient"] → The doctor helps the patient.
-  - ["I", "eat", "apple", "happy"] → I am happy eating an apple.
-  - ["mole", "wrestle", "deodorant", "want"] → REJECT (cannot make sense with all symbols)
+  - ["I", "want", "water"] →
+    Sentence: I want water.
+    Naturalness: 5
 
-  Sentence:
+  - ["doctor", "help", "patient"] →
+    Sentence: The doctor helps the patient.
+    Naturalness: 5
+
+  - ["I", "eat", "apple", "happy"] →
+    Sentence: I am happy eating an apple.
+    Naturalness: 4
+
+  - ["lady", "flip", "coin", "broomstick", "dentist"] →
+    Sentence: The lady flips the coin with a broomstick after the dentist.
+    Naturalness: 2
+
+  - ["mole", "wrestle", "deodorant"] → REJECT
+
+  Your output:
 
 validation_agent:
-  name: "语言质量专家"
+  name: "量化质量评估器"
   role: |
-    你是一位严谨的语言质量评审专家，负责评估AAC语料的质量。
+    量化评估AAC语料质量，结合模型自评和纯计算指标。
 
-    核心检查：句子是否使用了所有标签，且语义是否合理。
+    评估维度:
+    1. 模型自评 (Naturalness, w=0.50): 翻译时模型对语义合理性的1-5打分
+    2. 标签覆盖率 (Coverage, w=0.35): 标签在句子中是否出现（简单词形变化匹配）
+    3. 标签密度 (Density, w=0.15): 高斯核评估密度适中性
 
-validation_prompt: |
-    Evaluate this AAC training data:
-
-    Labels: {labels}
-    Sentence: {sentence}
-
-    Check:
-    1. Does the sentence use ALL labels? (Check each label appears in some form)
-    2. Is the sentence grammatically correct and natural?
-    3. Do the labels make semantic sense together?
-
-    Output JSON:
-    {{
-      "used_all_labels": true/false,
-      "action": "accept/revise/reject",
-      "reason": "brief explanation",
-      "revised_sentence": "if revise, provide corrected sentence"
-    }}
-
-    action rules:
-    - accept: All labels used, sentence natural
-    - revise: All labels used but sentence needs improvement
-    - reject: Not all labels used, OR labels make no sense together
-
-    Output JSON only:
+  validation_config:
+    weights:
+      naturalness: 0.50
+      coverage: 0.35
+      density: 0.15
+    thresholds:
+      accept: 0.55
+      veto_coverage: 0.5
