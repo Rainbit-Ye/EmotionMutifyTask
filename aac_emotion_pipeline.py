@@ -900,7 +900,7 @@ def main():
     parser.add_argument('--aac_model_path', type=str,
                         default='./AAC2Text/checkpoints/aac_model')
     parser.add_argument('--aac_base_model_path', type=str,
-                        default='/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct')
+                        default='/home/user1/liuduanye/qwen/Qwen2_5-1_5B-Instruct')
 
     # EmotionClassify 模型路径
     parser.add_argument('--emotion_model_path', type=str,

@@ -177,7 +177,7 @@ def main():
     
     ontology_path = "../../data/processed/aac_full_ontology.json"
     output_path = args.output or "../../data/processed/training_data.json"
-    model_path = "/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct"
+    model_path = "/home/user1/liuduanye/qwen/Qwen2_5-1_5B-Instruct"
     
     print("="*60)
     print("纯随机训练数据生成")

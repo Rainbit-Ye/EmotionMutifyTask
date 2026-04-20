@@ -69,7 +69,7 @@ class PictogramOntology:
 class OntologyBuilder:
     """本体构建器 - 使用 Qwen 推断语义信息"""
     
-    def __init__(self, model_path: str = "/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct"):
+    def __init__(self, model_path: str = "/home/user1/liuduanye/qwen/Qwen2_5-1_5B-Instruct"):
         print(f"加载模型: {model_path}")
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
         self.model = AutoModelForCausalLM.from_pretrained(

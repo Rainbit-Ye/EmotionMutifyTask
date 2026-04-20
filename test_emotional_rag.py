@@ -178,7 +178,7 @@ def main():
     # 初始化 Pipeline
     pipeline = AACEmotionPipeline(
         aac_model_path=os.path.join(SCRIPT_DIR, 'AAC2Text/checkpoints/aac_model'),
-        aac_base_model_path='/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct',
+        aac_base_model_path='/home/user1/liuduanye/qwen/Qwen2_5-1_5B-Instruct',
         emotion_model_path=os.path.join(SCRIPT_DIR, 'output/cls_final'),
         emotion_base_model_path=os.path.join(SCRIPT_DIR, 'Model/roberta-base')
     )

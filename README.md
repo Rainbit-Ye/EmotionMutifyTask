@@ -501,7 +501,7 @@ Emotional RAG (λ=0.3):
 
 | 模型 | 路径 | 说明 |
 |------|------|------|
-| Qwen2.5-1.5B-Instruct | `/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct` | AAC翻译基座模型 |
+| Qwen2.5-1.5B-Instruct | `/home/user1/liuduanye/qwen/Qwen2_5-1_5B-Instruct` | AAC翻译基座模型 |
 
 **修改路径**：
 

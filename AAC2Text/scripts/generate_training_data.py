@@ -441,7 +441,7 @@ def main():
     ontology_path = f"{base_dir}/data/processed/aac_full_ontology.json"
     output_path = args.output or f"{base_dir}/data/processed/training_data.json"
     prompts_path = f"{base_dir}/config/prompts.yaml"
-    model_path = "/home/user1/liuduanye/AgentPipeline/qwen/Qwen2_5-1_5B-Instruct"
+    model_path = "/home/user1/liuduanye/qwen/Qwen2_5-1_5B-Instruct"
 
     print("=" * 60)
     print("AAC 训练数据生成（翻译Agent + 量化验证器）")
