@@ -2,13 +2,13 @@
 # 所有 Agent 的提示词统一管理
 
 translation_agent:
-  name: "翻译+自评专家"
+  name: "翻译专家"
   role: |
-    你是一位专业的AAC翻译专家，负责将象形图符号组合翻译成自然流畅的英文句子，
-    并评估这些符号组合在一起是否语义合理。
+    你是一位专业的AAC翻译专家，负责将象形图符号组合翻译成自然流畅的英文句子。
 
     核心规则：必须使用所有给定的符号，不能遗漏任何一个。
     如果符号组合在逻辑上说不通，应该拒绝并输出REJECT。
+    尽量对符号进行自然语言重构，而不是按顺序罗列。
 
 translation_prompt: |
   Translate these AAC symbols into ONE simple English sentence. You MUST use ALL symbols.
@@ -17,57 +17,87 @@ translation_prompt: |
 
   CRITICAL RULES:
   1. You MUST use ALL symbols in your sentence. Do NOT skip any symbol.
-  2. Add articles and prepositions as needed.
-  3. If the symbols CANNOT be combined into a logically sensible sentence, output: "REJECT"
+  2. Add articles and prepositions as needed to make the sentence natural.
+  3. Try to RESTRUCTURE the symbols naturally - don't just list them in order.
+     Good: "The patient is helped by the doctor in the hospital."
+     Bad:  "Doctor help patient hospital."
+  4. If the symbols CANNOT be combined into a logically sensible sentence, output: "REJECT"
      - "Logically sensible" means the combination makes real-world sense, not just grammatically correct
      - Example of REJECT: symbols that create absurd/nonsensical scenarios even if grammatically possible
-  4. After your sentence, rate how naturally and logically these symbols combine:
-     1 = completely absurd/nonsensical (e.g., "the dentist uses a broomstick to clean the coin")
-     2 = very forced/unnatural (e.g., "the worried lady flips the coin with a broomstick after the dentist")
-     3 = somewhat acceptable but odd (e.g., "the lady reads a book about cooking")
-     4 = natural and reasonable (e.g., "the doctor helps the patient")
-     5 = perfectly natural and common (e.g., "I want water")
 
-  Output format (two lines):
+  Output format (one line):
   Sentence: <your sentence>
-  Naturalness: <1-5>
-
-  Examples:
-  - ["I", "want", "water"] →
-    Sentence: I want water.
-    Naturalness: 5
-
-  - ["doctor", "help", "patient"] →
-    Sentence: The doctor helps the patient.
-    Naturalness: 5
-
-  - ["I", "eat", "apple", "happy"] →
-    Sentence: I am happy eating an apple.
-    Naturalness: 4
-
-  - ["lady", "flip", "coin", "broomstick", "dentist"] →
-    Sentence: The lady flips the coin with a broomstick after the dentist.
-    Naturalness: 2
-
-  - ["mole", "wrestle", "deodorant"] → REJECT
 
   Your output:
 
 validation_agent:
-  name: "量化质量评估器"
+  name: "CoT质量评估器"
   role: |
-    量化评估AAC语料质量，结合模型自评和纯计算指标。
+    量化评估AAC语料质量，结合CoT链式推理和纯计算指标。
 
-    评估维度:
-    1. 模型自评 (Naturalness, w=0.50): 翻译时模型对语义合理性的1-5打分
-    2. 标签覆盖率 (Coverage, w=0.35): 标签在句子中是否出现（简单词形变化匹配）
-    3. 标签密度 (Density, w=0.15): 高斯核评估密度适中性
+    CoT评估维度（模型推理）:
+    1. 语义连贯性 (Semantic Coherence): 标签能否构成连贯场景
+    2. 语法自然度 (Grammatical Naturalness): 句子语法是否自然
+    3. 标签融合度 (Label Integration): 标签是否自然融入句子
+
+    纯计算维度:
+    1. 标签覆盖率 (Coverage, w=0.30): 标签在句子中是否出现
+    2. 公式化程度 (Formulaicness, w=0.20): 输出与输入结构的相似度（扣分项）
+
+    综合分 S = 0.35×naturalness + 0.30×coverage + 0.20×(1-formulaicness)
 
   validation_config:
     weights:
-      naturalness: 0.50
-      coverage: 0.35
-      density: 0.15
+      naturalness: 0.35
+      coverage: 0.30
+      formulaicness: 0.20
     thresholds:
       accept: 0.55
       veto_coverage: 0.5
+
+validation_cot_prompt: |
+  You are a quality evaluator for AAC (Augmentative and Alternative Communication) text generation.
+  Your task is to evaluate how natural the generated sentence is, given the input symbols.
+
+  Input Symbols: {labels}
+  Generated Sentence: {sentence}
+
+  Analyze this sentence step by step along the following dimensions:
+
+  1. **Semantic Coherence**: Do these symbols form a coherent, meaningful scenario? Can you imagine this happening in real life?
+     Score 1 = completely absurd/nonsensical
+     Score 2 = very forced/unnatural scenario
+     Score 3 = somewhat acceptable but odd
+     Score 4 = natural and reasonable scenario
+     Score 5 = perfectly natural and common scenario
+
+  2. **Grammatical Naturalness**: Is the sentence grammatically natural in English? Does it feel like something a native speaker would say, or does it have a "machine-translated" feel with awkward phrasing?
+     Score 1 = completely unnatural grammar
+     Score 2 = very awkward phrasing
+     Score 3 = acceptable but slightly odd grammar
+     Score 4 = natural grammar
+     Score 5 = perfectly natural, native-like phrasing
+
+  3. **Label Integration**: Are the symbols naturally integrated into the sentence? Or are they just listed/plugged in mechanically without linguistic restructuring?
+     Score 1 = symbols just listed mechanically
+     Score 2 = symbols barely integrated, very forced
+     Score 3 = symbols present but integration feels partial
+     Score 4 = symbols well integrated with some natural restructuring
+     Score 5 = symbols fully integrated with natural linguistic restructuring
+
+  4. **Overall Naturalness**: Your overall holistic assessment.
+     Score 1 = completely unnatural
+     Score 2 = mostly unnatural
+     Score 3 = somewhat acceptable
+     Score 4 = natural
+     Score 5 = perfectly natural
+
+  For each dimension, first write a brief analysis (1-2 sentences), then give your score.
+
+  Output format:
+  Semantic Coherence: <1-5>
+  Grammatical Naturalness: <1-5>
+  Label Integration: <1-5>
+  Overall Naturalness: <1-5>
+
+  Your analysis:

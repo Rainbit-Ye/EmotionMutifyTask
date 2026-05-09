@@ -160,7 +160,7 @@ def test_model(config: dict, num_samples: int = 50):
     print("-"*60)
 
     for labels in test_cases:
-        prompt = f"Translate these AAC symbols to a sentence: {' '.join(labels)}"
+        prompt = f"Translate these AAC symbols into ONE simple English sentence: {' '.join(labels)}"
         messages = [{"role": "user", "content": prompt}]
         input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
@@ -177,6 +177,9 @@ def test_model(config: dict, num_samples: int = 50):
 
         response = tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
         response = response.strip().split('\n')[0].strip()
+        dot_pos = response.find('.')
+        if dot_pos != -1 and dot_pos < len(response) - 1:
+            response = response[:dot_pos + 1]
         print(f"Labels: {labels}")
         print(f"Output: {response}")
         print()
@@ -189,7 +192,27 @@ def test_model(config: dict, num_samples: int = 50):
         print("-"*60)
 
         with open(val_path, 'r', encoding='utf-8') as f:
-            test_data = json.load(f)
+            content = f.read()
+
+        try:
+            test_data = json.loads(content)
+        except json.JSONDecodeError:
+            test_data = []
+            decoder = json.JSONDecoder()
+            pos = 0
+            while pos < len(content):
+                content_part = content[pos:].lstrip()
+                if not content_part:
+                    break
+                try:
+                    obj, end = decoder.raw_decode(content_part)
+                    if isinstance(obj, list):
+                        test_data.extend(obj)
+                    else:
+                        test_data.append(obj)
+                    pos += len(content[pos:]) - len(content_part) + end
+                except json.JSONDecodeError:
+                    break
 
         # 随机采样
         random.seed(42)
@@ -204,7 +227,7 @@ def test_model(config: dict, num_samples: int = 50):
             labels = item["labels"]
             sentence = item["sentence"].strip('"').strip("'").strip()
 
-            prompt = f"Translate these AAC symbols to a sentence: {' '.join(labels)}"
+            prompt = f"Translate these AAC symbols into ONE simple English sentence: {' '.join(labels)}"
             messages = [{"role": "user", "content": prompt}]
             input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
@@ -221,6 +244,9 @@ def test_model(config: dict, num_samples: int = 50):
 
             pred = tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
             pred = pred.strip().split('\n')[0].strip()
+            dot_pos = pred.find('.')
+            if dot_pos != -1 and dot_pos < len(pred) - 1:
+                pred = pred[:dot_pos + 1]
 
             preds.append(pred)
             refs.append([sentence])
