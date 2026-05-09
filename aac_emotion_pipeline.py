@@ -488,7 +488,7 @@ class AACTranslator:
 
         self.device = torch.device(device if torch.cuda.is_available() else 'cpu')
 
-        print(f"[AAC2Text] Loading base model: {base_model_path}")
+        print(f"[AAC2Text] Loading base model: {base_model_path}, target device: {self.device}")
         self.tokenizer = AutoTokenizer.from_pretrained(
             base_model_path,
             trust_remote_code=True,
@@ -497,7 +497,7 @@ class AACTranslator:
         self.model = AutoModelForCausalLM.from_pretrained(
             base_model_path,
             torch_dtype=torch.float16,
-            device_map="auto",
+            device_map={"": self.device},
             trust_remote_code=True,
             local_files_only=True
         )
@@ -508,10 +508,24 @@ class AACTranslator:
             self.model = PeftModel.from_pretrained(self.model, model_path)
 
         self.model.eval()
+
+        # Warmup: 首次推理会触发 CUDA kernel 编译，非常慢，提前跑一次
+        print("[AAC2Text] Warming up model (first inference)...")
+        import time as _time
+        _t0 = _time.time()
+        with torch.no_grad():
+            _dummy = self.tokenizer("Hello", return_tensors="pt").to(self.model.device)
+            self.model.generate(**_dummy, max_new_tokens=1, do_sample=False)
+        _warmup_time = _time.time() - _t0
+        print(f"[AAC2Text] Warmup done ({_warmup_time:.1f}s)")
+
         print("[AAC2Text] Model loaded successfully")
 
     def translate(self, symbols: List[str]) -> str:
         """将AAC符号列表翻译为自然语言句子"""
+        import time as _time
+        _t0 = _time.time()
+
         prompt = f"Translate these AAC symbols to a sentence: {' '.join(symbols)}"
         messages = [{"role": "user", "content": prompt}]
         input_text = self.tokenizer.apply_chat_template(
@@ -534,6 +548,9 @@ class AACTranslator:
             skip_special_tokens=True
         )
         response = response.strip().split('\n')[0].strip()
+
+        _infer_time = _time.time() - _t0
+        print(f"[AAC2Text] Inference time: {_infer_time:.2f}s, result: {response}")
         return response
 
 
@@ -690,6 +707,7 @@ class AACEmotionPipeline:
                  emotion_model_path: str,
                  emotion_base_model_path: str,
                  ontology_path: str = None,
+                 embedding_model: str = './Model/all-MiniLM-L6-v2',
                  device: str = 'cuda'):
 
         print("=" * 60)
@@ -705,7 +723,7 @@ class AACEmotionPipeline:
         # 加载图标预测器
         if ontology_path is None:
             ontology_path = "./AAC2Text/data/processed/aac_full_ontology.json"
-        self.icon_predictor = AACIconPredictor(ontology_path)
+        self.icon_predictor = AACIconPredictor(ontology_path, embedding_model=embedding_model)
 
         # 对话历史
         self.conversation_history = []

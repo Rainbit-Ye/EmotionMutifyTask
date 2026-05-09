@@ -4,6 +4,7 @@ AAC2Text/checkpoints/aac_model
 bertscore_model/
 # Output files
 output/
+models/
 
 # Data files (uncomment if needed)
 # data/
