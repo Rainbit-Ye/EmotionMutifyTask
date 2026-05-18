@@ -526,7 +526,7 @@ class AACTranslator:
         import time as _time
         _t0 = _time.time()
 
-        prompt = f"Translate these AAC symbols to a sentence: {' '.join(symbols)}"
+        prompt = f"Translate these AAC symbols into ONE simple English sentence: {' '.join(symbols)}"
         messages = [{"role": "user", "content": prompt}]
         input_text = self.tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
@@ -537,9 +537,9 @@ class AACTranslator:
         with torch.no_grad():
             outputs = self.model.generate(
                 **inputs,
-                max_new_tokens=50,
+                max_new_tokens=30,
                 do_sample=False,
-                stop_strings=["<|im_end|>", "\n"],
+                stop_strings=["<|eot_id|>", "<|end_of_text|>", "\n"],
                 tokenizer=self.tokenizer,
             )
 
@@ -547,7 +547,12 @@ class AACTranslator:
             outputs[0][inputs.input_ids.shape[1]:],
             skip_special_tokens=True
         )
-        response = response.strip().split('\n')[0].strip()
+        # 只取第一句，避免生成过多内容
+        for sep in ['\n', '.']:
+            if sep in response:
+                response = response[:response.index(sep)] + ('.' if sep == '.' else '')
+                break
+        response = response.strip()
 
         _infer_time = _time.time() - _t0
         print(f"[AAC2Text] Inference time: {_infer_time:.2f}s, result: {response}")

@@ -112,7 +112,7 @@ def compute_all_metrics(preds, refs):
     return results
 
 
-def test_model(config: dict, num_samples: int = 50):
+def test_model(config: dict, num_samples: int = None):
     """测试模型"""
 
     model_config = config["model"]
@@ -188,7 +188,7 @@ def test_model(config: dict, num_samples: int = 50):
     val_path = config["data"].get("val_data")
     if val_path and os.path.exists(val_path):
         print("-"*60)
-        print(f"计算评估指标 (采样 {num_samples} 条)...")
+        print(f"计算评估指标 ({len(test_data)} 条)...")
         print("-"*60)
 
         with open(val_path, 'r', encoding='utf-8') as f:
@@ -214,9 +214,11 @@ def test_model(config: dict, num_samples: int = 50):
                 except json.JSONDecodeError:
                     break
 
-        # 随机采样
-        random.seed(42)
-        test_data = random.sample(test_data, min(num_samples, len(test_data)))
+        # 采样或全部
+        if num_samples and num_samples < len(test_data):
+            random.seed(42)
+            test_data = random.sample(test_data, num_samples)
+        print(f"计算评估指标 ({len(test_data)} 条)...")
 
         preds = []
         refs = []
@@ -289,7 +291,7 @@ def test_model(config: dict, num_samples: int = 50):
 def main():
     parser = argparse.ArgumentParser(description='AAC 模型测试')
     parser.add_argument('--config', type=str, default=None, help='配置文件路径')
-    parser.add_argument('--num', type=int, default=50, help='测试样本数量')
+    parser.add_argument('--num', type=int, default=None, help='测试样本数量，默认全部')
     args = parser.parse_args()
 
     # 加载配置

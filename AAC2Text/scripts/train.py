@@ -446,8 +446,8 @@ def test_model(config: dict):
                 except json.JSONDecodeError:
                     break
 
-        random.seed(42)
-        test_data = random.sample(test_data, min(50, len(test_data)))
+        # 使用全部验证集评估
+        print(f"\n计算 BLEU 分数 (全部 {len(test_data)} 条)...")
 
         preds = []
         refs = []

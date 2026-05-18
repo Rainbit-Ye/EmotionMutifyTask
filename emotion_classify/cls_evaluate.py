@@ -118,6 +118,53 @@ def load_model(model_path, base_model_path, device, model_type='cls'):
             num_labels=len(EMOTION_LIST)
         )
 
+    elif model_type == 'ia3':
+        # IA3 基线
+        from peft import IA3Config
+        base_model = RobertaForSequenceClassification.from_pretrained(
+            base_model_path,
+            num_labels=len(EMOTION_LIST)
+        )
+        ia3_config = IA3Config(
+            target_modules=["key", "value", "dense"],
+            feedforward_modules=["dense"],
+            task_type=TaskType.SEQ_CLS,
+        )
+        # 先应用 IA3 config 再加载权重
+        model = PeftModel.from_pretrained(base_model, model_path)
+
+    elif model_type == 'prefix':
+        # Prefix Tuning 基线
+        base_model = RobertaForSequenceClassification.from_pretrained(
+            base_model_path,
+            num_labels=len(EMOTION_LIST)
+        )
+        model = PeftModel.from_pretrained(base_model, model_path)
+
+    elif model_type == 'lora_r16':
+        # LoRA r=16 ablation
+        base_model = RobertaForSequenceClassification.from_pretrained(
+            base_model_path,
+            num_labels=len(EMOTION_LIST)
+        )
+        model = PeftModel.from_pretrained(base_model, model_path)
+
+    elif model_type == 'lora_r32':
+        # LoRA r=32 ablation
+        base_model = RobertaForSequenceClassification.from_pretrained(
+            base_model_path,
+            num_labels=len(EMOTION_LIST)
+        )
+        model = PeftModel.from_pretrained(base_model, model_path)
+
+    elif model_type == 'context':
+        # 上下文窗口基线（LoRA + context format）
+        base_model = RobertaForSequenceClassification.from_pretrained(
+            base_model_path,
+            num_labels=len(EMOTION_LIST)
+        )
+        model = PeftModel.from_pretrained(base_model, model_path)
+
     else:
         raise ValueError(f"未知的模型类型: {model_type}")
 
@@ -139,9 +186,23 @@ def format_conversation(conversation):
     return text.strip()
 
 
+def format_conversation_context(conversation):
+    """上下文窗口格式化（Speaker1/Speaker2 标记）"""
+    text = ""
+    for turn in conversation:
+        role = turn["role"]
+        content = turn["content"]
+        speaker = "Speaker1" if role == "user" else "Speaker2"
+        text += f"{speaker}: {content} "
+    return text.strip()
+
+
 def predict_emotion(model, tokenizer, conversation, device, max_length=256, model_type='cls'):
     """预测情绪"""
-    text = format_conversation(conversation)
+    if model_type == 'context':
+        text = format_conversation_context(conversation)
+    else:
+        text = format_conversation(conversation)
 
     inputs = tokenizer(
         text,
@@ -157,7 +218,7 @@ def predict_emotion(model, tokenizer, conversation, device, max_length=256, mode
         outputs = model(input_ids=input_ids, attention_mask=attention_mask)
 
         # 根据模型类型获取logits
-        if model_type in ['cls', 'simple']:
+        if model_type in ['cls', 'simple', 'ia3', 'prefix', 'lora_r16', 'lora_r32', 'context']:
             logits = outputs.logits
         else:  # cls_multitask
             logits = outputs
@@ -387,6 +448,30 @@ def main():
     parser.add_argument('--eval_simple', action='store_true', default=True,
                         help='评估简单模型')
 
+    # 基线模型
+    parser.add_argument('--eval_ia3', action='store_true', default=False,
+                        help='评估 IA3 基线')
+    parser.add_argument('--ia3_model', type=str, default='../output/ia3_best',
+                        help='IA3 模型路径')
+    parser.add_argument('--eval_prefix', action='store_true', default=False,
+                        help='评估 Prefix Tuning 基线')
+    parser.add_argument('--prefix_model', type=str, default='../output/prefix_best',
+                        help='Prefix Tuning 模型路径')
+    parser.add_argument('--eval_lora_r16', action='store_true', default=False,
+                        help='评估 LoRA r=16 基线')
+    parser.add_argument('--lora_r16_model', type=str, default='../output/cls_r16_best',
+                        help='LoRA r=16 模型路径')
+    parser.add_argument('--eval_lora_r32', action='store_true', default=False,
+                        help='评估 LoRA r=32 基线')
+    parser.add_argument('--lora_r32_model', type=str, default='../output/cls_r32_best',
+                        help='LoRA r=32 模型路径')
+    parser.add_argument('--eval_context', action='store_true', default=False,
+                        help='评估上下文窗口基线')
+    parser.add_argument('--context_model', type=str, default='../output/context_best',
+                        help='上下文窗口模型路径')
+    parser.add_argument('--eval_all_baselines', action='store_true', default=False,
+                        help='评估所有基线模型')
+
     # 兼容旧参数
     parser.add_argument('--model_path', type=str, default=None,
                         help='（旧参数）模型路径')
@@ -454,6 +539,66 @@ def main():
                 torch.cuda.empty_cache()
         except Exception as e:
             print(f"评估simple模型失败: {e}")
+
+    # 4. 评估 IA3 基线
+    if (args.eval_ia3 or args.eval_all_baselines) and os.path.exists(args.ia3_model):
+        try:
+            model = load_model(args.ia3_model, args.base_model_path, device, model_type='ia3')
+            results = evaluate_single_model(model, tokenizer, test_data, device, 'IA3', 'ia3')
+            results_list.append(results)
+            del model
+            if device.type == 'cuda':
+                torch.cuda.empty_cache()
+        except Exception as e:
+            print(f"评估IA3模型失败: {e}")
+
+    # 5. 评估 Prefix Tuning 基线
+    if (args.eval_prefix or args.eval_all_baselines) and os.path.exists(args.prefix_model):
+        try:
+            model = load_model(args.prefix_model, args.base_model_path, device, model_type='prefix')
+            results = evaluate_single_model(model, tokenizer, test_data, device, 'PrefixTuning', 'prefix')
+            results_list.append(results)
+            del model
+            if device.type == 'cuda':
+                torch.cuda.empty_cache()
+        except Exception as e:
+            print(f"评估PrefixTuning模型失败: {e}")
+
+    # 6. 评估 LoRA r=16 基线
+    if (args.eval_lora_r16 or args.eval_all_baselines) and os.path.exists(args.lora_r16_model):
+        try:
+            model = load_model(args.lora_r16_model, args.base_model_path, device, model_type='lora_r16')
+            results = evaluate_single_model(model, tokenizer, test_data, device, 'LoRA-r16', 'lora_r16')
+            results_list.append(results)
+            del model
+            if device.type == 'cuda':
+                torch.cuda.empty_cache()
+        except Exception as e:
+            print(f"评估LoRA-r16模型失败: {e}")
+
+    # 7. 评估 LoRA r=32 基线
+    if (args.eval_lora_r32 or args.eval_all_baselines) and os.path.exists(args.lora_r32_model):
+        try:
+            model = load_model(args.lora_r32_model, args.base_model_path, device, model_type='lora_r32')
+            results = evaluate_single_model(model, tokenizer, test_data, device, 'LoRA-r32', 'lora_r32')
+            results_list.append(results)
+            del model
+            if device.type == 'cuda':
+                torch.cuda.empty_cache()
+        except Exception as e:
+            print(f"评估LoRA-r32模型失败: {e}")
+
+    # 8. 评估上下文窗口基线
+    if (args.eval_context or args.eval_all_baselines) and os.path.exists(args.context_model):
+        try:
+            model = load_model(args.context_model, args.base_model_path, device, model_type='context')
+            results = evaluate_single_model(model, tokenizer, test_data, device, 'Context-LoRA', 'context')
+            results_list.append(results)
+            del model
+            if device.type == 'cuda':
+                torch.cuda.empty_cache()
+        except Exception as e:
+            print(f"评估Context模型失败: {e}")
 
     if not results_list:
         print("\n没有成功评估任何模型！")
