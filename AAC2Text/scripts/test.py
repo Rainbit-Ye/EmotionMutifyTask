@@ -18,7 +18,9 @@ import json
 import torch
 import random
 import argparse
+import time
 import nltk
+from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import yaml
@@ -148,49 +150,15 @@ def test_model(config: dict, num_samples: int = None):
     model.eval()
     print("模型加载完成\n")
 
-    # 测试样例
-    test_cases = test_config.get("test_samples", [
-        ["I", "want_to", "water"],
-        ["I", "am", "happy"],
-        ["I", "eat_to", "apple"],
-    ])
-
-    print("-"*60)
-    print("推理测试:")
-    print("-"*60)
-
-    for labels in test_cases:
-        prompt = f"Translate these AAC symbols into ONE simple English sentence: {' '.join(labels)}"
-        messages = [{"role": "user", "content": prompt}]
-        input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-        inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
-
-        with torch.no_grad():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=50,
-                do_sample=False,
-                stop_strings=["<|im_end|>", "\n"],
-                tokenizer=tokenizer,
-            )
-
-        response = tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
-        response = response.strip().split('\n')[0].strip()
-        dot_pos = response.find('.')
-        if dot_pos != -1 and dot_pos < len(response) - 1:
-            response = response[:dot_pos + 1]
-        print(f"Labels: {labels}")
-        print(f"Output: {response}")
-        print()
+    # 设置 padding token 以支持 batch 推理（必须左 padding）
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.pad_token_id = tokenizer.eos_token_id
+    tokenizer.padding_side = "left"
 
     # 加载验证集计算指标
     val_path = config["data"].get("val_data")
     if val_path and os.path.exists(val_path):
-        print("-"*60)
-        print(f"计算评估指标 ({len(test_data)} 条)...")
-        print("-"*60)
-
         with open(val_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -218,44 +186,64 @@ def test_model(config: dict, num_samples: int = None):
         if num_samples and num_samples < len(test_data):
             random.seed(42)
             test_data = random.sample(test_data, num_samples)
-        print(f"计算评估指标 ({len(test_data)} 条)...")
 
-        preds = []
-        refs = []
+        batch_size = config.get("test", {}).get("batch_size", 16)
+        print("-"*60)
+        print(f"计算评估指标 ({len(test_data)} 条), batch_size={batch_size}...")
 
-        print(f"\n开始推理 {len(test_data)} 条数据...\n")
-
-        for i, item in enumerate(test_data):
+        # 预处理所有 prompt
+        all_prompts = []
+        for item in test_data:
             labels = item["labels"]
-            sentence = item["sentence"].strip('"').strip("'").strip()
-
             prompt = f"Translate these AAC symbols into ONE simple English sentence: {' '.join(labels)}"
             messages = [{"role": "user", "content": prompt}]
             input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+            all_prompts.append(input_text)
 
-            inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
+        preds = []
+        refs = []
+        start_time = time.time()
+
+        print(f"\n开始 batch 推理 {len(test_data)} 条数据...\n")
+
+        for i in tqdm(range(0, len(all_prompts), batch_size), desc="Batch推理"):
+            batch_prompts = all_prompts[i:i+batch_size]
+            batch_items = test_data[i:i+batch_size]
+
+            # tokenize batch，自动 padding
+            inputs = tokenizer(
+                batch_prompts,
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=256,
+            ).to(model.device)
 
             with torch.no_grad():
                 outputs = model.generate(
                     **inputs,
                     max_new_tokens=30,
                     do_sample=False,
+                    pad_token_id=tokenizer.eos_token_id,
                     stop_strings=["<|im_end|>", "\n"],
                     tokenizer=tokenizer,
                 )
 
-            pred = tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
-            pred = pred.strip().split('\n')[0].strip()
-            dot_pos = pred.find('.')
-            if dot_pos != -1 and dot_pos < len(pred) - 1:
-                pred = pred[:dot_pos + 1]
+            # 解码每条结果，跳过 prompt 部分
+            for j, (output, item) in enumerate(zip(outputs, batch_items)):
+                input_len = inputs.input_ids.shape[1]
+                pred = tokenizer.decode(output[input_len:], skip_special_tokens=True)
+                pred = pred.strip().split('\n')[0].strip()
+                dot_pos = pred.find('.')
+                if dot_pos != -1 and dot_pos < len(pred) - 1:
+                    pred = pred[:dot_pos + 1]
 
-            preds.append(pred)
-            refs.append([sentence])
+                preds.append(pred)
+                refs.append([item["sentence"].strip('"').strip("'").strip()])
 
-            # 每 10 条打印进度
-            if (i + 1) % 10 == 0:
-                print(f"已推理: {i+1}/{len(test_data)} 条")
+        elapsed = time.time() - start_time
+        speed = len(test_data) / elapsed
+        print(f"\n推理完成，耗时 {elapsed:.1f}s, 速度 {speed:.1f} 条/秒")
 
         # 计算所有指标
         print(f"\n推理完成，开始计算评估指标...\n")
@@ -278,7 +266,7 @@ def test_model(config: dict, num_samples: int = None):
 
         # 显示一些预测示例
         print("\n预测示例:")
-        for i in range(min(5, len(preds))):
+        for i in range(min(10, len(preds))):
             print(f"\n标签: {test_data[i]['labels']}")
             print(f"参考: {refs[i][0]}")
             print(f"预测: {preds[i]}")
@@ -292,11 +280,16 @@ def main():
     parser = argparse.ArgumentParser(description='AAC 模型测试')
     parser.add_argument('--config', type=str, default=None, help='配置文件路径')
     parser.add_argument('--num', type=int, default=None, help='测试样本数量，默认全部')
+    parser.add_argument('--batch', type=int, default=16, help='batch推理大小，默认16')
     args = parser.parse_args()
 
     # 加载配置
     config_path = args.config or "/home/user1/liuduanye/EmotionClassify/AAC2Text/config.yaml"
     config = load_config(config_path)
+
+    # 命令行 batch 参数优先
+    if args.batch:
+        config.setdefault("test", {})["batch_size"] = args.batch
 
     test_model(config, args.num)
 

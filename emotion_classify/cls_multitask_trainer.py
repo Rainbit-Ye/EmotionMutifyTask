@@ -16,6 +16,7 @@ L = L_main + α * L_turn + β * L_consistency
 import json
 import os
 import math
+import copy
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -48,6 +49,18 @@ CONFUSING_PAIRS = [
     ("sadness", "surprise"),
     ("happiness", "surprise"),
 ]
+
+# 情绪效价值 (Russell's Circumplex Model)
+# 用于 valence 辅助回归任务，参考 CMHL (Elgabry & Hamdi, 2026)
+EMOTION_VALENCE = {
+    "neutral": 0.0,
+    "anger": -0.8,
+    "disgust": -0.6,
+    "fear": -0.7,
+    "happiness": 0.9,
+    "sadness": -0.8,
+    "surprise": 0.2,
+}
 
 
 class MultiTaskEmotionDataset(Dataset):
@@ -97,6 +110,9 @@ class MultiTaskEmotionDataset(Dataset):
         turn_labels = [LABEL2ID[e] for e in turn_emotions]
         next_label = LABEL2ID[next_emotion]
 
+        # 效价标签 (valence regression target)
+        main_valence = EMOTION_VALENCE[main_emotion]
+
         return {
             'input_ids': input_ids,
             'attention_mask': attention_mask,
@@ -104,6 +120,7 @@ class MultiTaskEmotionDataset(Dataset):
             'turn_positions': turn_positions,  # 每轮最后一个token的位置
             'turn_labels': turn_labels,  # 每轮的情绪标签
             'next_label': next_label,  # 下一轮情绪标签
+            'main_valence': main_valence,  # 效价回归标签
             'num_turns': len(turn_labels),
             'main_emotion': main_emotion
         }
@@ -149,6 +166,7 @@ def collate_fn(batch):
     attention_mask = torch.stack([item['attention_mask'] for item in batch])
     main_labels = torch.tensor([item['main_label'] for item in batch])
     next_labels = torch.tensor([item['next_label'] for item in batch])
+    main_valences = torch.tensor([item['main_valence'] for item in batch], dtype=torch.float)
     num_turns = [item['num_turns'] for item in batch]
     max_turns = max(num_turns)
 
@@ -174,6 +192,7 @@ def collate_fn(batch):
         'attention_mask': attention_mask,
         'main_labels': main_labels,
         'next_labels': next_labels,
+        'main_valences': main_valences,
         'turn_positions': turn_positions,
         'turn_labels': turn_labels,
         'turn_mask': turn_mask,
@@ -221,6 +240,16 @@ class MultiTaskEmotionClassifier(nn.Module):
             nn.Linear(hidden_size // 2, num_labels)
         )
 
+        # 新增：效价回归头 (valence regression, 参考 CMHL)
+        # 从 [CLS] hidden state 预测情绪效价值 [-1, 1]
+        self.valence_regressor = nn.Sequential(
+            nn.Dropout(0.1),
+            nn.Linear(hidden_size, hidden_size // 4),
+            nn.ReLU(),
+            nn.Linear(hidden_size // 4, 1),
+            nn.Tanh()  # 输出范围 [-1, 1]
+        )
+
     def forward(self, input_ids, attention_mask, turn_positions=None, turn_mask=None, last_turn_idx=None):
         """
         前向传播
@@ -229,6 +258,7 @@ class MultiTaskEmotionClassifier(nn.Module):
             main_logits: 整体情绪的logits [batch_size, num_labels]
             turn_logits: 每轮情绪的logits [batch_size, max_turns, num_labels]
             next_logits: 下一轮情绪的logits [batch_size, num_labels]
+            valence_pred: 效价预测值 [batch_size, 1]
             main_hidden: [CLS] hidden state
             turn_hiddens: 每轮的 hidden states
         """
@@ -238,6 +268,9 @@ class MultiTaskEmotionClassifier(nn.Module):
         # 主任务：使用 [CLS] token
         main_hidden = hidden_states[:, 0, :]  # [batch_size, hidden_size]
         main_logits = self.main_classifier(main_hidden)  # [batch_size, num_labels]
+
+        # 效价回归：使用同一个 [CLS] hidden state
+        valence_pred = self.valence_regressor(main_hidden)  # [batch_size, 1]
 
         # 辅助任务：使用每轮最后一个 token
         next_logits = None
@@ -274,7 +307,7 @@ class MultiTaskEmotionClassifier(nn.Module):
             turn_logits = None
             turn_hiddens = None
 
-        return main_logits, turn_logits, next_logits, main_hidden, turn_hiddens
+        return main_logits, turn_logits, next_logits, valence_pred, main_hidden, turn_hiddens
 
 
 class FocalLoss(nn.Module):
@@ -351,6 +384,43 @@ class ContrastiveLoss(nn.Module):
         return torch.tensor(loss, device=logits.device, requires_grad=True)
 
 
+class UncertaintyWeighting(nn.Module):
+    """
+    自适应损失权重 (Kendall & Gal, CVPR 2018)
+
+    用可学习的同方差不确定性参数自动调节各任务损失权重:
+        L_total = Σ (1 / (2 * σ_i²)) * L_i + log(σ_i)
+
+    σ_i 代表任务 i 的噪声水平:
+    - 训练初期 σ_i 大 → 损失权重小（不确定性高的任务少影响共享参数）
+    - 训练后期 σ_i 收敛 → 各任务自然平衡
+    - log(σ_i) 是正则项，防止 σ_i → ∞
+    """
+    def __init__(self, num_tasks):
+        super().__init__()
+        # 初始化为0，即 σ_i = exp(0) = 1，初始各任务权重相等
+        self.log_vars = nn.Parameter(torch.zeros(num_tasks))
+
+    def forward(self, losses):
+        """
+        Args:
+            losses: 各任务的损失值列表 [L_main, L_turn, L_consistency, L_contrastive, L_next, L_valence]
+        Returns:
+            weighted_loss: 加权后的总损失
+        """
+        weighted_loss = 0.0
+        for i, loss in enumerate(losses):
+            precision = torch.exp(-2 * self.log_vars[i])  # 1 / (2 * σ_i²) 的简化
+            weighted_loss += 0.5 * precision * loss + self.log_vars[i]
+        return weighted_loss
+
+    def get_weights(self):
+        """返回当前各任务的有效权重（用于日志）"""
+        with torch.no_grad():
+            weights = torch.exp(-2 * self.log_vars)
+        return weights.detach().cpu().tolist()
+
+
 class MultiTaskTrainer:
     """多任务训练器"""
     def __init__(self, config):
@@ -389,6 +459,21 @@ class MultiTaskTrainer:
         trainable_params = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
         total_params = sum(p.numel() for p in self.model.parameters())
         print(f"可训练参数: {trainable_params:,} / {total_params:,} ({100*trainable_params/total_params:.2f}%)")
+
+        # PCGrad 开关（从配置文件读取，默认关闭）
+        self.use_pcgrad = config.get('cls', {}).get('use_pcgrad', False)
+
+        # 自适应损失权重开关（从配置文件读取，默认关闭）
+        self.use_uncertainty_weighting = config.get('cls', {}).get('use_uncertainty_weighting', False)
+        if self.use_uncertainty_weighting:
+            # 6个任务: main, turn, consistency, contrastive, next, valence
+            self.uncertainty_weighting = UncertaintyWeighting(num_tasks=6).to(self.device)
+            print("已启用自适应损失权重 (Uncertainty Weighting, Kendall & Gal 2018)")
+        else:
+            self.uncertainty_weighting = None
+
+        if self.use_pcgrad:
+            print("已启用 PCGrad 梯度手术 (Yu et al., NeurIPS 2020)")
 
     def _load_class_weights(self):
         """加载类别权重"""
@@ -502,6 +587,47 @@ class MultiTaskTrainer:
 
         return sample_weights
 
+    def _pcgrad_project(self, task_gradients):
+        """
+        PCGrad 梯度投影 (Yu et al., NeurIPS 2020)
+
+        当两个任务的梯度方向冲突（余弦相似度 < 0）时，
+        将一个梯度投影到另一个梯度的法平面上，消除冲突分量。
+
+        Args:
+            task_gradients: 各任务的梯度列表，每个元素是与模型参数同形状的梯度张量列表
+        Returns:
+            projected_gradients: 投影后的梯度列表
+        """
+        num_tasks = len(task_gradients)
+        projected = [list(g) for g in task_gradients]  # 深拷贝
+
+        for i in range(num_tasks):
+            for j in range(num_tasks):
+                if i == j:
+                    continue
+                # 计算两个任务梯度的点积（余弦相似度的分子）
+                dot_ij = sum(
+                    torch.dot(gi.flatten(), gj.flatten())
+                    for gi, gj in zip(projected[i], task_gradients[j])
+                    if gi is not None and gj is not None
+                )
+                # 计算任务j梯度的平方范数
+                norm_j_sq = sum(
+                    torch.dot(gj.flatten(), gj.flatten())
+                    for gj in task_gradients[j]
+                    if gj is not None
+                )
+
+                # 如果梯度冲突（点积 < 0），将任务i的梯度投影到任务j的法平面
+                if dot_ij < 0 and norm_j_sq > 1e-8:
+                    coeff = dot_ij / (norm_j_sq + 1e-8)
+                    for k in range(len(projected[i])):
+                        if projected[i][k] is not None and task_gradients[j][k] is not None:
+                            projected[i][k] = projected[i][k] - coeff * task_gradients[j][k]
+
+        return projected
+
     def train(self):
         """执行多任务训练"""
         cls_config = self.config['cls']
@@ -535,12 +661,19 @@ class MultiTaskTrainer:
                 collate_fn=collate_fn
             )
 
-        # 优化器
-        optimizer = torch.optim.AdamW(
-            self.model.parameters(),
-            lr=cls_config['learning_rate'],
-            weight_decay=cls_config.get('weight_decay', 0.01)
-        )
+        # 自适应损失权重的参数也需要传给优化器
+        if self.use_uncertainty_weighting and self.uncertainty_weighting is not None:
+            optimizer = torch.optim.AdamW(
+                list(self.model.parameters()) + list(self.uncertainty_weighting.parameters()),
+                lr=cls_config['learning_rate'],
+                weight_decay=cls_config.get('weight_decay', 0.01)
+            )
+        else:
+            optimizer = torch.optim.AdamW(
+                self.model.parameters(),
+                lr=cls_config['learning_rate'],
+                weight_decay=cls_config.get('weight_decay', 0.01)
+            )
 
         # 学习率调度器
         total_steps = len(train_dataloader) * cls_config['num_epochs']
@@ -567,9 +700,10 @@ class MultiTaskTrainer:
         alpha = loss_weights.get('turn', 0.3)  # 辅助任务权重
         beta = loss_weights.get('consistency', 0.2)   # 一致性损失权重
         gamma = loss_weights.get('contrastive', 0.1)  # 对比学习损失权重
-        delta = loss_weights.get('next', 0.2)  # 新增：下一轮预测损失权重
+        delta = loss_weights.get('next', 0.2)  # 下一轮预测损失权重
+        epsilon = loss_weights.get('valence', 0.15)  # 效价回归损失权重
 
-        print(f"损失权重: turn={alpha}, consistency={beta}, contrastive={gamma}, next={delta}")
+        print(f"损失权重: turn={alpha}, consistency={beta}, contrastive={gamma}, next={delta}, valence={epsilon}")
 
         print(f"\n训练集大小: {len(train_dataset)}")
         if val_dataloader:
@@ -583,7 +717,8 @@ class MultiTaskTrainer:
             total_loss = 0
             total_main_loss = 0
             total_turn_loss = 0
-            total_next_loss = 0  # 新增
+            total_next_loss = 0
+            total_valence_loss = 0
             total_consistency_loss = 0
             total_contrastive_loss = 0
             total_correct = 0
@@ -597,65 +732,215 @@ class MultiTaskTrainer:
                 input_ids = batch['input_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 main_labels = batch['main_labels'].to(self.device)
-                next_labels = batch['next_labels'].to(self.device)  # 新增
+                next_labels = batch['next_labels'].to(self.device)
+                main_valences = batch['main_valences'].to(self.device)
                 turn_positions = batch['turn_positions'].to(self.device)
                 turn_labels = batch['turn_labels'].to(self.device)
                 turn_mask = batch['turn_mask'].to(self.device)
                 last_turn_idx = batch['last_turn_idx'].to(self.device)  # 新增
 
-                # 前向传播
-                main_logits, turn_logits, next_logits, _, _ = self.model(
-                    input_ids, attention_mask, turn_positions, turn_mask, last_turn_idx
-                )
+                if self.use_pcgrad:
+                    # ===== PCGrad 模式：分别计算各任务梯度并投影 =====
+                    # 前向传播
+                    main_logits, turn_logits, next_logits, valence_pred, _, _ = self.model(
+                        input_ids, attention_mask, turn_positions, turn_mask, last_turn_idx
+                    )
 
-                # 计算动态样本权重（基于相似度）
-                sample_weights = self.compute_dynamic_weights(
-                    main_logits, turn_logits, main_labels, turn_labels, turn_mask
-                )
+                    # 计算动态样本权重
+                    sample_weights = self.compute_dynamic_weights(
+                        main_logits, turn_logits, main_labels, turn_labels, turn_mask
+                    )
+                    hard_samples += (sample_weights > 1.5).sum().item()
 
-                # 统计困难样本
-                hard_samples += (sample_weights > 1.5).sum().item()
+                    # 计算各任务损失
+                    main_loss_per_sample = main_criterion(main_logits, main_labels)
+                    main_loss = (main_loss_per_sample * sample_weights).mean()
 
-                # 主任务损失（Focal Loss + 动态权重）
-                main_loss_per_sample = main_criterion(main_logits, main_labels)
-                main_loss = (main_loss_per_sample * sample_weights).mean()
+                    turn_loss_per_sample = turn_criterion(
+                        turn_logits.view(-1, len(EMOTION_LIST)),
+                        turn_labels.view(-1)
+                    ).view(main_labels.size(0), -1)
+                    turn_loss = (turn_loss_per_sample * turn_mask).sum() / (turn_mask.sum() + 1e-8)
 
-                # 辅助任务损失（每轮情绪，Focal Loss）
-                turn_loss_per_sample = turn_criterion(
-                    turn_logits.view(-1, len(EMOTION_LIST)),
-                    turn_labels.view(-1)
-                ).view(main_labels.size(0), -1)
-                turn_loss = (turn_loss_per_sample * turn_mask).sum() / (turn_mask.sum() + 1e-8)
+                    consistency_loss = self.compute_consistency_loss(main_logits, turn_logits, turn_mask)
+                    consistency_loss = torch.tensor(consistency_loss, device=self.device)
 
-                # 一致性损失
-                consistency_loss = self.compute_consistency_loss(
-                    main_logits, turn_logits, turn_mask
-                )
-                consistency_loss = torch.tensor(consistency_loss, device=self.device)
+                    contrastive_loss = contrastive_criterion(main_logits, main_labels)
 
-                # 对比学习损失（区分相似情绪）
-                contrastive_loss = contrastive_criterion(main_logits, main_labels)
+                    next_loss = next_criterion(next_logits, next_labels).mean()
 
-                # 新增：下一轮情绪预测损失
-                next_loss = next_criterion(next_logits, next_labels).mean()
+                    # 效价回归损失 (MSE)
+                    valence_loss = F.mse_loss(valence_pred.squeeze(), main_valences)
 
-                # 总损失
-                loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss + delta * next_loss
+                    # 记录各损失用于统计
+                    loss_main_val = main_loss.item()
+                    loss_turn_val = alpha * turn_loss.item()
+                    loss_cons_val = beta * consistency_loss.item()
+                    loss_cont_val = gamma * contrastive_loss.item()
+                    loss_next_val = delta * next_loss.item()
+                    loss_val_val = epsilon * valence_loss.item()
 
-                # 反向传播
-                optimizer.zero_grad()
-                loss.backward()
-                torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-                optimizer.step()
-                scheduler.step()
+                    # 分别计算每个任务的梯度
+                    task_losses = [main_loss, alpha * turn_loss, beta * consistency_loss,
+                                   gamma * contrastive_loss, delta * next_loss,
+                                   epsilon * valence_loss]
+                    task_gradients = []
 
-                # 统计
-                total_loss += loss.item()
-                total_main_loss += main_loss.item()
-                total_turn_loss += turn_loss.item()
-                total_next_loss += next_loss.item()
-                total_consistency_loss += consistency_loss.item()
-                total_contrastive_loss += contrastive_loss.item()
+                    for task_loss in task_losses:
+                        optimizer.zero_grad()
+                        task_loss.backward(retain_graph=True)
+                        # 收集当前梯度
+                        grads = []
+                        for p in self.model.parameters():
+                            if p.grad is not None:
+                                grads.append(p.grad.clone())
+                            else:
+                                grads.append(None)
+                        task_gradients.append(grads)
+
+                    # PCGrad 梯度投影
+                    projected_gradients = self._pcgrad_project(task_gradients)
+
+                    # 将投影后的梯度赋给模型参数并更新
+                    optimizer.zero_grad()
+                    for i, p in enumerate(self.model.parameters()):
+                        if projected_gradients[0][i] is not None:
+                            # 取所有任务投影后梯度的平均
+                            avg_grad = torch.zeros_like(p)
+                            count = 0
+                            for task_grads in projected_gradients:
+                                if task_grads[i] is not None:
+                                    avg_grad += task_grads[i]
+                                    count += 1
+                            if count > 0:
+                                p.grad = avg_grad / count
+
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    optimizer.step()
+                    scheduler.step()
+
+                    # 统计
+                    loss = sum(task_losses)
+                    total_loss += loss.item()
+                    total_main_loss += loss_main_val
+                    total_turn_loss += loss_turn_val
+                    total_next_loss += loss_next_val
+                    total_valence_loss += loss_val_val
+                    total_consistency_loss += loss_cons_val
+                    total_contrastive_loss += loss_cont_val
+
+                elif self.use_uncertainty_weighting:
+                    # ===== 自适应损失权重模式 (Uncertainty Weighting) =====
+                    # 前向传播
+                    main_logits, turn_logits, next_logits, valence_pred, _, _ = self.model(
+                        input_ids, attention_mask, turn_positions, turn_mask, last_turn_idx
+                    )
+
+                    # 计算动态样本权重
+                    sample_weights = self.compute_dynamic_weights(
+                        main_logits, turn_logits, main_labels, turn_labels, turn_mask
+                    )
+                    hard_samples += (sample_weights > 1.5).sum().item()
+
+                    # 计算各任务损失
+                    main_loss_per_sample = main_criterion(main_logits, main_labels)
+                    main_loss = (main_loss_per_sample * sample_weights).mean()
+
+                    turn_loss_per_sample = turn_criterion(
+                        turn_logits.view(-1, len(EMOTION_LIST)),
+                        turn_labels.view(-1)
+                    ).view(main_labels.size(0), -1)
+                    turn_loss = (turn_loss_per_sample * turn_mask).sum() / (turn_mask.sum() + 1e-8)
+
+                    consistency_loss = self.compute_consistency_loss(main_logits, turn_logits, turn_mask)
+                    consistency_loss = torch.tensor(consistency_loss, device=self.device)
+
+                    contrastive_loss = contrastive_criterion(main_logits, main_labels)
+                    next_loss = next_criterion(next_logits, next_labels).mean()
+
+                    # 效价回归损失 (MSE)
+                    valence_loss = F.mse_loss(valence_pred.squeeze(), main_valences)
+
+                    # 使用 Uncertainty Weighting 计算加权总损失
+                    loss = self.uncertainty_weighting(
+                        [main_loss, turn_loss, consistency_loss, contrastive_loss, next_loss, valence_loss]
+                    )
+
+                    # 反向传播
+                    optimizer.zero_grad()
+                    loss.backward()
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    optimizer.step()
+                    scheduler.step()
+
+                    # 统计
+                    total_loss += loss.item()
+                    total_main_loss += main_loss.item()
+                    total_turn_loss += turn_loss.item()
+                    total_next_loss += next_loss.item()
+                    total_valence_loss += valence_loss.item()
+                    total_consistency_loss += consistency_loss.item()
+                    total_contrastive_loss += contrastive_loss.item()
+
+                else:
+                    # ===== 原始模式（固定权重） =====
+                    # 前向传播
+                    main_logits, turn_logits, next_logits, valence_pred, _, _ = self.model(
+                        input_ids, attention_mask, turn_positions, turn_mask, last_turn_idx
+                    )
+
+                    # 计算动态样本权重（基于相似度）
+                    sample_weights = self.compute_dynamic_weights(
+                        main_logits, turn_logits, main_labels, turn_labels, turn_mask
+                    )
+
+                    # 统计困难样本
+                    hard_samples += (sample_weights > 1.5).sum().item()
+
+                    # 主任务损失（Focal Loss + 动态权重）
+                    main_loss_per_sample = main_criterion(main_logits, main_labels)
+                    main_loss = (main_loss_per_sample * sample_weights).mean()
+
+                    # 辅助任务损失（每轮情绪，Focal Loss）
+                    turn_loss_per_sample = turn_criterion(
+                        turn_logits.view(-1, len(EMOTION_LIST)),
+                        turn_labels.view(-1)
+                    ).view(main_labels.size(0), -1)
+                    turn_loss = (turn_loss_per_sample * turn_mask).sum() / (turn_mask.sum() + 1e-8)
+
+                    # 一致性损失
+                    consistency_loss = self.compute_consistency_loss(
+                        main_logits, turn_logits, turn_mask
+                    )
+                    consistency_loss = torch.tensor(consistency_loss, device=self.device)
+
+                    # 对比学习损失（区分相似情绪）
+                    contrastive_loss = contrastive_criterion(main_logits, main_labels)
+
+                    # 新增：下一轮情绪预测损失
+                    next_loss = next_criterion(next_logits, next_labels).mean()
+
+                    # 效价回归损失 (MSE)
+                    valence_loss = F.mse_loss(valence_pred.squeeze(), main_valences)
+
+                    # 总损失
+                    loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss + delta * next_loss + epsilon * valence_loss
+
+                    # 反向传播
+                    optimizer.zero_grad()
+                    loss.backward()
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    optimizer.step()
+                    scheduler.step()
+
+                    # 统计
+                    total_loss += loss.item()
+                    total_main_loss += main_loss.item()
+                    total_turn_loss += turn_loss.item()
+                    total_next_loss += next_loss.item()
+                    total_valence_loss += valence_loss.item()
+                    total_consistency_loss += consistency_loss.item()
+                    total_contrastive_loss += contrastive_loss.item()
 
                 preds = torch.argmax(main_logits, dim=1)
                 total_correct += (preds == main_labels).sum().item()
@@ -681,15 +966,19 @@ class MultiTaskTrainer:
             if val_dataloader:
                 val_acc, val_next_acc, val_loss = self._validate(
                     val_dataloader, main_criterion, turn_criterion, next_criterion,
-                    contrastive_criterion, alpha, beta, gamma, delta
+                    contrastive_criterion, alpha, beta, gamma, delta, epsilon
                 )
-                print(f"Epoch {epoch + 1} 完成 - "
-                      f"训练损失: {total_loss / len(train_dataloader):.4f}, "
-                      f"训练准确率: {accuracy:.4f}, "
-                      f"下一轮预测准确率: {next_accuracy:.4f}, "
-                      f"验证准确率: {val_acc:.4f}, "
-                      f"验证下一轮准确率: {val_next_acc:.4f}, "
-                      f"困难样本: {hard_samples}")
+                log_msg = (f"Epoch {epoch + 1} 完成 - "
+                           f"训练损失: {total_loss / len(train_dataloader):.4f}, "
+                           f"训练准确率: {accuracy:.4f}, "
+                           f"下一轮预测准确率: {next_accuracy:.4f}, "
+                           f"验证准确率: {val_acc:.4f}, "
+                           f"验证下一轮准确率: {val_next_acc:.4f}, "
+                           f"困难样本: {hard_samples}")
+                if self.use_uncertainty_weighting and self.uncertainty_weighting is not None:
+                    weights = self.uncertainty_weighting.get_weights()
+                    log_msg += f", 任务权重: {[f'{w:.3f}' for w in weights]}"
+                print(log_msg)
 
                 if val_acc > best_val_acc:
                     best_val_acc = val_acc
@@ -707,7 +996,7 @@ class MultiTaskTrainer:
 
         return self.model
 
-    def _validate(self, val_dataloader, main_criterion, turn_criterion, next_criterion, contrastive_criterion, alpha, beta, gamma, delta):
+    def _validate(self, val_dataloader, main_criterion, turn_criterion, next_criterion, contrastive_criterion, alpha, beta, gamma, delta, epsilon):
         """验证集评估"""
         self.model.eval()
         total_loss = 0
@@ -721,12 +1010,13 @@ class MultiTaskTrainer:
                 attention_mask = batch['attention_mask'].to(self.device)
                 main_labels = batch['main_labels'].to(self.device)
                 next_labels = batch['next_labels'].to(self.device)
+                main_valences = batch['main_valences'].to(self.device)
                 turn_positions = batch['turn_positions'].to(self.device)
                 turn_labels = batch['turn_labels'].to(self.device)
                 turn_mask = batch['turn_mask'].to(self.device)
                 last_turn_idx = batch['last_turn_idx'].to(self.device)
 
-                main_logits, turn_logits, next_logits, _, _ = self.model(
+                main_logits, turn_logits, next_logits, valence_pred, _, _ = self.model(
                     input_ids, attention_mask, turn_positions, turn_mask, last_turn_idx
                 )
 
@@ -750,7 +1040,10 @@ class MultiTaskTrainer:
                 # 下一轮预测损失
                 next_loss = next_criterion(next_logits, next_labels).mean()
 
-                loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss + delta * next_loss
+                # 效价回归损失
+                valence_loss = F.mse_loss(valence_pred.squeeze(), main_valences)
+
+                loss = main_loss + alpha * turn_loss + beta * consistency_loss + gamma * contrastive_loss + delta * next_loss + epsilon * valence_loss
                 total_loss += loss.item()
 
                 preds = torch.argmax(main_logits, dim=1)

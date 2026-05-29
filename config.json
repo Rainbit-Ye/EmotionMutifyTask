@@ -1,7 +1,7 @@
 {
     "model": {
         "model_path": "/home/user1/liuduanye/EmotionClassify/Model/roberta-base",
-        "output_dir": "/home/user1/liuduanye/EmotionClassify/output"
+        "output_dir": "/home/user1/liuduanye/EmotionClassify/output/mtl_valence_uw"
     },
     "lora": {
         "r": 8,
@@ -41,12 +41,15 @@
         "max_length": 256,
         "weight_decay": 0.01,
         "logging_steps": 10,
+        "use_pcgrad": false,
+        "use_uncertainty_weighting": true,
         "loss_weights": {
             "main": 1.0,
             "turn": 0.3,
             "consistency": 0.2,
             "contrastive": 0.1,
-            "next": 0.2
+            "next": 0.2,
+            "valence": 0.15
         }
     },
     "data": {

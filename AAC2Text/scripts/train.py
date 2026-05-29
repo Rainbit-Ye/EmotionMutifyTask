@@ -243,7 +243,7 @@ class CustomTrainer(Trainer):
         return (loss, outputs) if return_outputs else loss
 
 
-def train(config: dict):
+def train(config: dict, resume_from_checkpoint: str = None):
     """训练函数 — DeepSpeed ZeRO-2 多卡"""
 
     data_config = config["data"]
@@ -331,8 +331,10 @@ def train(config: dict):
     print("\n" + "=" * 60)
     print(f"开始训练 — DeepSpeed ZeRO-2, {num_gpus} GPU(s)")
     print(f"有效 batch size: {training_args.per_device_train_batch_size * num_gpus * training_args.gradient_accumulation_steps}")
+    if resume_from_checkpoint:
+        print(f"恢复训练: {resume_from_checkpoint}")
     print("=" * 60)
-    trainer.train()
+    trainer.train(resume_from_checkpoint=resume_from_checkpoint)
 
     # 保存最终模型
     output_dir = model_config["output_dir"]
@@ -495,6 +497,7 @@ def main():
     parser.add_argument('--epochs', type=int, default=None, help='训练轮数')
     parser.add_argument('--batch', type=int, default=None, help='Batch size')
     parser.add_argument('--lr', type=float, default=None, help='学习率')
+    parser.add_argument('--resume', type=str, default=None, help='从checkpoint恢复训练，指定checkpoint路径或"auto"自动查找最新')
     parser.add_argument('--local_rank', type=int, default=-1, help='DeepSpeed local rank')
     parser.add_argument('--local-rank', type=int, default=-1, help='DeepSpeed local rank (alias)')
     args = parser.parse_args()
@@ -523,7 +526,25 @@ def main():
     if args.test:
         test_model(config)
     else:
-        train(config)
+        resume_ckpt = None
+        if args.resume:
+            if args.resume == "auto":
+                output_dir = config["model"]["output_dir"]
+                # 查找output_dir下最新的checkpoint
+                ckpt_dirs = sorted(
+                    [d for d in os.listdir(output_dir) if d.startswith("checkpoint-")],
+                    key=lambda x: int(x.split("-")[-1])
+                )
+                if ckpt_dirs:
+                    resume_ckpt = os.path.join(output_dir, ckpt_dirs[-1])
+                    print(f"自动找到最新checkpoint: {resume_ckpt}")
+                else:
+                    print("未找到可恢复的checkpoint，从头开始训练")
+            else:
+                resume_ckpt = args.resume
+                print(f"从checkpoint恢复训练: {resume_ckpt}")
+
+        train(config, resume_from_checkpoint=resume_ckpt)
         # DeepSpeed 多卡训练后显存被占，测试需单独运行:
         #   python scripts/train.py --test
         print("\n训练后测试请单独运行: python scripts/train.py --test")
