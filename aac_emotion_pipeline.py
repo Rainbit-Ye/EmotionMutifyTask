@@ -701,6 +701,61 @@ class EmotionAnalyzer:
         self.history.clear()
 
 
+# ==================== 增量预测状态管理 ====================
+
+class IncrementalState:
+    """增量预测模式的状态管理器"""
+    def __init__(self, max_seq_len=50):
+        self.current_sequence = []   # 当前轮次的icon序列
+        self.current_cs_roles = []   # 当前轮次的CS角色
+        self.turn_history = []       # 已提交的轮次历史
+        self.max_seq_len = max_seq_len
+
+    def add_icon(self, icon_id: str, cs_role: str):
+        """添加一个icon到当前序列"""
+        self.current_sequence.append(icon_id)
+        self.current_cs_roles.append(cs_role)
+        # 滑动窗口
+        if len(self.current_sequence) > self.max_seq_len:
+            self.current_sequence = self.current_sequence[-self.max_seq_len:]
+            self.current_cs_roles = self.current_cs_roles[-self.max_seq_len:]
+
+    def commit_turn(self, translation: str, emotion: Dict):
+        """提交当前轮次"""
+        self.turn_history.append({
+            'sequence': self.current_sequence.copy(),
+            'cs_roles': self.current_cs_roles.copy(),
+            'translation': translation,
+            'emotion': emotion,
+        })
+        self.current_sequence = []
+        self.current_cs_roles = []
+
+    def undo(self) -> bool:
+        """撤销上一个icon"""
+        if self.current_sequence:
+            self.current_sequence.pop()
+            self.current_cs_roles.pop()
+            return True
+        return False
+
+    def reset(self):
+        """重置当前序列"""
+        self.current_sequence = []
+        self.current_cs_roles = []
+
+    def get_context_for_sasrec(self) -> Tuple[List[str], List[str]]:
+        """获取SASRec输入: 最近3轮 + 当前序列"""
+        context_icons = []
+        context_cs = []
+        for turn in self.turn_history[-3:]:
+            context_icons.extend(turn['sequence'])
+            context_cs.extend(turn['cs_roles'])
+        context_icons.extend(self.current_sequence)
+        context_cs.extend(self.current_cs_roles)
+        return context_icons[-self.max_seq_len:], context_cs[-self.max_seq_len:]
+
+
 # ==================== 完整Pipeline ====================
 
 class AACEmotionPipeline:
@@ -713,11 +768,20 @@ class AACEmotionPipeline:
                  emotion_base_model_path: str,
                  ontology_path: str = None,
                  embedding_model: str = './Model/all-MiniLM-L6-v2',
-                 device: str = 'cuda'):
+                 device: str = 'cuda',
+                 mode: str = 'batch'):
+        """初始化Pipeline
+
+        Args:
+            mode: 'batch' (整段输入后预测) 或 'incremental' (逐icon即时预测)
+        """
 
         print("=" * 60)
-        print("Initializing AAC Emotion Pipeline")
+        print(f"Initializing AAC Emotion Pipeline (mode={mode})")
         print("=" * 60)
+
+        self.mode = mode
+        self.device = device
 
         # 加载翻译器
         self.translator = AACTranslator(aac_model_path, aac_base_model_path, device)
@@ -733,8 +797,84 @@ class AACEmotionPipeline:
         # 对话历史
         self.conversation_history = []
 
+        # 增量模式: 加载SASRec和融合预测器
+        self.incremental_state = None
+        self.fused_predictor = None
+
+        if mode == 'incremental':
+            self._init_incremental_mode(ontology_path, device)
+
         print("\nPipeline initialized successfully!")
         print("=" * 60)
+
+    def _init_incremental_mode(self, ontology_path: str, device: str):
+        """初始化增量预测模式的SASRec模型"""
+        from sequence_model.sasrec import SASRec, CS_ROLE_TO_ID, build_item_vocabulary
+        from sequence_model.fusion import FusedIconPredictor
+
+        # 加载配置
+        config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                config = json.load(f)
+            sasrec_config = config.get('sasrec', {})
+        else:
+            sasrec_config = {}
+
+        # 构建词汇表
+        self.item2idx, self.idx2item = build_item_vocabulary(self.icon_predictor.ontology)
+        num_items = len(self.item2idx) - 1  # exclude padding
+
+        # 创建SASRec模型
+        model_path = sasrec_config.get('model_path', './output/sasrec/best_model.pt')
+        if os.path.exists(model_path):
+            print(f"[Incremental] Loading trained SASRec from: {model_path}")
+            checkpoint = torch.load(model_path, map_location=device, weights_only=False)
+            saved_args = checkpoint.get('args', {})
+            self.sasrec_model = SASRec(
+                num_items=num_items,
+                num_cs_roles=len(CS_ROLE_TO_ID),
+                hidden_size=saved_args.get('hidden_size', 64),
+                num_heads=saved_args.get('num_heads', 2),
+                num_blocks=saved_args.get('num_blocks', 2),
+                max_seq_len=saved_args.get('max_seq_len', 50),
+                dropout=0.0,  # no dropout at inference
+                cs_role_emb_dim=saved_args.get('cs_role_emb_dim', 16),
+            ).to(device)
+            self.sasrec_model.load_state_dict(checkpoint['model_state_dict'])
+            self.sasrec_model.eval()
+        else:
+            print(f"[Incremental] Warning: SASRec model not found at {model_path}")
+            print(f"[Incremental] Creating untrained SASRec (predictions will be random)")
+            self.sasrec_model = SASRec(
+                num_items=num_items,
+                num_cs_roles=len(CS_ROLE_TO_ID),
+                hidden_size=sasrec_config.get('hidden_size', 64),
+                num_heads=sasrec_config.get('num_heads', 2),
+                num_blocks=sasrec_config.get('num_blocks', 2),
+                max_seq_len=sasrec_config.get('max_seq_len', 50),
+                dropout=0.0,
+                cs_role_emb_dim=sasrec_config.get('cs_role_emb_dim', 16),
+            ).to(device)
+            self.sasrec_model.eval()
+
+        # 创建融合预测器
+        self.fused_predictor = FusedIconPredictor(
+            sasrec_model=self.sasrec_model,
+            icon_predictor=self.icon_predictor,
+            item2idx=self.item2idx,
+            idx2item=self.idx2item,
+            alpha=sasrec_config.get('fusion_alpha', 0.5),
+            lambda_balance=sasrec_config.get('fusion_lambda', 0.3),
+            device=device,
+        )
+
+        # 初始化增量状态
+        self.incremental_state = IncrementalState(
+            max_seq_len=sasrec_config.get('max_seq_len', 50)
+        )
+
+        print("[Incremental] SASRec + FusedIconPredictor loaded")
 
     def process(self, symbols: List[str], role: str = "user") -> Dict:
         """处理AAC符号输入"""
@@ -797,6 +937,177 @@ class AACEmotionPipeline:
             'conversation_turn': len(self.conversation_history)
         }
 
+    # ==================== 增量模式API ====================
+
+    def add_icon(self, icon_id: str) -> Dict:
+        """增量模式: 用户点击一个icon -> 即时预测下一个icon
+
+        Args:
+            icon_id: 用户选择的icon ID
+
+        Returns:
+            预测结果，包含下一个icon推荐
+        """
+        if self.mode != 'incremental':
+            raise RuntimeError("add_icon() only works in incremental mode. Use process() for batch mode.")
+
+        # 1. 更新增量状态
+        cs_role = self.icon_predictor.ontology.get(icon_id, {}).get('cs_role', 'WHAT')
+        self.incremental_state.add_icon(icon_id, cs_role)
+
+        # 2. 局部翻译 (最近3个icon，降低延迟)
+        current_seq = self.incremental_state.current_sequence
+        if len(current_seq) >= 2:
+            partial_translation = self.translator.translate(current_seq[-3:])
+        else:
+            partial_translation = self.icon_predictor.ontology.get(icon_id, {}).get('label', icon_id)
+
+        # 3. 情感分析 (使用局部翻译)
+        emotion_result = self.analyzer.analyze(partial_translation, self.conversation_history)
+
+        # 4. 获取SASRec上下文 + 融合预测
+        context_icons, context_cs = self.incremental_state.get_context_for_sasrec()
+
+        used_symbols = []
+        for t in self.conversation_history:
+            used_symbols.extend(t.get('symbols', []))
+        used_symbols.extend(current_seq)
+
+        predictions = self.fused_predictor.predict_next(
+            current_sequence=context_icons,
+            current_cs_roles=context_cs,
+            current_emotion=emotion_result['single_emotion'],
+            next_emotion=emotion_result.get('next_emotion'),
+            current_sentence=partial_translation,
+            used_symbols=used_symbols,
+            conversation_context=[t['sentence'] for t in self.conversation_history],
+        )
+
+        # 5. 返回结果
+        cs_display = [f"{r}:{i}" for i, r in zip(current_seq, self.incremental_state.current_cs_roles)]
+
+        return {
+            'current_sequence': current_seq[:],
+            'cs_display': cs_display,
+            'partial_translation': partial_translation,
+            'emotion': {
+                'single': emotion_result['single_emotion'],
+                'confidence': emotion_result['single_confidence'],
+                'current': emotion_result['current_emotion'],
+                'next': emotion_result.get('next_emotion', 'neutral'),
+            },
+            'next_icon_predictions': predictions,
+            'sequence_length': len(current_seq),
+        }
+
+    def commit_sequence(self) -> Dict:
+        """增量模式: 用户完成当前序列 -> 完整翻译+情感分析+提交
+
+        Returns:
+            完整分析结果（类似batch模式的process()输出）
+        """
+        if self.mode != 'incremental':
+            raise RuntimeError("commit_sequence() only works in incremental mode.")
+
+        current_seq = self.incremental_state.current_sequence
+        if not current_seq:
+            return {'error': 'No icons in current sequence'}
+
+        # 1. 完整翻译
+        full_translation = self.translator.translate(current_seq)
+
+        # 2. 完整情感分析
+        emotion_result = self.analyzer.analyze(full_translation, self.conversation_history)
+
+        # 3. 记录到对话历史
+        self.conversation_history.append({
+            'role': 'user',
+            'symbols': current_seq,
+            'sentence': full_translation,
+            'single_emotion': emotion_result['single_emotion'],
+            'theme_emotion': emotion_result['theme_emotion'],
+            'current_emotion': emotion_result['current_emotion'],
+        })
+
+        # 4. 提交到增量状态
+        self.incremental_state.commit_turn(full_translation, emotion_result)
+
+        # 5. 获取趋势
+        trend = self.analyzer.get_trend()
+
+        # 6. 完整预测 (使用完整翻译)
+        history_sentences = [t['sentence'] for t in self.conversation_history[:-1]]
+        used_symbols = []
+        for t in self.conversation_history:
+            used_symbols.extend(t.get('symbols', []))
+
+        icon_predictions = self.icon_predictor.predict_next_icons_by_context(
+            conversation_context=history_sentences,
+            current_emotion=emotion_result['single_emotion'],
+            next_emotion=emotion_result['next_emotion'],
+            used_symbols=used_symbols,
+            current_sentence=full_translation,
+        )
+
+        return {
+            'input': {'symbols': current_seq, 'role': 'user'},
+            'translation': {'sentence': full_translation},
+            'emotion': {
+                'single': emotion_result['single_emotion'],
+                'single_confidence': emotion_result['single_confidence'],
+                'theme': emotion_result['theme_emotion'],
+                'current': emotion_result['current_emotion'],
+            },
+            'prediction': {
+                'next_emotion': emotion_result['next_emotion'],
+                'confidence': emotion_result['next_confidence'],
+            },
+            'icon_recommendations': icon_predictions,
+            'trend': trend,
+            'conversation_turn': len(self.conversation_history),
+        }
+
+    def undo_icon(self) -> Dict:
+        """增量模式: 撤销上一个icon"""
+        if self.mode != 'incremental':
+            raise RuntimeError("undo_icon() only works in incremental mode.")
+
+        success = self.incremental_state.undo()
+        current_seq = self.incremental_state.current_sequence
+
+        if success and current_seq:
+            # 重新预测
+            result = self.add_icon('__undo_rerun__')
+            # 恢复正确序列（add_icon会多加一个，但我们不需要）
+            self.incremental_state.undo()  # 撤销add_icon内部添加的
+
+            # 手动重新预测而不修改状态
+            context_icons, context_cs = self.incremental_state.get_context_for_sasrec()
+            partial_translation = self.translator.translate(current_seq[-3:]) if len(current_seq) >= 2 else (
+                self.icon_predictor.ontology.get(current_seq[-1], {}).get('label', '') if current_seq else ''
+            )
+            emotion_result = self.analyzer.analyze(partial_translation, self.conversation_history)
+
+            predictions = self.fused_predictor.predict_next(
+                current_sequence=context_icons,
+                current_cs_roles=context_cs,
+                current_emotion=emotion_result['single_emotion'],
+                next_emotion=emotion_result.get('next_emotion'),
+                current_sentence=partial_translation,
+            )
+
+            return {
+                'current_sequence': current_seq[:],
+                'partial_translation': partial_translation,
+                'next_icon_predictions': predictions,
+                'undone': True,
+            }
+
+        return {
+            'current_sequence': current_seq[:],
+            'undone': False,
+        }
+
     def process_conversation(self, conversation: List[Dict]) -> Dict:
         """处理完整对话"""
         self.reset()
@@ -832,9 +1143,9 @@ class AACEmotionPipeline:
 # ==================== 交互模式 ====================
 
 def interactive_mode(pipeline: AACEmotionPipeline):
-    """交互式模式"""
+    """交互式模式 (batch)"""
     print("\n" + "=" * 60)
-    print("AAC Emotion Pipeline - Interactive Mode")
+    print("AAC Emotion Pipeline - Interactive Mode (Batch)")
     print("=" * 60)
     print("\nEnter AAC symbols separated by spaces (e.g., 'I want_to water')")
     print("Enter 'quit' to exit, 'reset' to clear history")
@@ -879,7 +1190,7 @@ def interactive_mode(pipeline: AACEmotionPipeline):
             # 显示图标推荐
             icons = result['icon_recommendations']
             rag_info = icons.get('emotional_rag', {})
-            
+
             print(f"\n   🎯 Recommended Next Icons (Emotional RAG):")
             print(f"      λ={rag_info.get('lambda', 0.3):.1f}, Target: {rag_info.get('target_emotion', 'N/A')}")
 
@@ -914,6 +1225,113 @@ def interactive_mode(pipeline: AACEmotionPipeline):
             print(f"\nError: {e}\n")
 
 
+def incremental_mode(pipeline: AACEmotionPipeline):
+    """交互式增量模式: 逐icon输入，即时预测下一个icon"""
+    print("\n" + "=" * 60)
+    print("AAC Emotion Pipeline - Incremental Mode (IME-style)")
+    print("=" * 60)
+    print("\nEnter ONE icon at a time (like an input method)")
+    print("Commands: '.' = commit sequence, 'u' = undo, 'reset' = clear, 'quit' = exit")
+    print("=" * 60 + "\n")
+
+    while True:
+        try:
+            user_input = input("icon> ").strip()
+
+            if user_input.lower() == 'quit':
+                print("\nGoodbye!")
+                break
+
+            if user_input.lower() == 'reset':
+                pipeline.incremental_state.reset()
+                pipeline.conversation_history = []
+                pipeline.analyzer.reset()
+                print("History cleared.\n")
+                continue
+
+            if user_input.lower() in ('u', 'undo'):
+                result = pipeline.undo_icon()
+                if result.get('undone'):
+                    seq = result.get('current_sequence', [])
+                    print(f"  <- Undo. Current: {seq}")
+                    # Show updated predictions
+                    preds = result.get('next_icon_predictions', {})
+                    _display_incremental_predictions(preds)
+                else:
+                    print("  Nothing to undo.")
+                continue
+
+            if user_input.lower() in ('.', 'commit'):
+                result = pipeline.commit_sequence()
+                if 'error' in result:
+                    print(f"  {result['error']}")
+                    continue
+
+                turn = result['conversation_turn']
+                trans = result['translation']['sentence']
+                emo = result['emotion']
+                print(f"\n  [Committed Turn {turn}] {trans}")
+                print(f"  Emotion: {emo['single']} ({emo['single_confidence']:.0%}) | Next: {result['prediction']['next_emotion']}")
+
+                # Show full icon recommendations
+                icons = result.get('icon_recommendations', {})
+                if icons.get('actions'):
+                    action_strs = [f"{a['label']}" for a in icons['actions'][:3]]
+                    print(f"  Actions: {', '.join(action_strs)}")
+                if icons.get('entities'):
+                    entity_strs = [f"{e['label']}" for e in icons['entities'][:3]]
+                    print(f"  Entities: {', '.join(entity_strs)}")
+                print()
+                continue
+
+            if not user_input:
+                continue
+
+            # Add one icon
+            icon_id = user_input
+            result = pipeline.add_icon(icon_id)
+
+            # Display
+            seq = result.get('current_sequence', [])
+            cs_display = result.get('cs_display', [])
+            partial = result.get('partial_translation', '')
+            emo = result.get('emotion', {})
+
+            print(f"  {' → '.join(cs_display)}")
+            print(f"  Translation: {partial}")
+            print(f"  Emotion: {emo.get('single', 'N/A')} -> Next: {emo.get('next', 'N/A')}")
+
+            # Show predictions
+            preds = result.get('next_icon_predictions', {})
+            _display_incremental_predictions(preds)
+
+        except KeyboardInterrupt:
+            print("\n\nInterrupted. Goodbye!")
+            break
+        except Exception as e:
+            print(f"\nError: {e}\n")
+
+
+def _display_incremental_predictions(preds: Dict):
+    """显示增量模式下的icon预测结果"""
+    fusion_info = preds.get('fusion_info', {})
+    alpha = fusion_info.get('alpha', 0.5)
+
+    if preds.get('actions'):
+        action_strs = [f"{a['label']}({a['final_score']:.2f})" for a in preds['actions'][:3]]
+        print(f"  Top Actions: {', '.join(action_strs)}")
+
+    if preds.get('entities'):
+        entity_strs = [f"{e['label']}({e['final_score']:.2f})" for e in preds['entities'][:3]]
+        print(f"  Top Entities: {', '.join(entity_strs)}")
+
+    if preds.get('emotions'):
+        emo_strs = [f"{e['label']}" for e in preds['emotions'][:2]]
+        print(f"  Emotions: {', '.join(emo_strs)}")
+
+    print(f"  [α={alpha:.1f}: SASRec={alpha:.0%} + RAG={1-alpha:.0%}]")
+
+
 # ==================== 主函数 ====================
 
 def main():
@@ -932,11 +1350,17 @@ def main():
                         default='./Model/roberta-base')
 
     # 运行模式
-    parser.add_argument('--interactive', action='store_true', help='Interactive mode')
-    parser.add_argument('--symbols', nargs='+', help='AAC symbols to process')
+    parser.add_argument('--interactive', action='store_true', help='Interactive mode (batch)')
+    parser.add_argument('--incremental', action='store_true', help='Incremental mode (IME-style)')
+    parser.add_argument('--symbols', nargs='+', help='AAC symbols to process (batch mode)')
+    parser.add_argument('--mode', type=str, choices=['batch', 'incremental'], default='batch',
+                        help='Pipeline mode: batch (complete sequence) or incremental (one icon at a time)')
     parser.add_argument('--device', type=str, default='cuda')
 
     args = parser.parse_args()
+
+    # 确定模式
+    mode = 'incremental' if args.incremental else args.mode
 
     # 初始化Pipeline
     pipeline = AACEmotionPipeline(
@@ -944,14 +1368,19 @@ def main():
         aac_base_model_path=args.aac_base_model_path,
         emotion_model_path=args.emotion_model_path,
         emotion_base_model_path=args.emotion_base_model_path,
-        device=args.device
+        device=args.device,
+        mode=mode,
     )
 
-    # 交互模式
-    if args.interactive:
+    # 增量交互模式
+    if args.incremental:
+        incremental_mode(pipeline)
+
+    # Batch交互模式
+    elif args.interactive:
         interactive_mode(pipeline)
 
-    # 命令行符号输入
+    # 命令行符号输入 (batch only)
     elif args.symbols:
         result = pipeline.process(args.symbols)
 

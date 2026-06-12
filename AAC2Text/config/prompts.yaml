@@ -10,25 +10,198 @@ translation_agent:
     如果符号组合在逻辑上说不通，应该拒绝并输出REJECT。
     尽量对符号进行自然语言重构，而不是按顺序罗列。
 
-translation_prompt: |
-  Translate these AAC symbols into ONE simple English sentence. You MUST use ALL symbols.
+# 第一人称翻译模板 (subject_type = "first")
+translation_prompt_first: |
+  You are an AAC (Augmentative and Alternative Communication) user. The symbol "I" means yourself. Translate these AAC pictogram symbols into ONE natural English sentence from YOUR perspective.
 
   Symbols: {labels}
 
-  CRITICAL RULES:
+  RULES:
   1. You MUST use ALL symbols in your sentence. Do NOT skip any symbol.
-  2. Add articles and prepositions as needed to make the sentence natural.
-  3. Try to RESTRUCTURE the symbols naturally - don't just list them in order.
-     Good: "The patient is helped by the doctor in the hospital."
-     Bad:  "Doctor help patient hospital."
-  4. If the symbols CANNOT be combined into a logically sensible sentence, output: "REJECT"
-     - "Logically sensible" means the combination makes real-world sense, not just grammatically correct
-     - Example of REJECT: symbols that create absurd/nonsensical scenarios even if grammatically possible
+  2. You MUST NOT add content that is NOT represented by the symbols. No hallucination — only use the meaning of the given symbols. You may add articles (a, an, the), prepositions (in, on, at, to, with, for, from), conjunctions (and, but, or), and auxiliary verbs (is, am, are, have, will, can) as glue words. Nothing else.
+  3. The symbol order does NOT dictate sentence order. Rearrange freely to make the sentence natural and meaningful.
+  4. Symbols with underscores are compound concepts. Read them as a whole unit:
+     - "pink_pale" → pale pink (color adjective), NOT "my pink pale"
+     - "arrest_to" → arrest (verb), NOT "arrest to"
+     - "clean_shoes_to" → clean shoes (verb+object), NOT "clean shoes to"
+     - "ski_to" → ski (verb), NOT "ski to"
+     Remove "_to" suffixes — they mark verb form, not prepositions.
+  5. The subject is "I" — use first-person verb forms (I eat, I want, I am, I have, I can).
+  6. Keep it short and direct, like a real AAC user would say.
+
+  EXAMPLES:
+  Good: "I want to drink water."  (Symbols: I, want_to, water)
+  Good: "I am eating pizza at the restaurant."  (Symbols: I, eat, pizza, restaurant)
+  Good: "I feel happy reading books."  (Symbols: I, happy, read, book)
+  Good: "I want pale pink flowers."  (Symbols: I, want_to, pink_pale, flower)
+  Bad:  "I want to water."  (missing verb conjugation)
+  Bad:  "I eat pizza restaurant."  (no preposition, unnatural)
+  Bad:  "I ski down the mountain with my curly hair blowing in the wind while singing my favorite songs."  (HALLUCINATION — mountain, wind, favorite, songs are NOT in the symbols!)
 
   Output format (one line):
   Sentence: <your sentence>
 
   Your output:
+
+# 第二人称翻译模板 (subject_type = "second")
+translation_prompt_second: |
+  You are an AAC (Augmentative and Alternative Communication) user. The symbol "U" means "you" (the person you are talking to). Translate these AAC pictogram symbols into ONE natural English sentence addressing someone.
+
+  Symbols: {labels}
+
+  RULES:
+  1. You MUST use ALL symbols in your sentence. Do NOT skip any symbol.
+  2. You MUST NOT add content that is NOT represented by the symbols. No hallucination — only use the meaning of the given symbols. You may add articles (a, an, the), prepositions (in, on, at, to, with, for, from), conjunctions (and, but, or), and auxiliary verbs (is, am, are, have, will, can) as glue words. Nothing else.
+  3. The symbol order does NOT dictate sentence order. Rearrange freely to make the sentence natural and meaningful.
+  4. Symbols with underscores are compound concepts. Read them as a whole unit:
+     - "pink_pale" → pale pink (color adjective), NOT "your pink pale"
+     - "arrest_to" → arrest (verb), NOT "arrest to"
+     - "clean_shoes_to" → clean shoes (verb+object), NOT "clean shoes to"
+     Remove "_to" suffixes — they mark verb form, not prepositions.
+  5. The subject is "you" — use second-person verb forms (you eat, you want, you are, you have, you can).
+  6. Keep it short and direct, like a real AAC user would say.
+
+  EXAMPLES:
+  Good: "You want to drink water."  (Symbols: U, want_to, water)
+  Good: "You are eating pizza at the restaurant."  (Symbols: U, eat, pizza, restaurant)
+  Good: "You look happy reading that book."  (Symbols: U, happy, read, book)
+  Good: "You want pale pink flowers."  (Symbols: U, want_to, pink_pale, flower)
+  Bad:  "You wants water."  (wrong verb form for 2nd person)
+  Bad:  "You eat pizza restaurant."  (no preposition, unnatural)
+  Bad:  "U want water."  (do not use "U" in the sentence, use "you")
+
+  Output format (one line):
+  Sentence: <your sentence>
+
+  Your output:
+
+# 第三人称翻译模板 (subject_type = "third")
+translation_prompt_third: |
+  You are an AAC (Augmentative and Alternative Communication) translator. Translate these AAC pictogram symbols into ONE natural English sentence.
+
+  Symbols: {labels}
+
+  RULES:
+  1. You MUST use ALL symbols in your sentence. Do NOT skip any symbol.
+  2. You MUST NOT add content that is NOT represented by the symbols. No hallucination — only use the meaning of the given symbols. You may add articles (a, an, the), prepositions (in, on, at, to, with, for, from), conjunctions (and, but, or), and auxiliary verbs (is, am, are, have, will, can) as glue words. Nothing else.
+  3. The symbol order does NOT dictate sentence order. Rearrange freely to make the sentence natural and meaningful.
+  4. Symbols with underscores are compound concepts. Read them as a whole unit:
+     - "pink_pale" → pale pink (color adjective), NOT "the pink pale"
+     - "arrest_to" → arrest (verb), NOT "arrest to"
+     - "clean_shoes_to" → clean shoes (verb+object), NOT "clean shoes to"
+     Remove "_to" suffixes — they mark verb form, not prepositions.
+  5. Use third-person verb forms where appropriate (he/she eats, the doctor helps, etc.).
+  6. Make the sentence sound like natural English, not a mechanical symbol-to-word mapping.
+
+  EXAMPLES:
+  Good: "The doctor is helping the patient in the hospital."  (Symbols: doctor, help, patient, hospital)
+  Good: "The excited child is eating pizza."  (Symbols: child, eat, pizza, excited)
+  Good: "A teacher reads a book in the classroom."  (Symbols: teacher, read, book, classroom)
+  Good: "The lady wants pale pink shoes."  (Symbols: lady, want_to, pink_pale, shoe)
+  Bad:  "Doctor help patient hospital."  (no articles, no prepositions, just listing)
+  Bad:  "The doctor helps patient the hospital."  (missing article, wrong preposition)
+  Bad:  "The doctor is help the patient."  (wrong verb form)
+  Bad:  "The gardener helps him brush his hair before breakfast time while singing a song."  (HALLUCINATION — singing, song are NOT in the symbols!)
+
+  Output format (one line):
+  Sentence: <your sentence>
+
+  Your output:
+
+# ============================================================
+# 中文翻译模板 — icon→中文并行生成（不是从英文翻译）
+# ============================================================
+
+# ============================================================
+# 英→中翻译模板（基于英文句子翻译，不是icon→中文直译）
+# ============================================================
+
+# 英→中翻译模板（统一，不区分人称——人称信息已在英文句子中）
+translation_en_to_zh: |
+  请将以下英文句子翻译为自然流畅的中文。要求：
+  1. 忠实原文，不添加、不遗漏任何信息。
+  2. 句子要自然，像中文母语者会说的话。
+  3. 不要加解释、序号或多余标点。
+
+  英文: {sentence_en}
+
+  中文:
+
+# 第一人称中文翻译模板（已弃用，保留兼容）
+translation_prompt_zh_first: |
+  你是一位AAC（辅助与替代通讯）用户。"I"这个符号代表你自己。请根据以下象形图符号，从你自己的视角，生成一句自然的中文。
+
+  符号: {labels}
+
+  规则:
+  1. 必须使用所有符号的含义，不能遗漏任何一个。
+  2. 禁止幻觉——只能使用给定符号所代表的含义。可以添加量词（个、只、本）、介词（在、到、给、用、和）、助词（的、了、着、过、吗、呢）、连词（和、与、但是）等语法成分。不能添加符号中没有的语义内容。
+  3. 符号的顺序不决定句子的顺序，可以自由调整使句子自然通顺。
+  4. 主语是"我"——使用第一人称（我吃、我想要、我是、我有、我能）。
+  5. 语句简短直接，像真实的AAC用户会说的。
+
+  示例:
+  好: "我想喝水。"  (符号: I, 想要, 水)
+  好: "我在餐厅吃披萨。"  (符号: I, 吃, 披萨, 餐厅)
+  好: "我开心地看书。"  (符号: I, 开心, 看, 书)
+  坏: "我想要水。"  (缺少动词)
+  坏: "我吃披萨餐厅。"  (缺少介词，不自然)
+  坏: "我在山顶滑雪时长发飘在风中唱着我最爱的歌。"  (幻觉——山顶、风、最爱的、歌都不在符号中！)
+
+  输出格式（一行）:
+  句子: <你的中文句子>
+
+  你的输出:
+
+# 第二人称中文翻译模板
+translation_prompt_zh_second: |
+  你是一位AAC（辅助与替代通讯）用户。"U"这个符号代表"你"（对方）。请根据以下象形图符号，生成一句对别人说的自然中文。
+
+  符号: {labels}
+
+  规则:
+  1. 必须使用所有符号的含义，不能遗漏任何一个。
+  2. 禁止幻觉——只能使用给定符号所代表的含义。可以添加量词、介词、助词、连词等语法成分。不能添加符号中没有的语义内容。
+  3. 符号的顺序不决定句子的顺序，可以自由调整使句子自然通顺。
+  4. 主语是"你"——使用第二人称（你吃、你想要、你是、你有、你能）。
+  5. 语句简短直接，像真实的AAC用户会说的。
+
+  示例:
+  好: "你想喝水。"  (符号: U, 想要, 水)
+  好: "你在餐厅吃披萨。"  (符号: U, 吃, 披萨, 餐厅)
+  好: "你开心地看书。"  (符号: U, 开心, 看, 书)
+  坏: "你想要水。"  (缺少动词)
+  坏: "你吃披萨餐厅。"  (缺少介词，不自然)
+
+  输出格式（一行）:
+  句子: <你的中文句子>
+
+  你的输出:
+
+# 第三人称中文翻译模板
+translation_prompt_zh_third: |
+  你是一位AAC（辅助与替代通讯）翻译者。请根据以下象形图符号，生成一句自然的中文。
+
+  符号: {labels}
+
+  规则:
+  1. 必须使用所有符号的含义，不能遗漏任何一个。
+  2. 禁止幻觉——只能使用给定符号所代表的含义。可以添加量词、介词、助词、连词等语法成分。不能添加符号中没有的语义内容。
+  3. 符号的顺序不决定句子的顺序，可以自由调整使句子自然通顺。
+  4. 使用第三人称动词形式（他/她/它吃、医生帮助等）。
+  5. 让句子听起来像自然的中文，不是机械的符号罗列。
+
+  示例:
+  好: "医生在医院帮助病人。"  (符号: 医生, 帮助, 病人, 医院)
+  好: "兴奋的孩子在吃披萨。"  (符号: 孩子, 吃, 披萨, 兴奋)
+  好: "老师在教室里看书。"  (符号: 老师, 看, 书, 教室)
+  坏: "医生帮助病人医院。"  (缺少介词，不自然)
+  坏: "园丁在早餐时间帮他梳头时还唱了首歌。"  (幻觉——唱了首歌不在符号中！)
+
+  输出格式（一行）:
+  句子: <你的中文句子>
+
+  你的输出:
 
 validation_agent:
   name: "CoT质量评估器"
@@ -39,18 +212,17 @@ validation_agent:
     1. 语义连贯性 (Semantic Coherence): 标签能否构成连贯场景
     2. 语法自然度 (Grammatical Naturalness): 句子语法是否自然
     3. 标签融合度 (Label Integration): 标签是否自然融入句子
+    4. 人称一致性 (Person Consistency): 主语与动词形式是否匹配
 
     纯计算维度:
-    1. 标签覆盖率 (Coverage, w=0.30): 标签在句子中是否出现
-    2. 公式化程度 (Formulaicness, w=0.20): 输出与输入结构的相似度（扣分项）
-
-    综合分 S = 0.35×naturalness + 0.30×coverage + 0.20×(1-formulaicness)
+    1. 标签覆盖率 (Coverage, w=0.25): 标签在句子中是否出现
+    2. 公式化程度 (Formulaicness, w=0.15): 输出与输入结构的相似度（扣分项）
 
   validation_config:
     weights:
-      naturalness: 0.35
-      coverage: 0.30
-      formulaicness: 0.20
+      naturalness: 0.40
+      coverage: 0.25
+      formulaicness: 0.15
     thresholds:
       accept: 0.55
       veto_coverage: 0.5
@@ -61,43 +233,21 @@ validation_cot_prompt: |
 
   Input Symbols: {labels}
   Generated Sentence: {sentence}
+  Subject Type: {subject_type}
 
-  Analyze this sentence step by step along the following dimensions:
+  Rate this sentence on 5 dimensions. Be concise — write ONLY the score line for each dimension, no analysis text.
 
-  1. **Semantic Coherence**: Do these symbols form a coherent, meaningful scenario? Can you imagine this happening in real life?
-     Score 1 = completely absurd/nonsensical
-     Score 2 = very forced/unnatural scenario
-     Score 3 = somewhat acceptable but odd
-     Score 4 = natural and reasonable scenario
-     Score 5 = perfectly natural and common scenario
+  1. Semantic Coherence (1=absurd, 5=perfectly natural scenario)
+  2. Grammatical Naturalness (1=unnatural, 5=native-like)
+  3. Label Integration (1=mechanical listing, 5=natural restructuring)
+  4. Person Consistency (1=wrong agreement, 5=perfect agreement with subject type "{subject_type}")
+  5. Overall Naturalness (1=unnatural, 5=perfectly natural)
 
-  2. **Grammatical Naturalness**: Is the sentence grammatically natural in English? Does it feel like something a native speaker would say, or does it have a "machine-translated" feel with awkward phrasing?
-     Score 1 = completely unnatural grammar
-     Score 2 = very awkward phrasing
-     Score 3 = acceptable but slightly odd grammar
-     Score 4 = natural grammar
-     Score 5 = perfectly natural, native-like phrasing
-
-  3. **Label Integration**: Are the symbols naturally integrated into the sentence? Or are they just listed/plugged in mechanically without linguistic restructuring?
-     Score 1 = symbols just listed mechanically
-     Score 2 = symbols barely integrated, very forced
-     Score 3 = symbols present but integration feels partial
-     Score 4 = symbols well integrated with some natural restructuring
-     Score 5 = symbols fully integrated with natural linguistic restructuring
-
-  4. **Overall Naturalness**: Your overall holistic assessment.
-     Score 1 = completely unnatural
-     Score 2 = mostly unnatural
-     Score 3 = somewhat acceptable
-     Score 4 = natural
-     Score 5 = perfectly natural
-
-  For each dimension, first write a brief analysis (1-2 sentences), then give your score.
-
-  Output format:
+  Output EXACTLY this format, one line per dimension, nothing else:
   Semantic Coherence: <1-5>
   Grammatical Naturalness: <1-5>
   Label Integration: <1-5>
+  Person Consistency: <1-5>
   Overall Naturalness: <1-5>
 
-  Your analysis:
+  Your output:

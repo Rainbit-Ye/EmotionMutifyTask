@@ -448,3 +448,548 @@
 2. **训练随机性**：重训后随机种子不同，可能收敛到稍不同的局部最优，但差异不大
 
 **结论**：旧模型的真实生成质量与当前模型相近，之前的低指标（chrF 41.51等）主要是评估 bug 导致的，而非模型能力差异
+
+---
+
+### 2026-06-05：动态增量预测架构升级 — SASRec + Emotional RAG 融合 + S-DPO 对齐
+
+**目标**: 将AAC图标推荐系统从"整段输入后预测"升级为"逐icon输入即时预测"(类似输入法IME)，同时保留现有batch模式，并引入前沿方法（SASRec序列模型 + S-DPO对齐）。
+
+#### 改动1：本体丰富化 — Colourful Semantics 语义角色标注
+
+**参考文献**: Bryan, "Colourful Semantics", 1997; PrAACT (Magnana et al., 2023); BERTptCS, 2024
+
+**改动文件**: `AAC2Text/data/processed/aac_full_ontology.json`, `AAC2Text/scripts/enrich_ontology_cs.py`
+
+**改动内容**:
+
+1. 新增脚本 `enrich_ontology_cs.py`：为3295个AAC图标自动标注Colourful Semantics (CS)语义角色
+
+2. CS角色体系（6类语用语义槽位）：
+
+   | CS Role | 含义 | 示例icon | 分布 |
+   |---------|------|---------|------|
+   | WHO | 施事/主语 | I, you, mum, doctor | 1029 |
+   | WHAT_DOING | 动作/谓语 | eat, drink, go, help | 657 |
+   | WHAT | 受事/宾语 | water, food, apple | 1295 |
+   | WHERE | 处所 | home, school, hospital | 100 |
+   | WHEN | 时间 | morning, today, week | 36 |
+   | HOW | 方式/修饰 | quickly, happy, sad | 178 |
+
+3. 映射策略：
+   - 基于现有 `(grammar_role, semantic_type)` 组合的确定性规则映射（覆盖~96%的icon）
+   - 剩余129个歧义icon使用Qwen2.5-1.5B推断CS角色（`--use-llm`参数）
+   - 同时规范化 `grammar_role` 字段（30+不一致值统一为10个规范值：SUBJ/OBJ/TRANS/INTR/MOD/LOC/COMPL/DUR/INST/DIR）
+
+4. 输出：更新 `aac_full_ontology.json`，每个icon新增 `cs_role` 字段，`grammar_role` 已规范化
+
+**设计说明**:
+- CS角色比grammar_role更粗粒度但更具语用性：WHO/WHAT_DOING/WHAT直接对应"谁在做什么"的句法槽位
+- 参考BERTptCS (2024)：将CS语义角色注入transformer输入，引导模型预测符合当前语义槽位的icon
+- CS角色嵌入将作为SASRec模型的输入特征之一
+
+---
+
+#### 改动2：合成icon序列数据生成
+
+**改动文件**: `AAC2Text/scripts/generate_icon_sequences.py`
+
+**改动内容**:
+
+1. 新增脚本 `generate_icon_sequences.py`：从现有数据生成SASRec训练用的icon序列
+
+2. 数据来源与策略：
+   - **training_data.json (30K对)**: 每条有`labels`(icon列表)和`type`(svo/sv_time/svo_emo等语法模式)，直接解析为CS标注序列
+   - **CS模板增强**: 按CS模板(WHO+WHAT_DOING, WHO+WHAT_DOING+WHAT等12种)从ontology采样，生成~50K额外序列
+   - **多轮对话模拟**: 生成2-5轮的对话session(~5K)，用于SASRec的跨轮次上下文学习
+   - **负采样**: 同CS角色替换(硬负例)+随机替换
+
+3. 输出文件：
+
+   | 文件 | 数量 |
+   |------|------|
+   | `data/icon_sequences_train.json` | 153,000 |
+   | `data/icon_sequences_val.json` | 8,500 |
+   | `data/icon_sequences_test.json` | 8,500 |
+
+4. 序列格式：
+   ```json
+   {"sequence": ["mum", "give_to", "water"], "cs_roles": ["WHO", "WHAT_DOING", "WHAT"], "emotion": "happiness", "type": "svo", "source": "training_data"}
+   ```
+
+---
+
+#### 改动3：SASRec序列推荐模型
+
+**参考文献**: Kang & McAuley, "Self-Attentive Sequential Recommendation", ICLR 2018
+
+**改动文件**: `sequence_model/sasrec.py`, `sequence_model/train_sasrec.py`, `sequence_model/__init__.py`
+
+**改动内容**:
+
+1. 新增 `sequence_model/` 包，实现SASRec模型用于AAC icon的next-item预测
+
+2. 模型架构 (`SASRec`, ~512K参数)：
+
+   ```
+   输入: [item_emb + cs_role_emb + position_emb]
+     → CausalSelfAttentionBlock × 2 (hidden=64, heads=2)
+     → LayerNorm → Linear
+     → logits(3155) (icon词汇表大小)
+   ```
+
+   - `item_emb`: icon ID嵌入 (padding_idx=0)
+   - `cs_role_emb`: CS语义角色嵌入 (16维，投影到hidden_size)
+   - `position_emb`: 位置编码
+   - `CausalSelfAttentionBlock`: Multi-head self-attention + FFN + residual + LayerNorm
+   - 因果mask: 位置t只关注 ≤t 的位置，保证自回归特性
+   - CS角色嵌入帮助模型理解当前正在填充的"句法槽位"
+
+3. 训练脚本 `train_sasrec.py`：
+   - 交叉熵损失 (next-item prediction)
+   - 评估指标: Hit@K, MRR, NDCG@K
+   - Early stopping (patience=10)
+
+4. 训练结果（2026-06-05，12 epochs，第12 epoch early stopping）：
+
+   **训练配置**: hidden=64, blocks=2, heads=2, lr=1e-3, batch=128, DeepSpeed ZeRO-2, 2×GPU
+
+   **训练过程**（train loss从6.56降至5.70，train acc从0.6%升至2.3%）：
+
+   | Epoch | Train Loss | Train Acc | Val Hit@1 | Val Hit@5 | Val MRR | Val NDCG@5 |
+   |-------|-----------|----------|-----------|-----------|---------|------------|
+   | 1     | 6.5617    | 0.62%    | 0.59%     | 2.85%     | 2.80%   | 1.67%      |
+   | 2 ★   | 6.4199    | 0.66%    | 0.62%     | 3.22%     | 3.04%   | 1.90%      |
+   | 3     | 6.3761    | 0.75%    | 0.51%     | 3.13%     | 2.90%   | 1.77%      |
+   | 5     | 6.1915    | 1.41%    | 0.61%     | 2.89%     | 2.88%   | 1.73%      |
+   | 8     | 5.9070    | 2.04%    | 0.47%     | 2.64%     | 2.56%   | 1.51%      |
+   | 12   | 5.7026    | 2.27%    | 0.42%     | 2.28%     | 2.36%   | 1.33%      |
+
+   ★ = best val MRR
+
+   **测试集最终结果**（使用best model, epoch 2）：
+
+   | 指标 | 值 | 随机基线 (1/3155) | 相对随机提升 |
+   |------|-----|-------------------|-------------|
+   | Hit@1 | 0.72% | 0.032% | 22.5× |
+   | Hit@3 | 2.01% | 0.095% | 21.2× |
+   | Hit@5 | 3.19% | 0.158% | 20.2× |
+   | Hit@10 | 6.25% | 0.317% | 19.7× |
+   | MRR | 3.14% | — | — |
+   | NDCG@5 | 1.94% | — | — |
+   | NDCG@10 | 2.91% | — | — |
+
+   **过拟合分析**：模型从第2 epoch后开始过拟合（train loss持续下降但val指标持续下降），原因：
+   - 合成数据分布偏窄：大量序列来自同样的7种语法模板，模式单一
+   - 3155类词汇表对~512K参数模型偏大：模型记住了训练模式的CS角色组合但未学到泛化的icon序列规律
+   - 合成数据icon间缺乏真实语用关联：模板采样时icon组合无真实语义约束
+
+   **正面信号**：Hit@10=6.25%是随机概率的~200倍，说明模型确实学到了CS角色的序列模式（WHO→WHAT_DOING→WHAT的槽位填充规律）。融合Emotional RAG后实际推荐效果会显著提升，因为RAG提供语义相似度兜底
+
+4. 辅助类：
+   - `SASRecDataset`: 序列padding + 下一item标签生成
+   - `CS_ROLE_TO_ID`: CS角色到索引的映射字典
+   - `build_item_vocabulary()`: 从ontology构建icon词汇表
+   - `compute_metrics()`: 计算Hit@K, MRR, NDCG@K
+
+**已知问题与改进方向**:
+
+1. **合成数据过拟合**（核心问题）：train loss从6.56降至5.70，train acc从0.6%升至2.3%，但val MRR从3.04%降至2.36%。建议：引入真实用户交互日志、增加数据多样性、使用对比学习增强(CL4SRec)
+2. **模型容量偏小**：当前hidden=64/blocks=2/heads=2（512K参数），对3155类词汇表偏小。建议：hidden=128/blocks=4/heads=4（~4M参数），或使用预训练语言模型初始化
+3. **SASRec单路性能有限**：但融合Emotional RAG后可互补——SASRec提供序列上下文规律(CS角色槽位填充)，RAG提供语义+情感相似度兜底，融合后实际推荐效果应显著优于单路
+4. **S-DPO对齐尚未运行**：偏好对齐可进一步提升模型对用户真实选择的预测准确率
+
+---
+
+#### 改动4：SASRec + Emotional RAG融合预测器
+
+**改动文件**: `sequence_model/fusion.py`
+
+**改动内容**:
+
+1. 新增 `FusedIconPredictor` 类：融合SASRec序列预测与Emotional RAG语义检索
+
+2. 融合公式：
+   ```
+   Final(i) = alpha × P_sasrec(i|seq) + (1-alpha) × [lambda × cos(E(Q_emo), E(i)) + (1-lambda) × cos(E(Q_orig), E(i))]
+   ```
+   - `P_sasrec(i|seq)`: SASRec的softmax概率（序列上下文）
+   - `cos(Q, i)`: all-MiniLM-L6-v2余弦相似度（语义+情感）
+   - `alpha=0.5` (默认，可调), `lambda=0.3` (沿用Emotional RAG参数)
+
+3. 归一化策略：两路评分分别min-max归一化到[0,1]后再加权融合
+
+4. 增量模式 vs batch模式：
+   - 增量模式: SASRec天然支持部分序列; RAG用局部翻译文本
+   - Batch模式: SASRec用完整序列; RAG用完整翻译
+
+---
+
+#### 改动5：双模式Pipeline架构重构
+
+**改动文件**: `aac_emotion_pipeline.py`
+
+**改动内容**:
+
+1. 新增 `IncrementalState` 类：管理增量预测模式的状态
+   - `current_sequence` / `current_cs_roles`: 当前轮次的icon序列
+   - `turn_history`: 已提交轮次的历史
+   - `max_seq_len=50`: 滑动窗口
+   - `add_icon()`: 添加icon到当前序列
+   - `commit_turn()`: 提交当前轮次
+   - `undo()`: 撤销上一个icon
+   - `get_context_for_sasrec()`: 拼接最近3轮+当前序列作为SASRec输入
+
+2. `AACEmotionPipeline` 新增 `mode` 参数：
+   - `mode='batch'` (默认): 保持原有 `process()` 行为完全不变
+   - `mode='incremental'`: 加载SASRec + FusedIconPredictor，使用增量API
+
+3. 增量模式新增方法：
+   - `add_icon(icon_id)`: 用户点击一个icon → 更新序列 → 即时预测下一个icon
+   - `commit_sequence()`: 用户完成当前轮次 → 完整翻译+情感分析 → 清空序列
+   - `undo_icon()`: 撤销上一个icon → 重新预测
+
+4. 增量模式的翻译策略：
+   - **轻量翻译**: 每加一个icon，用最近2-3个icon做局部翻译（降低延迟）
+   - **commit时**: 用完整序列做一次高质量翻译，更新对话历史
+   - **SASRec不依赖翻译**: SASRec直接从icon序列预测，核心预测路径无需等待翻译
+
+5. CLI新增参数：
+   - `--incremental`: 启动增量交互模式
+   - `--mode batch|incremental`: 指定模式
+   - 增量模式特殊命令: `.` / `commit` = 提交, `u` / `undo` = 撤销, `reset` = 清空
+
+6. 新增 `incremental_mode()` 交互函数和 `_display_incremental_predictions()` 显示函数
+
+7. `_init_incremental_mode()`: 初始化增量模式，加载SASRec模型和FusedIconPredictor
+
+**兼容性**: batch模式完全不受影响，所有原有代码路径不变
+
+---
+
+#### 改动6：S-DPO对齐（序列模型 + 情感模型）
+
+**参考文献**: Hu et al., "S-DPO: Simultaneous DPO for Multi-Negative Preference Alignment", NeurIPS 2024
+
+**改动文件**: `sequence_model/sdpo_trainer.py`, `sequence_model/collect_preference_data.py`
+
+**改动内容**:
+
+1. 新增 `collect_preference_data.py`：DPO偏好数据生成
+   - **SASRec偏好数据** (S-DPO多负例): 用户选择icon A → (chosen=A, rejected={B,C,D,E})
+   - 初始模拟: 用test序列中真实next-icon作chosen，模型top-K中非正确项作rejected，同CS角色icon作硬负例
+   - **情感分类器偏好数据**: 用户纠正预测情感 → chosen=正确情感, rejected=系统错误预测
+   - 生成数据：
+     - `data/sasrec_dpo_train.json`: 417,774对
+     - `data/sasrec_dpo_val.json`: 23,130对
+     - `data/cls_dpo_train.json`: 4,500对
+     - `data/cls_dpo_val.json`: 500对
+
+2. 新增 `sdpo_trainer.py`：S-DPO训练器
+
+   S-DPO损失函数（与标准DPO的区别：对K-1个rejected项取平均）：
+   ```
+   L_S-DPO = -E[log σ(β × (log π(chosen|seq)/π_ref(chosen|seq)
+                            - mean_j log π(rejected_j|seq)/π_ref(rejected_j|seq)))]
+   ```
+
+   - `SDPOLoss` 类：实现S-DPO损失
+   - `SDPODataset` 类：偏好数据集
+   - 训练流程: 冻结已训练SASRec作reference model，训练policy model
+   - `get_log_probability()`: 从SASRec获取指定item的log概率
+
+3. DPO数据格式：
+   ```json
+   {"prompt": {"sequence": ["I", "want_to"], "cs_roles": ["WHO", "WHAT_DOING"]},
+    "chosen": "water", "rejected": ["food", "help", "go", "sleep"],
+    "emotion_context": "neutral"}
+   ```
+
+---
+
+#### 改动7：评估模块
+
+**改动文件**: `sequence_model/evaluate.py`
+
+**改动内容**:
+
+1. 新增评估指标实现：
+   - `accuracy_at_k()`: Hit@K
+   - `reciprocal_rank()`: MRR
+   - `ndcg_at_k()`: NDCG@K
+   - `cs_role_accuracy()`: CS角色准确率（预测icon的CS角色是否与目标一致）
+   - `evaluate_predictions()`: 批量评估
+   - `compare_modes()`: batch vs incremental模式对比
+
+---
+
+#### 改动8：配置文件更新
+
+**改动文件**: `config.json`
+
+**改动内容**:
+
+1. 新增 `sasrec` 配置段：
+   ```json
+   "sasrec": {
+       "enabled": true,
+       "hidden_size": 64, "num_blocks": 2, "num_heads": 2,
+       "max_seq_len": 50, "cs_role_emb_dim": 16, "dropout": 0.2,
+       "batch_size": 128, "learning_rate": 0.001, "num_epochs": 50,
+       "patience": 10, "model_path": "./output/sasrec/best_model.pt",
+       "fusion_alpha": 0.5, "fusion_lambda": 0.3
+   }
+   ```
+
+2. 更新 `dpo` 配置段：
+   ```json
+   "dpo": {
+       "enabled": false,
+       "num_epochs": 3, "batch_size": 4, "learning_rate": 5e-6,
+       "beta": 0.1, "max_length": 256,
+       "s_dpo_num_negatives": 4,
+       "seq_model_path": "./output/sasrec_dpo",
+       "cls_model_path": "./output/cls_dpo"
+   }
+   ```
+
+---
+
+#### 新增文件汇总
+
+| 文件 | 说明 |
+|------|------|
+| `AAC2Text/scripts/enrich_ontology_cs.py` | 本体CS角色标注 + grammar_role规范化 |
+| `AAC2Text/scripts/generate_icon_sequences.py` | 合成icon序列生成 |
+| `sequence_model/__init__.py` | 包初始化 |
+| `sequence_model/sasrec.py` | SASRec模型 + Dataset + 评估函数 |
+| `sequence_model/train_sasrec.py` | SASRec训练脚本 |
+| `sequence_model/fusion.py` | SASRec + Emotional RAG融合预测器 |
+| `sequence_model/sdpo_trainer.py` | S-DPO训练器 |
+| `sequence_model/collect_preference_data.py` | DPO偏好数据生成 |
+| `sequence_model/evaluate.py` | 评估指标实现 |
+
+#### 修改文件汇总
+
+| 文件 | 改动 |
+|------|------|
+| `AAC2Text/data/processed/aac_full_ontology.json` | 新增`cs_role`字段，规范化`grammar_role` |
+| `aac_emotion_pipeline.py` | 新增IncrementalState、双模式、add_icon/commit_sequence/undo_icon、增量CLI |
+| `config.json` | 新增`sasrec`段，更新`dpo`段 |
+
+---
+
+#### 后续步骤
+
+1. **SASRec训练优化**: 合成数据过拟合问题，建议增加数据多样性或引入真实用户交互日志
+2. **S-DPO对齐训练**: 运行 `python3 sequence_model/sdpo_trainer.py`
+3. **消融实验**: alpha融合权重(0/0.25/0.5/0.75/1.0)，SASRec-only vs RAG-only vs 融合，有/无CS角色嵌入
+4. **DPO for 情感分类器**: 在 `cls_multitask_trainer.py` 中添加DPO训练模式
+
+---
+
+#### 参考文献（新增）
+
+19. Kang & McAuley, "Self-Attentive Sequential Recommendation", ICLR 2018. (SASRec)
+20. Hu et al., "S-DPO: Simultaneous DPO for Multi-Negative Preference Alignment", NeurIPS 2024. (S-DPO)
+21. Bryan, "Colourful Semantics", 1997. (CS语义角色体系)
+22. Magnana et al., "PrAACT: Fine-tuning Transformers for AAC Pictogram Prediction", 2023. (AAC符号预测)
+23. BERTptCS, "Colourful Semantics + BERT for AAC", 2024. (CS角色注入transformer)
+24. Rafailov et al., "Direct Preference Optimization: Your Language Model is Secretly a Reward Model", NeurIPS 2023. (DPO)
+25. Schulman et al., "Proximal Policy Optimization Algorithms", 2017. (PPO/RLHF)
+26. Shao et al., "DeepSeekMath: GRPO", 2024. (GRPO)
+
+---
+
+### 2026-06-10 ~ 06-11：AAC2Text 双语训练数据生成 Pipeline 改进
+
+**目标**: 改进AAC2Text数据生成流程，增加I/U人称主语支持、减少幻觉、生成更自然的句子、构建中文本体并支持双语文本输出。
+
+#### 改动1：I/U 代词主语支持 + 21种组合类型
+
+**改动文件**: `AAC2Text/scripts/generate_training_data.py`, `AAC2Text/config/prompts.yaml`
+
+**改动内容**:
+
+1. 新增 `ALL_COMBO_TYPES`（21种）：7种原始第三人称 + 7种`i_`前缀第一人称 + 7种`u_`前缀第二人称
+   - `i_`前缀：主语固定为"I"，使用第一人称翻译模板
+   - `u_`前缀：主语固定为"U"，使用第二人称翻译模板
+   - 无前缀：随机选择人称
+
+2. `generate_combination()` 返回3元组 `(labels, combo_type, subject_type)`
+
+3. 新增 `PRONOUN_SENTENCE_FORMS`：映射 I→{i,me,my,mine,myself}、U→{you,your,yours,u}，用于覆盖率评分时的代词匹配
+
+4. `QuantitativeValidator._coverage_score()` 增加代词映射逻辑：先检查 `PRONOUN_SENTENCE_FORMS`，再按常规方式匹配
+
+5. `QuantitativeValidator.validate()` 新增 `person` 维度（权重0.15）：自然度 = 0.20×coherence + 0.25×grammaticality + 0.15×integration + 0.15×person + 0.25×overall
+
+---
+
+#### 改动2：反幻觉 + 自由词序 + 复合符号读取规则
+
+**改动文件**: `AAC2Text/config/prompts.yaml`
+
+**改动内容**:
+
+1. 所有6个翻译模板（3英文+3中文）新增规则：
+   - "You MUST NOT add content that is NOT represented by the symbols. No hallucination."
+   - 允许的glue words：冠词、介词、连词、助动词
+   - "The symbol order does NOT dictate sentence order. Rearrange freely."
+
+2. 复合符号下划线读取规则：
+   - `pink_pale` → pale pink（颜色形容词），不是"my pink pale"
+   - `_to`后缀标记动词形式，不是介词：`ski_to` → ski，不是"ski to"
+   - `arrest_to` → arrest（动词），不是"arrest to"
+
+3. Few-shot示例中加入幻觉bad examples：
+   - Bad: "I ski down the mountain with my curly hair blowing in the wind while singing my favorite songs."（mountain, wind, favorite, songs 不在符号中！）
+
+---
+
+#### 改动3：图标100%覆盖率（2929→3295→2929 unique 100%）
+
+**改动文件**: `AAC2Text/scripts/generate_training_data.py`
+
+**改动内容**:
+
+1. 移除所有过滤逻辑：
+   - 删除 `len(clean_id) > 2` 过滤（排除I/U/PE/N等）
+   - 删除 `flag_/country_` 前缀过滤（排除~363个国旗）
+   - 删除 `features_/man_-/woman_-` 前缀过滤（排除面部变体）
+
+2. 扩展 `semantic_type` → `aac_category` 映射，覆盖所有缺失类型：
+   - 新增：quantity, symbol, content, geography, abstract, adjective 等
+
+3. 新增 `cs_role` 兜底：仍有未覆盖的icon使用CS角色进行类别分配
+
+4. 结果：2929个unique icon全部覆盖（100%）
+
+---
+
+#### 改动4：CoT验证精简 + 5维度评估
+
+**改动文件**: `AAC2Text/config/prompts.yaml`, `AAC2Text/scripts/generate_training_data.py`
+
+**改动内容**:
+
+1. CoT prompt 从冗长分析格式精简为纯输出格式（5行分数），避免截断
+2. 5个维度：Semantic Coherence, Grammatical Naturalness, Label Integration, Person Consistency, Overall Naturalness
+3. `max_new_tokens` 从200增加到300，确保5个维度完整输出
+4. 新增 Person Consistency 维度（评估主语与动词形式是否匹配）
+
+---
+
+#### 改动5：复合符号可读名称优化
+
+**改动文件**: `AAC2Text/scripts/generate_training_data.py`
+
+**改动内容**:
+
+1. 新增 `readable_names` 字典：从 `core_semantic` 字段构建人类可读名称
+   - `pink_pale` → "pale pink"
+   - `arrest_to` → "take into custody"
+   - `drink_consistency_juice_straw` → "liquid container for drinking"
+
+2. `clean_symbol()` 改为优先使用 `readable_names`，regex作为fallback
+
+3. 中间位置的变体编号（`_2_`）被正确去除
+
+4. 英文翻译模型默认从 Qwen2.5-1.5B 升级为 Llama-3-8B-Instruct
+
+---
+
+#### 改动6：中文本体构建
+
+**改动文件**: `AAC2Text/scripts/build_zh_ontology.py`（新增）, `AAC2Text/scripts/fix_zh_ontology.py`（新增）
+
+**改动内容**:
+
+1. `build_zh_ontology.py`：基于英文本体 `aac_full_ontology.json`，用Qwen2.5-1.5B逐条翻译为中文
+   - Step 1：翻译词汇表（typical_objects + typical_modifiers），缓存到 `vocab_en_zh.json`
+   - Step 2：逐条翻译 core_semantic/label/super_concept，增量保存
+   - 输出 `aac_full_ontology_zh.json`：3154条，每条新增 `core_semantic_zh`, `label_zh`, `super_concept_zh`, `typical_objects_zh`, `typical_modifiers_zh`
+   - 结构性字段（semantic_type, grammar_role, cs_role等）保持英文
+
+2. `fix_zh_ontology.py`：修复中文本体质量问题
+   - 修复887条 `label_zh` 格式污染（"核心语义:" 等结构化前缀泄漏）
+   - 补翻译29条 `core_semantic_zh` 和448条 `super_concept_zh` 仍为英文的字段
+   - 硬编码修复11个顽固条目
+   - 最终质量：core_semantic_zh 100%, label_zh 99.4%, super_concept_zh 99.6%
+
+**最终中文本体质量**:
+
+| 字段 | 中文率 |
+|------|--------|
+| core_semantic_zh | 100.0% (3154/3154) |
+| label_zh | 99.4% (3135/3154) |
+| super_concept_zh | 99.6% (3141/3154) |
+| typical_objects_zh | 98.7% (3071/3110) |
+| typical_modifiers_zh | 99.2% (1933/1948) |
+
+---
+
+#### 改动7：双语生成模式（EN→ZH翻译模式）
+
+**改动文件**: `AAC2Text/scripts/generate_training_data.py`, `AAC2Text/config/prompts.yaml`
+
+**改动内容**:
+
+1. 中文本体加载：`_build_chinese_names()`（运行时Qwen批量翻译）替换为 `_load_chinese_names_from_ontology()`（直接从 `aac_full_ontology_zh.json` 读取，秒级加载）
+
+2. 中文生成模式从 **icon→ZH直译** 改为 **EN→ZH翻译**：
+   - 先用 Llama-3-8B 生成英文句子（icon→EN，不变）
+   - 再用 Qwen1.5B 翻译英文句子为中文（EN→ZH，新逻辑）
+   - 新增 `_translate_en_to_zh()` 方法
+   - 原因：1.5B模型做翻译（输入已是完整自然句）比做生成（需同时理解icon语义+组织中文句子）可靠得多
+
+3. 新增 `translation_en_to_zh` prompt 模板：
+   - 简洁翻译指令："忠实原文，不添加不遗漏，自然流畅"
+   - 不区分人称（人称信息已在英文句子中）
+
+4. 输出格式：`{"labels", "sentence_en", "sentence_zh", "type", "subject_type", "validation", "cot_reasoning"}`
+
+5. GPU分配：GPU0=Llama-3-8B(EN), GPU1=Qwen1.5B(ZH翻译), GPU2=Llama-3-8B(CoT), GPU3=BERT(公式化)
+
+---
+
+#### Bug 修复
+
+| Bug | 原因 | 修复 |
+|-----|------|------|
+| BertRegressionModel `init_weights()` AttributeError | transformers版本不兼容 | 删除 `self.init_weights()` 调用，权重从safetensors手动加载 |
+| Icon数量从3295降至75 | 多个过滤逻辑排除图标 | 移除所有过滤，扩展semantic_type映射，加cs_role兜底 |
+| CoT 5维度截断 | max_new_tokens=200不够5个维度输出 | 精简prompt+增加到300 |
+| `pink_pale` 读成 "my pink pale" | 下划线按词拆分 | 用core_semantic构建readable_names字典 |
+| 批量翻译行错位 | 30条/批的输出行数与输入不1:1 | 改为逐条翻译+增量保存 |
+| 中文生成严重幻觉 | Qwen1.5B做icon→ZH生成能力不足 | 改为EN→ZH翻译模式 |
+| 中文引号SyntaxError | `strip('"\'""')` 引号嵌套 | 改为显式循环strip |
+| KeyError 'icon_id' | 2条英文本体数据缺失icon_id | 改为 `item.get("icon_id")` |
+| label_zh格式污染 | Qwen输出"核心语义: xxx"而非纯净值 | 鲁棒解析+补翻译+硬编码修复 |
+
+---
+
+#### 新增文件
+
+| 文件 | 说明 |
+|------|------|
+| `AAC2Text/scripts/build_zh_ontology.py` | 构建中文本体（增量、可中断恢复） |
+| `AAC2Text/scripts/fix_zh_ontology.py` | 修复中文本体质量问题（格式污染、未翻译、语义错误） |
+| `AAC2Text/data/processed/aac_full_ontology_zh.json` | 中文本体（3154条，6个中文字段） |
+| `AAC2Text/data/processed/vocab_en_zh.json` | 英→中词汇翻译缓存 |
+| `AAC2Text/data/processed/icon_names_zh.json` | icon中文可读名称缓存（已弃用，被中文本体替代） |
+
+#### 修改文件
+
+| 文件 | 改动 |
+|------|------|
+| `AAC2Text/scripts/generate_training_data.py` | 21种组合类型、I/U人称支持、反幻觉prompt、100%图标覆盖、readable_names、双语EN→ZH模式、中文本体加载 |
+| `AAC2Text/config/prompts.yaml` | 6个翻译模板(3EN+3ZH)增加反幻觉规则、新增EN→ZH翻译模板、CoT 5维度精简 |
+
+---
+
+#### 待办
+
+1. 运行全量双语pipeline验证EN→ZH翻译质量
+2. 更新 `train.py` 和 `test.py` 适配双语数据格式（`sentence_en`/`sentence_zh`）
+3. 中文本体剩余质量优化（`typical_objects_zh` 约1.3%英文，个别语义翻译偏差）

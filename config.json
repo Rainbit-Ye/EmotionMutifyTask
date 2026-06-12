@@ -20,16 +20,37 @@
         "save_steps": 500,
         "logging_steps": 10
     },
+    "sasrec": {
+        "enabled": true,
+        "hidden_size": 64,
+        "num_blocks": 2,
+        "num_heads": 2,
+        "max_seq_len": 50,
+        "cs_role_emb_dim": 16,
+        "dropout": 0.2,
+        "batch_size": 128,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0001,
+        "num_epochs": 50,
+        "patience": 10,
+        "grad_clip": 1.0,
+        "model_path": "./output/sasrec/best_model.pt",
+        "fusion_alpha": 0.5,
+        "fusion_lambda": 0.3
+    },
     "dpo": {
         "enabled": false,
-        "num_epochs": 1,
-        "batch_size": 2,
-        "learning_rate": 1e-5,
+        "num_epochs": 3,
+        "batch_size": 4,
+        "learning_rate": 5e-6,
         "beta": 0.1,
-        "max_length": 512,
+        "max_length": 256,
         "max_prompt_length": 128,
         "save_steps": 500,
-        "logging_steps": 10
+        "logging_steps": 10,
+        "s_dpo_num_negatives": 4,
+        "seq_model_path": "./output/sasrec_dpo",
+        "cls_model_path": "./output/cls_dpo"
     },
     "cls": {
         "enabled": true,

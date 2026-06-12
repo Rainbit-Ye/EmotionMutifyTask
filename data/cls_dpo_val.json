@@ -1,0 +1,2502 @@
+[
+  {
+    "prompt": "What's this , I wonder ? A coffee grinder ? Oh , that would be very useful .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hi , Peter . I ’ m afraid I can ’ t make it to dinner tomorrow night . It ’ s just I ’ m not feeling well . I think I ’ m coming down with a cold or something . Thanks . I will .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Have you read the new rules about using cell phone at work ? Well , but for this one , don ’ t bring your cell phone to meetings , I think it is not reasonable . What if there are some important calls ? I didn ’ t pay attention to that .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I just got laid off . The awful business , you know . Yeah , I ’ m better after talking to you .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "What upsets you ? It is not your mother finding one for you ? Perhaps you can try the three minutes date , the latest type . No , there is an updated virgin , three minutes video date . I know an online dating website providing such service with a microphone and webcam , you can sigh for it . You can be face-to-face with a guy talking for maximum three minutes . I think you can find out if there is a possibility of romance within the first second of meeting someone , so-called love at first sight . Don ’ t worry . There are many other options using the internet as dating methods . Some sites operate at international standard even have got certifications . Of course , for these sites , you have to pay a membership fee . But all in all , it is more serious and professional . The chance of meeting a good and serious person who does not play games is higher .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Why are there still so many people overweight despite the current fitness craze ? What are they ? Why ? That makes sense . Probably less time to make dinner and the junk food is cheaper . What's that ? Wow ! No wonder people are so fat . Say , Carl , looks like you could be doing a bit more exercising . You should consider eating healthier food and getting some more exercise . So what happened ? You should have kept trying .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What ’ s wrong with you ? Why are you scratching so much ? Let me have a look . Whoa ! Get away from me ! I think you have chicken pox ! You are contagious ! Get away ! Don ’ t breathe on me ! Well in the meantime you are a biohazard ! I didn ’ t get it when I was a kid and I ’ Ve heard that you can even die if you get it as an adult !",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Where are you going , Tony ? Mom said you couldn't go out .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "how's it going ? to be honest , I'm a bit fed up . well , my boyfriend was supposed to call me last night , but he never did . the thing is , this isn't the first time he's promised to do something and then didn't . a bit ? I'm extremely annoyed that he didn't phone me when he promised me that he would ! He's such a liar . I don't know . I've got mixed feelings about it . On the one hand , I really want to end it with him , but on the other hand , I don't want to be without him . in the long run , I think breaking up with him would make me much happier , but I know that I'll be depressed about it for a few weeks first . what would you do if you were me ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "How much is this shirt ? It's rather expensive , isn't it ? How about 50 yuan ? Then let's split the difference and I'll give you 60 yuan , OK ? All right .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "You are studying here , aren ’ t you ? Do you like this campus ? How come ? Oh.It ’ s awful , but it can ’ t be helped .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "You seemed to be fed up with Mary . She is a barking dog . But she means well . You are unfair to her . She is a very nice girl .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Excuse me , is there a table for 8 right now ? Well , since there are some small square tables , could we put two tables together ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I don't know how to adjust my life . Would you give me a piece of advice ? Yes , I can't sleep well every night . I drink a lot of wine . I often feel so tired . I sometimes find the shadow of death in front of me .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Oh , the bus is gone . I'm afraid we have to wait for the next bus .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Mr . Jackson , I've drafted a schedule for your business trip next week . You may have a look . You're leaving on Tuesday morning . Your flight takes off at 8 Yes , you're seeing him on Thursday . You're inspecting the factory in the morning and having dinner with him in the evening . Oh , that's not everything . You're free on Friday and then on Saturday you're catching the 9 o'clock plane back to Guangzhou .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Ok ... I ’ ll talk to you later . Bye I just got off the phone with my boyfriend . He is always getting upset and losing his temper over nothing . It ’ s so hard to talk to him at times . Yeah but , he is always in a really foul mood . I try to find out what ’ s bothering him or get him to talk about his day but , he always shuts down and brushes me off . I guess you are right . What do you think I should do ? He wasn ’ t always this grouchy you know ... You are something else you know that ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Excuse me . Who is the person responsible for handling complaints here ? I would like to make a few complaints . Here is the thing . I was woke up by strange noises of the telephone several times last night . Even I unplugged it , it wouldn't stop beeping . I am also not satisfied with the housekeeping service in my room . So I want to change to a cleaner and quieter room .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Would you like to go to the movies tonight ? Well , we could see something different like a detective film . How about a comedy ? How about a love story then ? What's you opinion ? Really ? No , but I can't imagine that a girl like you would wonder to see a war movie .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "What happened to your brother ? Your parents must be worrying about him . Have you talked to him ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Are you being served , Sir ? Would you sit here , please ? How would you like it cut ? What , your short already , sir . Should I just trim it ? Oh , I see . You like Chinese style , don ’ t you ? Would you like to have some shampoo , sir ? How about oil or spray ? There , how ’ s that ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "It's taking you forever to do my hair . You should've been done already . I don't think that you're done . My hair looks hideous . It doesn't look good at all . I really hope that you didn't expect me to pay you for this .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "John , if you don't mind , I'd like to ask you a personal question . All right . Are you married ? Then , when do you plan to get married ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Ann , it's terrible ! Look , this is a pimple ! How come ? I have no bad habit . I sleep eight hours a day , never eat spicy food , clean the face twice a day and so on . I have done a lot . I wasn't aware of that !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Devi , do you have any preference for where you would like to go for dinner for your birthday ? There is a great restaurant directory here in the weekend section of the newspaper . Do you have a particular type of food that you would like ? That Japanese restaurant , Shogun , got good reviews . Would that be a place that you might like to go to for your birthday ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "This is our Submission of Tender which includes the information about volume of the project , the cost and so on . What kind of guarantee are you going to provide for us ? Should we pay earnest money ? Where do we submit the tender ? Oh , I see . By the way , is tender-opening done publicly ? And are the prices stated in the US dollar ? OK ! We will . Bye !",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "What can I do for you , sir ? What kind of games do you like ? I see , but games are played in different ways . I'm wondering what type of games do you like to play ? Basically , there are 7 types of games Don't worry . Most male customers choose first person shooting , real time strategy , action or sports , while female customers prefer simulating , action or role playing . Shooting , action and sports games require flexible movements and real time strategy usually needs overall consideration . If so , counter Strike and Might & Magic are good alternatives . Counter Strike is one of the hottest shooting games and Might & Magic series are popular among girls because the game has attractive plot and interesting scenes . Do you want the latest editions ? If your computer runs fast , I think the latest editions are better because although old editions are cheaper , they are less exciting and attractive .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I watched a very interesting documentary about plants yesterday evening . It was called “ unusual plants ” and looked at several species of plants from around the world which have unusual features . Well . There was one type of plant that catches insects and eats them . No , it isn ’ t . it ’ s a pity , because I ’ d like to see it in action . They showed flowers that only provide their nectar to one type of butterfly or bee . The insect has to be the exact size to get the nectar . Other insects cannot get it . Of course , when the insect collects the nectar , it also takes some pollen from one flower to another . That ’ s right . That ’ s one reason why it ’ s so important to protect every species . According to the documentary , they have an incredible ability to find water supplies , however small , and then store them without losing much through evaporation .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "So you're going picnicking ? Have a good day !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "So , tell me , what makes you think we should give you a raise ? Salaries are confidential , how do you know how much money these \" other people \" make ? Those are company cars provided to the sales staff for their business trips . Also , some employees receive sales commissions . So good salesmen will naturally earn more . I see your point . However , it might be hard to get a raise approved . Profits were down last quarter , and the whole company is tightening its belt , so anything that affects the annual budget",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "What's wrong , Dave ? You look down today . Well , English is a \" paper tiger \" . Its natural enemy is adequate practice . I suggest you read English texts aloud every day , and try to speak more . That will be beneficial to cultivate your sense of the language .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Wow ! What happened to you ? You look sad . That's unbelievable . Why did this happen ? I cant't believe it . You've worked here for years .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "You look depressed . What's on your mind ? Take it easy . When we last talked , you promised there would be more exercises in your life . But now you are putting on some weight . Well , I think it's time for you to change your eating habits and develop a healthy lifestyle . Regular exercise will improve your health . You can do some jogging . It's easy and it doesn't take much time .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "It's too hot to read . Which season do you like best ? How about summer ? Why ? But sometimes summer is more charming than the other seasons .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Oh great ! This stupid computer froze again ! That's the third time today ! Hey Samuel , can you come take a look at my PC ? It's acting again . It must have a virus or something . But I'm quite careful when I'm browsing the internet , I have no idea how I could have picked a virus . Ok . Anything else ? Um yeah.Sorry about that .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I have no idea what to buy for Mary for her birthday . Yes , that would be good ! If I remember right , she likes music , skiing , and reading . Her roommate , Malia , might know what her favorite groups are . Let's give Malia a call and ask her for her help right now .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "It's too hot to read . Which season do you like best ? How about summer ? Why ? But sometimes summer is more charming than the other seasons .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hi . I ’ m here for flight 513 to New York but I thought I heard the paging system announce that it is canceled . Is that true ? No way ! I worked very hard so that I could leave on today ’ s flight . Are there seats on another airline ? You mean the line over there of about 200 people ? ! This is a rotten way to start a vacation . I HATE lines ! Can you book me on tomorrow ’ s flight ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Would you please teach me how to use the computer ? Do I have to turn on the computer ? What should I learn first ? I am ready I am going to get , let's start !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "which countries have you been to ? I thought you had been to Australia too . I think I'd say Norway . It has many pictures as fjords , waterfalls , and mountains . well , the north of Norway is almost always cold , but further south it can be fairly warm in summer . It ’ s a wet country , so there ’ s snow almost everywhere in winter .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Tom , is Jenny crying ? I ’ m just coming for that . She ’ s your sister . What she asked was only duck soup for you . Why can ’ t you be good to her ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "I want to know how to buy something from this machine . I want to buy one of those snack things . I'm clear so far . It won't go in ! Yes , next step . They're totally unreliable .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I'm so thirsty . That's a good idea . I kind of want a soda . What do you mean ? What are you supposed to drink ? I guess I will get water .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Well , Mr . Brown , we've settled everything in connection with this transaction except the question of payment in yen . Now can you explain to me how to make payment in yen ? I know some of them are doing that . But this is new to me . I've never made payment in yen before . It is convenient to make payment in pound sterling , but I may have some difficulty in making payment in yen . Do you mean to say that I can open a letter of credit in yen with a bank in London or Bonn ? I see .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "How much is this shirt ? It's rather expensive , isn't it ? How about 50 yuan ? Then let's split the difference and I'll give you 60 yuan , OK ? All right .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Is it true that rice is the staple food in most of Southeast Asia ? Is rice your staple food , too ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Excuse me . I bought this just now and here's a receipt . I'm afraid I was short-changed . Could you look into it ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "You are blue in the face , arn't you ? But supposing your son killed like the fish , what do you think then ? So beat the cat , but don't kill it .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "You look upset , is there anything wrong ? What is it ? Oh , that's too bad ! I am sorry to hear that !",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hi Joe . You met my new assistant , right ? You are kidding , but she's so helpful . Come on . She's like that with everyone .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Excuse me , sir . Is there anything I can do for you ? Let me see . I am sorry , sir . We will change another one for you . Please wait a moment .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Do you know Yahoo Greetings , Edgar ? Can you tell me how to send one on it ? ID ? What's that ? Oh . I see . But I have done it . Is that all ? Oh . I see . Thanks .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Thank you for a lovely day . I really enjoyed it . Thank you for the picnic too . It was supper . Yes , I'd love to . Thanks again . Goodbye .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Welcome to Lincoln Bank . What can I help you with , Sir ? Unfortunately , no , I can't . But our specialist can . Please take a seat and our Mortgage Adviser will come out to see you . No problem , Sir . He'll be with you in just a minute . Could I get you something to drink while you are waiting ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Would you like to go to the theater with me tomorrow ? That's coincidence , someone's just returned two tickets and I picked them . Evening . Stalls .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Good afternoon , sir.What Can I do for you ? Really ? Have you left it in your room ? Well , in that case , you have to pay for it . Please fill out the form first .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hi , Kate . Yeah , I saw someone walking like you , but I wasn ’ t sure . We haven ’ t seen each other for how long ? Almost three months ? But you look quite different now . Oh , you look quite slender and more vivacious . What have you been taking ? Are you on a diet ? Wow ! That ’ s great . I sincerely want to achieve my weight loss goals , but it ’ s difficult for me to keep up the exercise . Also you know , old habits are hard to break . Dance ? You only go dancing ? That ’ s not hard . I can do that .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Er ... Alison ? I just wanted to congratulate you ! I mean , it was a good race and you deserve to win . It was that final sprint ! You were great ! Really !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "You didn ’ t show up in the morning meeting . What ’ s up ? But you still look a little bit tired . What time did you leave ? That ’ s normal after a tense work evening . Working overtime is not always a pleasant experience for me either . Once , I worked overtime everyday for a whole week including the weekend . That really broke my rhythm and I got a little sick later . But if the company asks , what else can we do ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Man , I ’ m freaking out ! You gotta help me ! I can ’ t go through with this ! I just can ’ t ! I ’ m not ready for marriage ! What was I thinking ? I ’ m only thirty five years old ! I ’ Ve got my entire life ahead of me , adventures waiting ! I can ’ t settle down yet ! I know . I know ! You ’ re right . I ’ m being crazy ! Ok , I ’ m ready , let ’ s do this !",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "We used to be very friendly , but it seems now that my daughter ’ s marriage has taken its toll of our relationship . I don ’ t like her husband , that bad egg , but my daughter insists on marrying him . I wish she wouldn ’ t regret for her decision .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Do you like our new history teacher ? You can't say that ! He's a very knowledgeable person .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Did you see the news today ? You know about the blackout last night , right ? A bunch of people went looting last night . They took full advantage of the lights being out . The news reported that four stores were broken into . The police don't know who did it .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Next time you buy veggies or fruits , have them bagged and weighed before you come here . The total comes to US $ 65.81 . How will you pay today ? Slide your card through the card ID pad and punch in your PIN . One moment . Do you want to withdraw some cash while you're at it ? Paper or plastic ? Do you want paper or plastic bags for your groceries ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hey , look , there is a circus show over there . It's the circus . Oh , come on , they give them treat too.Oh , look , that little monkey is so cute . Oh , it is coming to us , come on , Ben , get a banana to it . Why are you acting so strange today ? That's weird !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "There will be another sandstorm here tomorrow . Yes . We should plant more trees and grass to stop the sand from spreading . But we need the wood .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "I don't know how to adjust my life . Would you give me a piece of advice ? Yes , I can't sleep well every night . I drink a lot of wine . I often feel so tired . I sometimes find the shadow of death in front of me .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Did you listen to the weather forecast ? There's a typhoon coming . Yep , it should be here by tomorrow night .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "There will be another sandstorm here tomorrow . Yes . We should plant more trees and grass to stop the sand from spreading . But we need the wood .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Here you are at last ! You're half an hour late , you know . What happened ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "We have been over this a hundred times ! We are not getting a pet ! Who is going to look after a dog or a cat ? What if we want to take a vacation ? Who will we leave it with ? Plus , our apartment is too small for that breed of dog . We ’ re planning on having children soon , I don ’ t think those animals are a good idea with a baby in the house . I ’ ll tell you what , I can get you some hamsters and we ’ ll take it from there .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I am here to get my prescription filled . Do you ever deliver prescriptions by mail ? How should I take this medication ? Should I avoid alcohol with this medication ? Should I expect any side effects ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "What's this then ? But this should have been handed in last Thursday . Well , what's your excuse then ? Oh , Yes ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I'm calling to cancel a reservation I made earlier in the week . Rudy Randolph , 818-555-1234 . My reservation begins on the second Monday of April . Thanks . I'll call again when things get better at home .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I remember you said that you like China because it has cheap beers . Why do you drink ? I mean , where does drinking get you ? Come on , you don't even know that blinds following is a sign of immaturity . How ? By drinking ? When did you begin to drink ? And then ? So you get drunk every day ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hi , Mikel . What's with you ? You look angry . True , you are getting a really pot belly , aren't you ? Just kidding , Mikel . Why don't you come work out with me ? It works if you keep at it . Come on , let's go ! This feels great . I'm all reed up . I can keep going all night . Exercise has no benefit unless you sweat like a pig . Thanks for coming , it was a real blessed . You'll get used to it , Mikel , trust me .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I haven't met the Smiths for a long time . Why ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Did you order the cake ? Get on the phone right now . It might not be too late . Yeah . How about ' Happy Birthday Tony , from the gang . '",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Frank ’ s getting married , do you believe this ? Yes , he is . He loves the girl very much . A girl he met on holiday in Spain , I think . Not yet .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hello , thanks for calling 123 Tech Help , I ’ m Todd . How can I help you ? It ’ s okay sir , calm down . What happened ? Ok , sir , it sounds like you might have a virus . No , your computer might have a virus , I mean , it has a bad program on it . Maybe that ’ s why it crashed . I recommend that you run an antivirus program in order to safely remove any unwanted spyware or Trojans .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Have you heard that we will have reorganization ? Yes , flexible , aggressive and creative people are urgently needed in the marketing department . James is going to be packed off there .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Sorry , I'm late .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I don't know what I'm going to do . I need to find a job . If I don't , I won't be able to stay here next semester . What do you mean ? Yes , I know . I tried that.They don't have anything now . So what can I do ? I know that . You don't have to tell me that . That's my problem . I know I have the right to work for the university . That's legal.But they don't have a job for me . And it's illegal for me to get a job elsewhere . But I need a pretty decent job . I need to make enough to pay my rent at least . What ? I already had that idea . But I don't know what I would do . Maybe . I don't know . I have to find something.Otherwise I have to go back to Taiwan . I'll be broke in two months .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Gross ! What are you doing to yourself ? It looks like some kind of primitive form of torture . Well , you might pinch your eyelid ! Or lose an eyeball ! What for ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "What can I do for you ? For whom ? What symptoms does he have ? I got it . Don't worry , just a common cold . Patulin will do . Six per day , and two after each meal . My pleasure .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Did you hear peter just retired ? He is not young as he looks . I think he's almost sixty .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I'm going for a walk , Yi-jun . I need some time to myself . I just can't right now . Everyone will be talking about Taylor and ... I need to come to grips with his death first . And I also need to prepare a eulogy in case I'm asked to speak tomorrow .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Any plans tonight ? Well , I am wondering if we took a hang-out for a drink or something . You know , I just came back from a really tough interview . I was quite nervous during the interview . I really want to have the job . Right now , I am still a little on the edge . I am not sure if I could convince them during the interview . I don ’ t know . I think I did well in the paper exams . I was prepared to answer a lot of questions , but they didn ’ t ask those as I expected . To my surprise , the manager tried to talk about the Chinese poesy with me . Just did my best .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Mom , are those tattoos on your brows ? Moooooommmmm ! You're so in ! Anything else you've been keeping from me ? Any body piercing ? Stick out your tongue ! Come on mom . I'm your A ! Wait till the guys hear about this !",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Excuse me , is this the parcel counter ? I'd like to send this parcel , please . Some books and newspapers . Is it all right ? No , I'd rather send it by sea . Thank you .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Ladies and gentlemen , now we are in the National Forest Park . The stone is a prehistoric log . It was turned to stone millions of years ago . But it's the truth . We don't have them here , I'm afraid . Ginkgo trees grow well only in cold weather . They are poplar trees . They are widely used in our lives .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Tommy played truant today . His teacher called me this morning . I've asked him , but he won't tell me . What should we do about this ? He is like you . I remember when we were at the college , you always skipped classes . Stop , stop ... We are talking about our son's attendance for classes and his study . Maybe we could give him a little bit money to pay to go to school . In that way , I'll be late every day . How about letting him go to school on school bus ? That's because I went to school for each class when I was at school . So now I am much more clever than you .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Thanks . Sometimes talking with a friend is a great way to get over something . Do you mind if I vent a little bit ? Great , because I am really mad at William . I mean , what kind of an idiot wouldn't be able to appreciate a smart , beautiful woman like me ? Anybody who would be friends with that guy has to be really dumb . Oh right ... present company excluded , of course !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Can I reserve a hotel room ? My name's John Sandals . If my plans don't change , I'll need a room April 14 till April 17 . Tell me how much it will be , and I can tell you if it's okay . $ 308 a night ? That's a fair price . Nonsmoking , please . I have absolutely no problem with that . Not a problem . The number is 626-555-1739 .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Well , Peter . I'm sorry you're ill . What's the matter with you ? Show me your torgue.What did you eat yesterday ? Did you eat any cake ? Did you eat any ice cream ? Did you eat any candy ? Young man , tell me everything you ate yesterday evening . I see ! How many pieces of cake did you eat ? How many plates of ice ream did you eat , young man ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "The air conditioning is not working ! We need to call a handyman before we start to fry in here ! That would be convenient . They might as well ask him to fix the electrical wiring . The circuit breakers keep going out all the time . It ’ s really annoying ! I know ! I was in ankle deep water trying to get to my car that day ! The handyman definitely has his work cut out for him .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I don't think the lecture is very interesting . I feel he's like a talking machine .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "I really admire you , Diana . You are always happy and able to achieve high scores at school . Isn't there anything else ? You must have a high IQ score . Go ahead . Seriously ? But you are such a genius . Well , perhaps you're right . Sometimes EQ matters more than IQ . OK , thank you . I'm going to the library , are you coming ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Okay , here's the lease . Read it over before you sign it . As you can see , the deposit is $ 300 . Yes , assuming there's been no damage to the apartment . Before you move in , you can make a list of any marks , scratches , and so forth that are already there . Great . You can move in next Monday . Your first month's rent is due then .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Hello ! Oh , hi , Donald . Well , it rained hard all day and I had a bad cold , so I decided to stay home . Oh , the telephone lines were damaged by the storm . They repaired them yesterday . No , they stayed home and played cards with the children . No . I listened to records and studied , what did you do yesterday , Donald ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What is your case against the police ? What do you mean ? Didn ’ t they let you go ? So they kept you at the station ? Did they tell you why they arrested you ? I understand .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Oh , my ! It's really hot . I've never seen such scorching weather in my life . Oh , look at the thermometer ! The temperature has hit 98 . But it's already awfully close . I guess you can ’ t do anything until after dark then .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Doris , I'm glad you're home . I'm terrified . I don't know what to do ! I think someone is stalking me . I don't know . I saw him the first time Tuesday . He was at the cafe . I noticed he was looking at me a lot . Not just the usual looking , but staring.He just kept staring at me . He didn't stop . I didn't do anything . Finally , he left.But then I saw him again today . Outside the shoe store . Near the cafe . I went into a CD store and pretended I was looking at CD's . But then he came in too . Yes . Then I noticed he was on the sidewalk behind me . He was following me .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "May I help you ? Alright . Do you have your receipt ? And why are you returning them ? I see . Oh , wait . Ma'am , I'm sorry . These slacks were on sale . I'm sorry , but we don't allow returns on sale items . I'm sorry , but we usually don't do it . It is our policy . Well . Let me talk to the manager for a moment . Madam , the manager says can do it this time . Please show me your receipt again . I will have to give you store credit , Madam . If you can find something else you like in the store , you can use the credit . We appreciate your business , Madam .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Can I help you ? We have various colors . How about this one ? You have a very good taste . It's our best seller . Sure ! Look , it suits you well .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What's the matter , Paul ? So , what are you going to do ? I'm sorry , but I really need it this afternoon . Sure . That's no problem . Here you go . Anything else ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I can't believe you wear jeans to the office ! Are you trying to lose your job ? Wow ! Nobody told me about that . Won't the relaxed dress code damage the company image ? I guess it lets people express their individual tastes . But won't some people abuse it ? It seems that a relaxed atmosphere could hinder productivity .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Can we talk ? You know what I mean . I want to know where this relationship is going . I ’ m in love with you and I need to know ... I ’ m awesome . Well , I guess that ’ s my answer , isn ’ t it . Look , if you don ’ t love me , it ’ s not a thing , alright , we ’ Ve had our laughs , but I don ’ t appreciate ... maybe it ’ s just time we ... You do ? Oh , I love you too ! Oh baby , I ’ m so sorry .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What time do you have ? I must be off now . I'm pressed for time .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Television is undoubtedly a great invention , but one of the main criticisms of it is that people just aren't selective enough . Lesley , got a television . how do you pick out the sorts ofprogrammes you want to watch ? Do you think of television though as a great time-waster ? Aha , but how do you prevent it coming into your life and taking oversour evenings and at the same time perhaps get . . . get out of thetelevision some of the sort of best things ... best programmes that ... that undoubtedly are on television ? Do you think though that ... that in . . . in a sense television skilled people's own er ... sort of , creativity or their ability entertain themselves because if they're bored all they do is justturn on the television ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "The art critic from the daily chronicle doesn ’ t think much of the max oreo exhibition . He says that the artwork is uninspiring and old fashioned . I liked it . I didn ’ t think his works were masterpieces , but the certainly weren ’ t uninspiring , in my opinion . I like landscapes and still life . You prefer abstract paintings , don ’ t you ? I agree . I prefer oils too . I collect landscapes , but I only have a small collection . You have a small collection of abstract art , don ’ t you ? That would be nice . Can you read the characters ? I think that ’ s true with any of the fine arts .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "How was your trip to Brazil ? Did you learn anything ? Tell me about it . Really ? Are you serious ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What are you doing , Janice ? Patent ? Are you also learning something about patent ? You are well-informed . Can you tell me something about the Patent Law in our country from the book you are reading ? So coincidental . Actually we can exchange some information on this problem . Is there any provision on applying for the patent for foreign company ? How long is the duration of patent right for an invention according to your Patent Law ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "This room is unfit for humans . I want another room , and I want a refund for tonight . In a word , cockroaches ! Thank you . I'm glad that you don't believe that your guests are liars .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Do you know how late it is ? I hope you don't think that excuse lets you off the hook . Haven't I asked you to call if you're going to be home late ? Regardless , all you had to do was give a call . Come home late one more time , and you'll find your stuff outside . That's right , maybe then you'll respect my rules .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Good afternoon , sir . Could you spell that , please ? One moment , please . Ah yes , Mr . Hilton , you booked a single room for three nights . Is that correct ? I see from the computer that you are a frequent guest here . Do you have your loyalty card ? Thank you . Right , your room number is 105 . Here's your key and receipt . Thank you for choosing our hotel again , sir . Goodbye .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "It's quiet everywhere in winter . Me too . That's a good idea . Let's go ! Take care ! Don't slip on the ground . Yes . Very wonderful . How lovely it is !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Karen , do you have a minute ? I'd like to ask you about something . I think you can give me some advice.You have worked here longer , and I just want to know what you think . I am worried about the meeting this morning . Really ? I'm afraid I was too rude . Well , I maybe talked to Mr . Drummond too directly . I thought I maybe said too much . I don't want him to be angry . Really ? But I am new here , and I'm not sure he is used to that . Yes . And he is the president of the company . I am very happy to hear that , Karen.It ' s good to know I'm working in such a company . Good . Thank you for telling me this .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Are you okay ? What's wrong ? By who ? Are you hurt ? That's crazy . Do you want me to take you ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I had broken up with him , how painful I feel . I ’ m going to drown my sorrows .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Do you think I could use your car tomorrow ? I ’ Ve got a date with this girl , see ? And ... Nine thirty ? That ’ s no good . Couldn ’ t I have it a bit longer ? Even if I fill up the tank ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "We've got a new manager in our department . Yes , I did . Someone called Drexler . Carl Drexler . He's been with the company onlytwo years . I've been here longer . And I know more about the job , too Because I'm the wrong sex , of course ! Yes , that was probably it ! It isn't fair . A dark suit . White shirt . A tie . Why ? You mean you think I didn't get the job because I come to work in jeansand a sweater ? Do you really think I should wear different clothes ? Why should I wear a skirt ? Or a dress ? Why should I do that ? I'm good at my job ! That's the only important thing !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "It's too hot to read . Which season do you like best ? How about summer ? Why ? But sometimes summer is more charming than the other seasons .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "How is everything going with your girlfriend ? Oh , I am sorry to hear that . I did ’ t know that you had split up . What happened ? Really ! Did she tell you why she didn ’ t show up ? What was she thinking ? Did you confront her about it when you saw her ? I can ’ t believe she would do that to you . It ’ s so dishonest---and rude ! I bet you she regrets what she ’ s done . You were such a good catch ! She really lost out , didn ’ t she ? I know . It ’ s always nice to have some closure , but I don ’ t think you ’ ll have a problem finding another girlfriend .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "How did you enjoy your family party at “ ginger ’ s ” ? I hear that they have a lovely menu and buffet . I like the buffets they have , but if often order a la carte , because I don ’ t feel extremely hungry . I like the wine list there too . Some restaurants allow you to take your own wine and just charge you corkage , but the don ’ t do that at “ ginger ’ s ” . what was included in the seafood buffet ? Did they have lobster ? Yes , it probably is . I don ’ t like ordering oysters in restaurants . You never know whether they are fresh . When you eat out , do you usually eat from the buffet ? Oh , you don ’ t usually have a starter ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Well , I'm glad you're finally back . I was wondering what happened . Why ? You got lost . You're kidding ! You could have called . You've been gone for two hours . How could you get lost for so long ? I don't know . Where ? Grangerfield ! You were in Grangerfield ? That's a completely different town ! How could you drive to a completely different town ? Grangerfield is like a dozen miles away from here . Hmm , maybe I do . Maybe I have an idea how it happened . You were too busy looking at Joseph , and you weren't paying attention to the road . Yes , that's what I think.Maybe the next time you go out with him to buy groceries , you'll get lost for even longer.Maybe six hours or so . What ? Hah , hah ! See ? I guessed right . You weren't watching the road at all .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "This sucks . I hate buying lingerie . Okay , just find something and get out of here . Alright , these are fine . Oh , no , don ’ t come over here , don ’ t come over here . Um , I ’ m just having a look around . It ’ s my girlfriend ’ s birthday tomorrow . I'm trying to find her something . Sure that ’ s fine . Well , do you want a thong , some bikini briefs , maybe this nice pair of lacy boy shorts ? Here you are , sir . I ’ m sure she ’ ll enjoy them . I ’ m sorry , sir . I ’ m going to have to take a look inside your bag .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Ah ! No ! Damn it ! So what ? I just lost one hour's worth of work . No , I didn't save this time.Damn it ! And I'm sick of writing this paper . Now I have to write it all over again too . I hate computers . Sometimes I think they cause more trouble than they're worth . I don't know . I feel like going out . It doesn't matter . I still can go out and buy a beer . Yes , that's true . Damn ! I just lost half my paper , and now I can't even do my homework.This is a bad time for this to happen . Thanks . I think I will try . Where are you going ? Maybe we can trade.Why don't you stay here and read for my exam , and I'll go drink beer ? So ? You can go to the class for me.Just write my name on the exam book and take the exam . Why not ? About fourteen . Damn !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I just got laid off . The awful business , you know . Yeah , I ’ m better after talking to you .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Wow ! What ’ s the hold up ? Really ? Then , I guess I won ’ t have a hard time finding a room or getting a cab ? I ’ m not too worried about it . I always seem to find something .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Staying out all night , you frightened me to death . You should at least give me a call .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Have you got your invitation yet ? The house warming party . Tom and Bill Smith . They are both working now you know ? And they've bought a new house . It's out in the suburbs . Yes , I have . I went out with them last weekend . Yes , it is . There are three bedrooms , a living room , a dining room , and a big kitchen . There's also a garden . They are moving today . Tom's taken the day off . He's rented a truck , and they should have all their furniture in the house tonight . Next Saturday night . You should get your invitation today or tomorrow .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Excuse me , miss . I don't think we need the MP4 any more . We would like to refund it . Here you are .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Are you listening to me , Dan ? What did I just say ? Just what I thought !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "You look kind of green . Have you had anything to eat lately ? Perhaps the food was bad . Has anything been upsetting you lately ? Do you think that maybe you are getting the flu ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Ok ... I ’ ll talk to you later . Bye I just got off the phone with my boyfriend . He is always getting upset and losing his temper over nothing . It ’ s so hard to talk to him at times . Yeah but , he is always in a really foul mood . I try to find out what ’ s bothering him or get him to talk about his day but , he always shuts down and brushes me off . I guess you are right . What do you think I should do ? He wasn ’ t always this grouchy you know ... You are something else you know that ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Did you listen to the weather forecast ? There ’ s a typhoon coming . Yep , it should be here by tomorrow night .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "How much should I pay ? Here is $ 50 . Keep the change , please .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Sorry ! Excuse me ! I got your message . That's OK . Just let it out . I'm OK ! I was out of town with ... Femi . Taylor Smith . But not me . The pallbearers are carrying out the casket . It would be rude to just leave . Let's follow .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I think this painting would look good in our living room . What do you think ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "As an experienced interviewer , could you tell me what kind of behavior the interviewer hates most ? And we should have good sitting posture . Where should I put my overcoat and briefcase after entering the office ? I think that ’ s the reason why Princess Diana ’ s hair style became so popular . I ought to respect other people ’ s privacy , as most Westerners do .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "What's wrong with you ? I really recommend you go for a run in the morning . On the contrary ! It really refreshes you and gets you ready to attack the day . Yes , I often feel like a million dollars after work , like I can take on anything .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I'm really in a flap about the interview . I'm in such a need of the job that I can't afford any mistakes .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Have you heard of Paul ? He's got a promotion . No , they made him vicepresident in charge of sells . Well , it's true . The board man last thirdly and they choice Paul .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hi ! Fiona ? I almost didn't recognize you . You are much thinner since I last saw you . How did you do it ? What's the secret then ? Well . It's hard for me . I can't keep doing exercise .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Please help yourself to whatever you like , don't be shy . This dish tastes terrific . Would you like to try a little ? It is a little hot , but very good . Would you like another beer ? Come on , it's the weekend . Let's taste and enjoy this meal . Cheers !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I failed the exam because I didn't study .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Veronica ! Veronica ! Veronica ! Are you OK ? I will come clean as soon as we get to safety , OK ? For now , you have to trust me , please ! I would never do anything to hurt you . I haven ’ t been completely honest with you Veronica , I ’ m sorry . I ’ m not a fireman . I ’ m not even from the United States . I ’ m a spy for the Indian government . When I was a young boy , I used to play cricket my father back in my hometown of Hyderabad . It was a peaceful town , and my father was a renowned chemist . One day , he was approached by members of the CIA , claiming that my father had made the discovery of the millennium in his small lab back at the university where he taught bio-chemistry . I never saw him again . I vowed to discover the whereabouts of my father and consequently joined the Indian Intelligence Bureau . I ’ m sorry , I wasn ’ t supposed to meet you . I wasn ’ t supposed to fall in love with you , but you have to believe me when I tell you that what I feel for you is real . Veronica , wait !",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I'm very worried , doctor . I'm afraid that I'm very ill . Because I feel tired all the time , even when I wake up in the morning . I find it very difficult to do any work . I have no appetite . Very badly , doctor . Well , yes , I am . I'm worried about my work . I've just taken a new job . I earn a lot of money but it's difficult work . I'm always afraid of making a mistake .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I'm going for a walk , Yi-jun . I need some time to myself . I just can't right now . Everyone will be talking about Taylor and ... I need to come to grips with his death first . And I also need to prepare a eulogy in case I'm asked to speak tomorrow .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Excuse me . Have you got any books on genetic engineering ? I've looked for them everywhere , but I can't find any . What a pity ! I should have come earlier . Ok , I will .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hey , let's eat out tonight . No . Just want to relax a little bit . You don't have to win the lottery to relax , do you ? Come on . It's on me . Don't be silly . I'll take you anywhere you wanna go . Dream on !",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Johnny , I can't believe you would do that . You're darn Toomin ' , you know ! Now , you're on housework duty while I'm here ! You're going to mop the floor until you can see your face in it ! And you're going to dust every piece of furniture in the house !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I want to see the man responsible for selling typewriters . Well , look here . Ten new typewriters were delivered to my company yesterday afternoon and only five of them work properly . Never mind being sorry , what are you going to do about it ? Good , I hope you'll make sure that it won't happen again . Thank you . Goodbye .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Doris , I'm glad you're home . I'm terrified . I don't know what to do ! I think someone is stalking me . I don't know . I saw him the first time Tuesday . He was at the cafe . I noticed he was looking at me a lot . Not just the usual looking , but staring.He just kept staring at me . He didn't stop . I didn't do anything . Finally , he left.But then I saw him again today . Outside the shoe store . Near the cafe . I went into a CD store and pretended I was looking at CD's . But then he came in too . Yes . Then I noticed he was on the sidewalk behind me . He was following me . He followed me all the way home ! Yes , he was . I'm not imagining it.Finally , just when I got home , I turned around and looked at him.He was just standing there . He didn't smile . He just stood there . It was so obvious.What should I do ? I'm so scared . Can I call the police ? Why can't I call the police now ? He was definitely following me ! I suppose . What can they do ? I don't even know who he is . Alright . And I won't go to that cafe for awhile .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Driver , take me to the airport . Driver , can you please speed up ? I m afraid I might miss the flight . Damn it ! I think I'm going to miss the plane . At 2:00 . Really ? Great ! Here is the money .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I'm looking for a pan I can use in my kitchen . I've already got a small pan . I need a big one . Oh , no , that's way too heavy a pan for me . Yes , it's very lightweight . But I don't want this aluminum handle . Oh , this feels very nice . It's perfect . I'll take it . Cash . But first , I need a lid for this pan .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Vancouver is the third largest city in Canada . There are many famous places such as Robson Street , Stanley Park , Gaston , Lion Gate Bridge , The Vancouver Art Gallery , and The Canadian Crafts Museum .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "It smells like an ashtray in here ! What ’ s wrong ? I thought we agreed that you were gonna quit smoking . Look , there are other ways to quit . You can try the nicotine patch , or nicotine chewing gum . We spend a fortune on cigarettes every month and now laws are cracking down and not allowing smoking in any public place . It ’ s not like you can just light up like before . Fine ! I want a divorce !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "You're from New York , aren't you ? What do you suggest I should see in New York ? No , I don't like museums.They ' re boring . Ah ! That sounds interesting .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Hey , Gary , great to see you again . Please have a seat . So tell me , what seems to be the problem ? Well , let ’ s have a look . Open wide . Hmm ... this doesn ’ t look good . Well , it looks like you have a cavity and your crown is loose . We ’ ll need to put in a filling before it gets any worse , and the crown probably needs to be refitted . I ’ m going to order some x-rays . No , not at all ! Just lay back and relax .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I think it is easier to buy a car than to maintain it . What ’ s worse , I just don ’ t trust those vehicle maintenance shops . Sometimes , they overcharge or don ’ t build those parts I have been paying for . Last week , they even tried to persuade me to buy new parts which really need not to be changed . You know , my car is just half a year old and also good brand . I was just wondering about all these . Is it possible to make a compliant call to some organization what it ’ s someone gets rip-off .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Hello , darling ! Did you have a good day today ? Would you like a drink ? Dinner will be ready at six . Are you hungry ? Oh . Did you pick up the suits from the cleaners ? Good . Are you going to the pub tonight ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Victoria , you are back from vacation ! How was it ? How come ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "When can you give me the final decision ? OK . Thank you for your interview with me .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "It's nice and bright today , isn't it ? How about winter ? It's boring , right ? Do you get much rain during the summer ? So you should bring an umbrella often .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Shall I make some coffee , Jane ? It's ready . Do you want any milk ? What about some sugar ? Two teaspoonfuls ? Would you like some more ? Of course . I think there are a few in that box . What a pity ! Have a biscuit instead . Eat more and smoke less !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "So , Lauren , I just wanted to talk to you quickly about our new customer support representative , Jason Huntley . Basically , I ’ Ve got a few concerns about him , and the bottom line is , I don ’ t think he ’ s a good fit for our company . Yeah , his attitude is great , but he ’ s really unreliable.Sometimes he ’ s really productive , but then other times ... take last Tuesday for instance , he was forty-five minutes late for our morning meeting ! But that ’ s not the only thing ... you know , he really doesn ’ t have the best work ethic , I ’ m constantly catching him on MSN and Facebook when he should be talking to clients . Make it work , Geoff . You would say that , wouldn ’ t you , he is your cousin.what a jerk , make me hire your stupid , useless , cousin .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "It's the 17th week now , isn't it ? Oh , the final exam is coming soon . I feel a little bit nervous . No , I haven't began my preparations . Great . You can help me a lot with English . No problem .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I heard you are busy with your new house now ? Let meet this right — — do you want to buy the house ? But it is far from downtown . Living here is very inconvenient .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Hello , Madam . What can we do for you today ? I certainly do . Here it is , an Export L / C from Tokyo . Yes , it is . Sayuri Beds , Tokyo , Japan . Just sign right here , please . That's everything you need to do .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "It ’ s very kind of you to invite me to dinner . This dish is really delicious . You ’ re great . Could you say it in Chinese ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I really admire you , Diana . You are always happy and able to achieve high scores at school . Isn't there anything else ? You must have a high IQ score . Go ahead . Seriously ? But you are such a genius . Well , perhaps you're right . Sometimes EQ matters more than IQ . OK , thank you . I'm going to the library , are you coming ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Lisa wins the first prize in the English speech contest of her college . But I always feel disappointed . I have many problems with English learning . I feel confused about the grammars . And my writing is not good . I feel so frustrated . I know that , mom . But sometimes I'm just sad . Yes , mom . You are right . Nothing is impossible to a willing heart . I will keep going .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Ah , ah , ah ... Jog ? Walk ? Oh no . Oh , dear . Oh no . Dance class ! I don't know how . Oh ...",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hi , my name is Lean , and I'm from Russia . To me English is a difficult language . True , but English is harder than most . It's a crazy language . One letter can have several pronunciations and one word can have several meanings .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I ’ m itching for moving ! It ’ s so wet and dark , I ’ m just fed up .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "What a lovely day . The sun is shinning and the sky is so blue . It's a perfect day to go to the beach and get a beautiful tan . Come on . Getting a tan symbolizes health and wealth in western countries . That is a really interesting fact . Just do whatever you feel like doing . Good idea . It is always cooler in a shade .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "What ’ s the problem ? Things are getting out of hand . You keep sticking your nose where it doesn ’ t belong . Now , I am responsible for training new staff , but you keep overriding my authority by trying to pose your methods . I know you are a hotshot college graduate with something to prove . But I don ’ t like your way .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Good morning golf aficionados ! My name is Rick Fields , and you guessed it , I am here with my main man , Bob Copeland . Whoa , that ’ s a lot of cash ! Let ’ s go to the course and see how Tiger Woods is doing . Tiger Woods is about to tee off , and let ’ s see if he has the same luck as Jack . Tiger is asking his caddie for his driver and , he seems to be very nervous . It seems that his ball has flown somewhere deep in the trees . He is having a hard time finding it and even his caddie has climbed a tree to try and spot it .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I think mum should not take sides . After all , we are all her children . It ’ s unfair .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Excuse me . I need to refill this prescription . Yes , I need to refill it today . I was worried about that . I couldn't remember if I had it refilled twice yet or not . Listen . This is an emergency . I tried to call my doctor , but he is out of town . So I can't see him in time . I need this medicine . It is for skin condition . I've run out.Can you just refill it once more ? But I need it . Please . Refill it for me just this once . I can go to the doctor around ten days from now . Then I'll have another prescription . But I have a prescription . I just need more of it . Oh , it will be so expensive ! I have a special medical plan , and I can only see one doctor.It will cost me a lot of money to see another doctor . This is ridiculous ! In Taiwan , it is much easier to get medicine when I need it .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hey , did you hear the news ? Miss Yang is dating the manager who's married . No joke ! That's why she hasn't married yet .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Look ! I bought these shoes only three weeks ago and there is a hole in them already . I did . But they said they won ’ t change them .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Operator . Can I help you ? To Mr . Zhang in at 2135-3678 ? May I have your name and telephone number ? Mr . Luo , will you hold the line , please - - - Mr . Luo , there is no Zhang at that number . Will you check the number again , please ? It's 2135-3678 . Are you sure this time ? OK . Let me try again .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Mary , this is your homeroom . It's 213 . Remember that . You sit in there , listen to the morning announcement with other kids , and then you go to your classes . But I have to go to my homeroom . No . Stop worrying , Mary . You'll do just fine .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Come on ! It's time to go ! Well , I've got to stop and get gas in the car , first . Well , it won't if there no line at the pump . I'll give you five more minutes , then I'm going on without you ! Oh , yes , I would !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hello . This is John ’ s Distribution . Can I help you ? Are you completely out ? Okay . I ’ ll send someone to deliver it for you tomorrow . No problem .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "What are we going to do ? I can't get the car out of this ditch . I'm stuck ! I know . This is terrible . What can we do ? This snow doesn't stop falling ! I wanted to show you the cabin . We only had another half-hour to go . I don't know . What do you mean ? I have plenty of gas . So what can we do ? Alright . That's a good idea . Days ? Oh , my God ! It's good we have food . Okay , I'll follow your advice .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Can I help you ? Well , you heard right . You can get an excellent deal on a new computer here . We have great discounts for students . Well , first let's consider your computer . Here , for example , is a system I highly recommend-the Power Macintosh G3 . it comes with 64 megabytes of total memory . Yes , it is . It should be enough for any student needs you might have . What department are you in ? Well , so you will mostly be using word processing , for writing papers . I recommend the Corel Word Perfect program for word processing . We can talk about software later . Let's talk about your hardware first . We have a special deal on right now . I should tell you about it , as it only goes until next Tuesday . If you buy one of these fifteen-inch color monitors with a Power Macintosh G3 , you can actually get 30 percent off the usual sale price . Yes . Yes . It's an excellent system . Yes , it's a Macintosh . It's Apple . Mcintosh and Apple are the same thing . I'm sorry , but our university computer center only sells Macintosh equipment . Yes . That's not true . Most of the students and professors in the university here use Macintosh . They find it is better for writing and word-processing , and that is what students mostly do . May I ask where you're from ? Well , I know that in most Asian countries Apple is not very popular . But here in America , especially in universities and publishing companies , Apple is very commonly used . There are several Chinese writing programs you can use with Macintosh . Chinese is no problem for Apple . No , don't be sorry . It's reasonable to ask your friends . But believe me , most of the students here in the university-Asian students included-most of them use Apple . You're very welcome . Here is my card , if you need any help .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hey , your Chinese is coming along ! Yeah . It ’ s a lot better than mine . Hang in there . It ’ ll all come together one of these days .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "I don't know what to do about the people who live in the flat above me ! They're incredibly selfish . They ' re always up until the wee hours of the night playing their music so loudly that I have to wear earplugs in order to fall asleep ! I tried to introduce myself to them when they moved in , but they were so arrogant that I didin't want to ever talk to them again ! They both just talk about how great they are all the time . They are ! Besides being loud and arrogant , they're also terrible gossips . They're always talking about everybody else in the apartment . I don't , but they talk so loudly that I can hear what they're talking about from my bedroom - and it's not very nice . Most of my other neighbours are scared of them . I can't afford to move right now . I think you're being a bit optimistic . If you met them , you'd understand .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I know I'm a blabbermouth , but what do you think she should do , John ? I know ! But it's really important to her ! Her whole life could be ruined by this man ! Are you serious , John ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Alright everyone settle down . Let ’ s get started.As you know , an important aspect of becoming a good citizen is understanding the genesis of our legal system . It is not enough to simply memorize our laws , it is necessary that we comprehend why and how they were formed . This brings me to our topic for today . Does anyone know what we celebrate on May first ? No , that ’ s May fifth in Spanish , James , no wonder you are failing my Spanish class . No , May first is International Workers ’ Day . No ! It is not considered to be a national holiday here in the US , but in other countries it is . In the nineteenth century , working conditions were appalling , with workers being forced to work ten , twelve , and fourteen hours a day . Support for the eight-hour work day movement was growing rapidly , despite the indifference and hostility of many union leaders , and by April 1886 , 250,000 workers were involved in the May Day movement.Previous legislative attempts to improve working conditions had failed , so labor organizers took drastic measures . They passed a resolution stating that eight hours would constitute a legal day ’ s work . And , on May First 1886 , the resolution took effect . Yes ! But the happy ending came at a high price.On May third , 1886 , police fired into a crowd of strikers at the McCormick Reaper Works Factory , killing four and wounding many . A mass meeting was called for the next day to protest the brutality . Well , as we say , the rest is history ...",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Anita , I ’ Ve been here only three days and you ’ re leaving already . Gambling ? Where ? If you gamble all night , you ’ ll run out of money in a few days .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I don't know what to say . This can't be happening . Here's the obituary . But it explains why Taylor isn't answering and Femi took time off from work . This says the viewing is at Myers Funeral Home today until five .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Where did you get assigned to go this time around ? Hong Kong again . I would like to go somewhere different for a change . If you really want to learn , remind me when you get back from your business trip . When do you leave ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Julia , burglaries in our town have been on the wing . I heard that a robbery happened in our town several days ago . The robbers ripped off a car in broad daylight . I am worrying about it too . I want to install a security door . Yes , I think so . The security door is so firm that nobody can break in . OK , I will do it right now .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Mr . Smith is really a thorough drag . He's endless talking about stocks almost bores me to death . I'm not at all keen on this subject .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "What shall we do when we find a shortage in the shipment ? Shall we leave it to the brokers ? Do they charge for that ? Is it the same in America ? It's part of their service , isn't it ? Is it enough to claim with an on board bill of lading ? I see . By the way , how do we prove the ownership of our goods ? I see . Thank you .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Dahua's Market . How can I help you ? We are on Nanjing Road , next to the theatre .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Well , I guess that ’ s about it . Everything ’ s packed and ready to go . Have fun ! I plan to spend some more time with my grandkids , and I might even go back to school .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Excuse me , sir . Didn't you see the red light ? No , sir . The sign says No Turn on Red . I am sorry , sir . But may I see your driver's license and insurance policy , PLS ? I have to give you a ticket . Sign here , PLS . You can appeal to the court within 14 days . This slip has all the information you need . Pls drive safely , sir .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I couldn't look at you , and say you aren't beautiful ! No , Miss Anna , you must let me say how lovely you are ! What's wrong with that ? You know that everybody notices how beautiful you are , don't you ? Oh , Miss Anna ! That's too hard ! I won't be here long .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Are you ready for a second ? Would you like anything else ? I'm sorry.It ' s out of season now .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "He has come to life in the end . Yes . Fortunately , an ambulance passed in the nick of time , and we got him away to hospital . Wish him to be healthy soon .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I'd like to help pitch in with dinner . No , I'd like to do something special for you on your birthday . OK.Now how can I help , hon ? Easy , I can do that with my eyes closed.Done . How many potatoes do you need ? Gotcha , OK . Here they are . Where is the peeler ? What ? Oh shit ! I cut my finger . I guess cooking is not as easy as I thought .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Excuse me , sir . Is there anything I can do for you ? All right . How much would you like to change ? Pardon ? I'm sorry , sir , after 7 I'm afraid we cannot help you , sir , because that would be violating the regulations . I owe an apology for doing nothing about it .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Yeah , I ’ Ve just moved here , and I ’ d like to activate my cell phone , and I ’ m not sure if I should go with a prepaid plan , or a monthly rate plan . What ? Really ? I don ’ t really want to have to buy a new phone . Really ? What ’ s the catch ? So what does this plan include ? Wow , all this for forty dollars per month ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Oh , my God ! I've been cheated ! It's a brick ! I can't believe how stupid I was . Damn it ! There was a guy on the sidewalk.He had three new boxes , Panasonic video camera boxes.He said he had to get rid of them quick . So he said he'd sell me one for twenty dollars . A four-hundred-dollar camera for twenty bucks . Yes . I wanted to . But he said , no , the box is still in its plastic wrap from the store.If it's opened , other people won't believe it's new . Yes , it was the kind of perfect plastic wrap that comes with new products.Look , it even had a bar-code price sticker on it ! It looked brand new . He said he had to get rid of them . They were stolen . C'mon , don't blame me ! I thought it was a new camera . We could use it.We were even thinking about buying a camera . I don't understand how he could have such a perfect-looking box . You're right , Sarah . I was a fool . I can't believe it . How could I fall for such a trick ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "The ATM machine outside won't give me back my card . Yes , here it is . How did you know ? Oh . But can I have my card back now ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I am sorry to say this but I seem to have lost the key to the safe . Yes , I believe so . How should I compensate for this ? What ? 100 US dollars ? Is it covered by the insurance ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Didn ’ t you punch in this morning , Monica ? That ’ s ok . I should have told you earlier . This is a company rule . According to the company rule , we should punch in before 8 o ’ clock and punch out after 5 o ’ clock every work day . From 11:30 to 1 o ’ clock . Sometimes , but not quite often .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "What ’ s wrong with you , Mr . Polly ? Then , buy a bottle of soft drink . It ’ s a problem , because my boss is in that shop now . Sorry , Mr . Polly . Have a try .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "This Olympic park is so big ! Splendid ! When is it gonna be finished ? How many seats are there in the stand ? I didn ’ t know it would be so big ! Ah ... I see . Hey , look the sign here , No climbing .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "So who does he think he is , anyway , I can't believe the way that my boss has been ordering everyone around lately , I mean , it's now like he is the CEO , or anything . Yikes ! you are joking , right ? I can't believe it . No wonder he is so stressed and bossy lately . I thought he was just being ostentatious by giving orders to people and all the different departments . What big shoes to fill ! What does a CEO do anyway ? I know the CEO makes the most money in the company , but what does he actually do ? Must be one smart guy .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Who ate the cookies that were sitting here ? Shame on you . I was saving them for your brother .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Could I pay for my parking ticket ? Here's my ticket right here . I don't have it . I don't understand why I can't just pay you . I get it now . Will my record be cleared after I pay the fine ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hello . Are you here to withdraw some money from your account at the Securities Company ? I'll need to see your Passbook for that account . Thanks . OK ... your balance is 320,214 RIB . How much do you require today ? Please fill in this transfer form and enter your password , here . Then the transaction should be completed .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I simply couldn ’ t help giving him the fish-eye when I knew all that . However , he disappointed us very much this time .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "What ’ s the matter , dear ? Oh , dear . Did you lose a lot of money ? You must tell the embassy about it . And I think they ’ ll issue you with a new one . No . But you mustn ’ t leave it too long . Did you report it the police ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "What's the matter with you ? You look so upset and tired . Oh , that's really tough . I can understand . By the way , is there anyway I can help ? Oh , that's so great , bless you ! if you need me , I'll always be there .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I ’ m so frustrated ! I called the electronics shop to find out what time they close , and it took me twenty minutes to get what I wanted ! yes.They have some sort of digital receptionist.So when I called in , a machine told me to push a button for the department I wanted to be transferred to . I just kept pushing buttons . I was transferred to customer service , but there a machine told me to choose between technical help , warranty information , or price information . Eventually I did get to a real person . I found out the closing time , but by then the store had already closed !",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "It is reported that the temperature is going to drop dramatically tonight . Yes . So you'd better dress warmly before you go out .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Have we sold out all the newspapers for today ? Why are so many extra gifts left here ? How about giving them to that old man ? By the way , do you think it's a good idea to give free gifts to attract customers ? I think it should be more useful to hand out some fliers which is also cheaper . That's true . Okay . How tiring the job is !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Well , if it isn't the teacher's pet ! You can't prove that by me . I saw the score on your report . It just happened to be the highest grade in the class . I worked hard too . But she always gives me a lower grade .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Are you ready to order now , sir ? You have a choice of vegetables , green peas , lima beans or spinach . Yes , sir . What would you want to drink , coffee , tea or milk ? The cream and sugar are on the table , sir . Would you like to order some dessert ? Ice cream , fresh fruit or chocolate cake . Yes , sir . Here you are , sir . Pay the cashier at the door .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Oh great ! This stupid computer froze again ! That's the third time today ! Hey Samuel , can you come take a look at my PC ? It's acting again . It must have a virus or something . But I'm quite careful when I'm browsing theinternet , I have no idea how I could have picked up a virus . Ok . Anything else ? Um yeah . Sorry about that .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "It seems that you get antsy when you hear I praise another guy . How come you think of him that way ? I have no reason to distrust him . He's never caused any harm . Nothing smells a rat . I told you that he's an all-right guy .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hi , Nally , are you hungry ? Where to ? Are you kidding ? That place is too ritzy for lunch . Same thing , meals there all coarsen arm and leg . Let's stop it at Multicolor for a quick lunch .. That was a great lunch , the food was good , but the service was lousy . You got it . All right , Let's go back to school .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Well , Yuri , tell me about it . That's what I was afraid of . Mud ? But Ivan told me there were no mudslides in that district . I thought all the mudslides were down in Chichitango . Oh , that's terrible ! What bad luck ! I wish we had never come to this country.But , if it isn't the strikes and the revolutionaries , it's the earthquakes.Our operations here are finished ! It's not your fault , Yuri.But tell me . When will Ivan be able to get out there ? Good . I want an estimate of damages as soon as possible . Yes , Yuri ? Has the earthquake damaged the bridges too ? Are you serious ? Fighting ? But I didn't hear anything on the news . Oh , this is terrible , Yuri . Terrible ! So we can't even assess the damages . How can we do business in this country ? Either we're buried under mud , or we're in danger of getting kidnapped.No , I can't believe this mess ! You don't have to keep saying that , Yuri . It's not your fault.But me--I'm the one who should be sorry.It was me who suggested operations here in the first place ! Oh , what can we do ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "How do you feel about that restaurant ? What did you dislike the most ? Did you think that the food was any good ? The service certainly could have been better . Is this a restaurant that you want to come back to ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hi , could you help me find a place where I could buy some lunch ? I was thinking of pizza or something else Italian , maybe . Good ! Where is it ? That would be great .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Did you listen to the weather forecast ? There ’ s a typhoon coming . Yep , it should be here by tomorrow night .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Did you listen to the weather forecast ? There ’ s a typhoon coming . Yep , it should be here by tomorrow night .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I'm so angry at Bob for buying a new bike .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "What are you doing ? There are no countries marked on the map . The thing that I find most surprising is that most of the world is covered with water . Compared to the oceans , most countries are tiny . Rivers have created deep valleys and canyons like the grand can you . It ’ s all so interesting . I ’ ll have to find more information about it on the internet . Or perhaps I should try and attend your geography class .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Have you every belonged to a political party ? Really ? I know you are very concerned about the environment . You were a member of the pressure group Greenpeace , weren ’ t you ? The green party have no chance of winning an election . The other parties are too big and popular . Most people are not very politically aware . They often don ’ t understand the issues fully .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hi , I have a reservation under the name of Sandals . Of course ! Let me take it out of my wallet . Yes , of course . Is American Express okay ? In that case , here's my VISA . Yes , I'm easy to please .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Hi , Francis , morning ! How are you doing today ? Indeed , I agree that is not a good start . How about the meeting ? You missed anything important ? Was he unhappy with you not attending the meeting ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I have to go up to London for a couple of days next week.Would you like to come ? Well , I prefer to go on the train , but I suppose you want me to take the car . And I've got to drive.You know I'm not fond of that . I found it much more relaxing to sit in the train . But very much quicker.But I know we'll never agree on this subject.You prefer the car . I prefer the train .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "can you help me pick out some fabric for a suit ? I'm going to get one made for a friend's wedding . it depends on the price , but I was thinking of getting a wool / cashmere blend . I was thinking of a brown pin-striped suit . haven't you heard ? Brown is the new black . that may be true , but black is so boring . Anyway , I already have three black suits . I might as well get a suit that stands out from the rest . I like the one on the left , but I don't like the pattern on it . It's too much . I want a pattern that's a bit subtler . I think that will do . Let's go talk to the tailor about getting it made .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Stephanie ! Did you just get to school ? But you were up and about when I left the dorm this morning ! That was about an hour and a half ago . This happens all the time ! Why do you always take so long to get ready the morning ? Please explain because it makes no sense to me . How can a girl ’ s routine be so complicated ? You get up , you shower , you get dressed , you brush your teeth , you ’ re out the door . Half an hour , tops . True , I hardly ever see you without your hair done and your makeup on , even when you show up to class in sweatpants . Tell me , how long does it take you to choose that outfit in the morning ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "how is your house hunting going ? how much are you looking to spend ? looks like you ’ re not going to get more than a bedroom in a shared flat with that . well , if you want to live in London , you have to pay the price ! I can ask around at work . Do you have a preference for makers or non-smokers ? how long do you want to sign a contract for ? do you need a furnished or unfurnished apartment ? you know that you ’ ll have to pay utilities on top of the rent , right ? it ’ s not usually included , so you ’ ll have to factor in about 100 pounds more each month for utilities . don ’ t worry . Sometimes people will give you a discount if you promise to do the clearing or take care of the children .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Do you think we should travel by bus or by train ? We could face delays if we travel by bus , thanks to traffic jams . That's true.But I feel that I see more when I travel by bus . So which form of transport do you prefer to use ? Ok , then we'll go by train . I'm sure we'll have a good journey.Shall we go to the station and buy the tickets ? We should take a packed lunch on the journey.The food they sell on the trains is always expensive .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Can I stay out all night with my friends ? But we'll be careful .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Hi , Tom . You forgot to put on your sports shoes ! It's Games Day today ! Let me give you a hand . You are carrying so many books . Have you forgotten the cheers ? That's good !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Honey , why are you so angry ? Can you tell me ? Why do you say such words ? I love you very much . Susan , just one last week I went out to have a lunch with her . There is nothing for you to be jealous about . I like your company much better than Janet ’ s . Honey , you should know that I love you so deeply . But honey , I think you ’ re terrific . There is nothing ...",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Honey , why are you so angry ? Can you tell me ? Why do you say such words ? I love you very much . Susan , just one last week I went out to have a lunch with her . There is nothing for you to be jealous about . I like your company much better than Janet ’ s . Honey , you should know that I love you so deeply . But honey , I think you ’ re terrific . There is nothing ...",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Ok , so who are we going to invite to our dinner party ? Don't forget my friend Andy from the office . He has nothing to do on Friday , so I invited him over . Why can't we ? I'm not sure . He just broke up with his girlfriend recently , and I don't think he's in the mood to start again so soon . I think you're making a mountain out of a molehill . It's only a superstition . It really doesn't mean anything . Ok , ok . I'll ask my sister to come . That way we'll have fourteen for dinner .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Here's some flowers , love . Happy Valentine's Day . This is let you know that I still you after all this years . I knew there are some up and down when I married you , but through at all , you've always been may my Valentine . I don't think I say this enough , but I want to thank you for your kind listen patience , you ' Ve always been there for me . I am so glad we met one another .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Sorry . I didn't mean to be late . Can I come in ? Have I used the one that my sister is sick ? Are you sure ? I thought I said it was my mother . Well . You can trust me this time . My sister is definitely sick . I'm just coming from the hospital . They say she might even die . I'll do my best . I'm working on it . Really !",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Would you like to go to the movies tonight ? Well , we could see something different like a detective film . How about a comedy ? How about a love story then ? What's you opinion ? Really ? No , but I can't imagine that a girl like you would wonder to see a war movie .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Dad , may I have a room of my own ? Dad , but I don't want to share a room with Peter . He snores every night . Alright . Maybe it's the only way to do it .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "So , Casey , how are things going with the photos for the press kit ? You ’ Ve had over a month to get this finalized ! Why are things delayed ? I ’ m not looking for excuses here . I just want to get this finished on time ! I ’ m not going to put this off any longer , Casey ! I want those photos ASAP !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hello . This is the Customer service . How can I help you ? Sure . What ’ s your favorite number ? I ’ m sorry . This number has already been registered . This number is ok . It ’ s still available . When would you like your phone number changed ? Sure .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Come back . You haven't paid yet . But he took some newspaper away without paying . Why ? You make me confused . Why does he have such a privilege ? I see . Does he live by himself ? He must be lonely ? How respectable !",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "So , Lauren , I just wanted to talk to you quickly about our new customer support representative , Jason Huntley . Basically , I ’ Ve got a few concerns about him , and the bottom line is , I don ’ t think he ’ s a good fit for our company . Yeah , his attitude is great , but he ’ s really unreliable.Sometimes he ’ s really productive , but then other times ... take last Tuesday for instance , he was forty-five minutes late for our morning meeting ! But that ’ s not the only thing ... you know , he really doesn ’ t have the best work ethic , I ’ m constantly catching him on MSN and Facebook when he should be talking to clients . Make it work , Geoff . You would say that , wouldn ’ t you , he is your cousin.what a jerk , make me hire your stupid , useless , cousin .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I lost my wallet .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I think that ’ s settled . How dare you speak to me like this .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "What's the date today Mr.Brown . I don't have a calendar . 25th Sep ? Oh , I have an appointment tonight . It is at 8 o'clock . I don't know what time it is.It must be about 6 o'clock . I have to go now . I don't want to be late .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I don't like the merry-go-round . Ok , I guess it's worthy of two yuan .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Hello , this is Rich . He ’ s not in at the moment . Can I take a message ? Does have your telephone number ? 3725015281 ? Right . I ’ ll have him call you back . Sure can . No problem . Goodbye .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "You know that this afternoon's meeting is cancelled , right ? I sent out a notice . You've stopped checking your e-mail ? How obnoxious ! I heard he was sending you dirty jokes .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Can I make preservation now ? 9:45 , please . We want a table next to the window . In that case , please help us reserve a table for 4 at 9:00 .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "My stomach's growling again ! Just a little steak , uh ... snack ? A bowl of clam chowder ? You're right . But if I get too thin , my mom will make me go to the hospital again . You know . Soup , well , society makes us like this . Well , thin is always \" in \" with the media . if you aren't thin , you're nobody . You lost me . Yeah , but that's human nature . Let's change the stomach , I mean , the subject.How about some food ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "How can I help you today , Sir ? That's not a problem . You can use that service wherever you are , it doesn't matter which country you are in at the time . Of course . It's 33234 . That will put you in touch with a Personal Banker . That's the beauty of the service ; they can deal with everything , with total security .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Is there anything I can dor you ? Why not go the youth restaurant ? You will have a happy lunch there .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "This is Action 5 News reporter Sarah O ’ Connell reporting live from Washington , D . C . where a protest has broken out . Thousands of angry citizens are protesting against the proposed bailout of the auto manufacturing industry ! Sir , sir , Sarah O ’ Connell , Action 5 news . Can you tell us what ’ s happening ? Sir but what exactly is making everyone so angry ? I see . But , many supporters of the bailout argue that it could help save the jobs of millions of hardworking Americans . Good point . This is Sarah O ’ Connell reporting live from Washington D . C . , back to you , Tom .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hello , Anna . Come in and sit down . What's the matter ? Do you often suffer from backache ? When did it start ? Well , go home and rest in bed for two days , then you'll feel better . Yes , I'll give you some pills . Take one a time and three times a day , and come back in three days . If you don't feel ...",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I've something very unpleasant to talk with you . Upon the arrival of the first consignment , it was found that about 50 % of the sixty cases of pineapples were leaking . It ’ s simply because the tins were damaged . I am sorry to say it's not on the way , but during loading . The tins inside the cases were broken evidently through rough handling . Certainly . Here you are . Our health authorities said they were no longer suitable for human consumption . I have to remind you that our terms are CIF Hamburg . I hope you would indemnify us for the loss , so it wouldn't be so heavy on us .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Dear , time is up , let ’ s go there now . Have you taken the key to the door ? Where have you put it ? Are you sure ? Then , have you looked downstairs ? Look , dear . It ’ s over there . On the floor .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What a terrible house ! The door bell doesn't work , the sink is leaking It's no use complaining.If we had got enough money , we wouldn't put up with it !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Cute ... Here . These beans are already ground . Now for step three You have to brew the grinds while they're fresh and drink it immediately for the best flavor . There is no step four ...",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Good morning , Madam ! Can I help you ? Oh , look at these two watches , aren't they lovely ? How about this one ? It's graceful in style . Sure . 500 dollars , Madam . Surely . As this is the latest model , and you can also set the alarm . Just do like this.Very simple .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Have you heard that we will have reorganization ? Yes , flexible , aggressive and creative people are urgently needed in the marketing department . James is going to be packed off there .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What would you like for your main dish ? How would you like it ? Anything else , sir ? Of course .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Good morning , I ’ m Daniel . I ’ m applying for the positon of manager . I got to know your company through such famous brands as LUX , LIPTON and WALLS . After making a customer survey , I was glad to find out how your products are appreciated by millions of Chinese . It ’ s the job I ’ m interested in . And your company is the best-known . Although I don ’ t have much experience as a manager , the job description you sent to me was very interesting . It ’ s a job I ’ Ve been dreaming of and I feel suited to fill it . I don ’ t think so . As the saying goes , “ A great oak needs deep roots . ” I ’ m really interested in this job .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hello ? Hello ? Hello ? Who is calling , please ? Listen , I know who you are . If you call this number again , I ’ ll call the police . You ’ ll be arrested . I ’ Ve got your number .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Mr . Smith is really a thorough drag . He's endless talking about stocks almost bores me to death . I'm not at all keen on this subject .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "You ’ re home late today , David . How was school ? Oh , what ’ s she like ? Is she old or young ? Is she strict ? Can she speak Chinese ? David , stop dreaming . It ’ s time to do your homework .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "What's Ron Marston like , Pauline ? What did your boss say to him ? Did he telephone again last night ? What did you say to him ? Did he telephone again ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "How upsetting ! He has been away for a week ! I have reported it to the police .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Steven , have you got better now ? I guess you miss your wife and children very much . If necessary , I can stay here to accompany you until you are discharged . You are my best friend . That's what I should do . Please don ’ t be a stranger .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Have you thought of moving at all , Sarah ? Buying a house can be expensive , but there are ways to find cheaper houses . Well , sometimes the city auctions offer houses to the community . You ’ d have to make a quick decision about the offer in a day , but you would definitely save money doing it that way . Sure , my sister-in-law and her husband just bought a house that way . They ’ re pretty satisfied with it . Not at all . The woman , who owned it , took good care of it . But when she died , she had no family left and no will , so the government had to sell it for her . It was about 75 years old . There were a few repairs that needed doing , but it didn ’ t take a lot of money or time . The area can be a bit rough in the evenings , but the neighbors watch out for each other , so it ’ s ok .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Hello everyone ! I ’ m Rick Fields , and here with me is Bob Copeland . That ’ s right , and it looks like we ’ re just about ready to start the match . The ref is calling the players for the face-off ... and here we go ! The Russians win possession and immediately set up their attack ! Federal gets checked hard into the boards ! Alright , the puck is back in play now . Pavel Bure is on a breakaway ! He is flying down the ice ! The defenders can ’ t keep up ! Slap shot ! He scores",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Sometimes I think television is too biased . None of them are completely objective . Newspapers or the radio I guess . I just wish TV was more objective . The internet's a lot worse . There's no one moderating it . Anyone around the world can put information onto the net for anyone else to see . The information on the internet is mostly unsubstantiated and you can never know who has written it , or why . A lot of people get conned online .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Are we supposed to get off right here ? Where are we ? You said this was the right stop . Did we get off the bus too early ? Why did you tell me to get off ? I really don't feel like walking .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Mary , set your alarm clock for seven tomorrow morning . I'm going to take you to your school to register for classes . You can choose classes that you like at the school office . Well , there are core courses and electives . Core courses are ones that you must take . Elective courses are ones that you get to choose for yourself .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Do you have girlfriend ? Well , I came to know a girl three weeks ago . We have so much in common . So I think I may fall in love with her . Then what's the difference between having a crush and falling in real love ? That's what I do . Yes . That's it . She likes dogs so much now , and I begin to love dogs . Thanks , but I know falling in love is one thing while staying in love is another . Yeah , falling in love is so good .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Next , please . Hello , may I help you , sir ? Ok , it comes four dollars twenty cents . Here is your change . Please wait for your receipt of the registered mail . Let me see . En .. just a minute . Here it is . I need your signature on this note . Drop it in the mail box mark out of town . at that corner . You ‘ re welcome .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "How may I help you ? Give them here . It appears these books are two weeks late . You do realize you are going to have to pay late fees , right ? The late fee is 25 cents a day . It ’ s 25 cents for each book .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "You didn't tell me she was married ! I got carried away . I made such a fool of myself . They were both laughing at me ! That guy was definitely a Don . Yeah . If I leave Little Italy alive ...",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hello , Fred . What are you doing ? Can you tell me the concept of e-commerce ? Now , many people mentioned the word , ' e-commerce ' , in front of me . What kinds of channels can you use in e-commerce ? What are the benefits of e-commerce ? How things have changed now !",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Anything else I can do for you ? OK , here you are.Anything else ? You can buy a money order and mail mature immigration . Please fill out the form for the money order.You also need to pay a one dollar fee . You're welcome.Have a nice day .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "May I have your attention please ? Well , my speech isn't very long . Would you please ...",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "May I help you ? Let me see . Oh , you're at the wrong gate . Your plane leaves from Gate No . 8 . No , don ’ t worry . Just follow me .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "That way they look longer . Putting on mascara . I won't .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Well , Peter , you have to do better than that next time , won ’ t you ? Of course , you have . You must try harder this time . No , you needn ’ t do that . You ’ d better get a part-time job somewhere and go to evening classes . You ought to have worked harder then you wouldn ’ t have failed your exams . You have to take a job and study . Who knows ! That might come to later .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Paul sends you his regards .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Hi , my name is Pete . You are Ann . Isn't that right ? Do you see that girl in the red top ? She told me who you were . Yes , that's her . Actually I live in London , but my family lives in Seattle . Where in London do you live ? I play tennis there every week . Shall we have a game one day ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "OK . Come back into the classroom , class . Yes , but to the heath , this break has long enough . Come on , baby . It ’ s time now . Hurry up , little boy .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "How is your job search going , Janet ? Are you serious ? You studied mathematics at college for four years , and now you have a job working with your hands ! I can see that . But I didn ’ t know you had experience in that line of work . Congratulations ! You do have the right attitude .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Listen , you can not afford another day off . You ’ Ve called in sick five times in the last three weeks . Well . I want a note from the doctor this one and to be honest , if it continues , we may not be able to have you here .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Could I see the manager please ? I have a complaint to make . Did you have the room checked before we move in ? 1808 . The toilet doesn ’ t work properly . The water doesn ’ t run in the shower . That ’ s not bad . Thanks for your help .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I really like my debate class . I've entertained the idea . But I'm I leaning more toward politics . That's not like you to generalize . I think I can do a lot of good for our country .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Oh , come on , Ultraman ! It says that there will be a blackout from 5 p . m . to 7 p . m . in our neighborhood today . Don't you know you will look like a monster in the blackout ? That's not the point . Come on , can you imagine that there will be no electricity on such a hot day ? OK , since you are the smart one , can you come up with a better plan ? So that we won't be baked like cookies here . Barbie ? You know , I might be seven , but I'm not a girl . All right , all right .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hi , Mikel . What's with you ? You look angry . True , you are getting a really pot belly , aren't you ? Just kidding , Mikel . Why don't you come work out with me ? It works if you keep at it . Come on , let's go ! This feels great . I'm all reed up . I can keep going all night . Exercise has no benefit unless you sweat like a pig . Thanks for coming , it was a real blessed . You'll get used to it , Mikel , trust me .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "So , Emily , how was your day ? It can't have been that bad . Go on and tell me about it . Why ? What happened ? That's not very fair . What did you do ? Does he treat everyone in your department like this ? Do you have any idea why he treats you worse than the others ? Is there anyone else you can talk to about it at your company ? That's very sensible . It sounds like you have a good head on your shoulders . That's so true . When you have a taste for success , you can't let dishonest people like your manager get in the way .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "You are in love with Mary , right ? I am not blind . Anyone can see that with half an eye .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "How much did you bid ? We'll see how much fun it is after they take all your money ! ! What if he had his friends fake the reviews ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Take a seat inside and see what you think.So you will take the Porsche then , sir ? You're smart to buy it . At 45 dollars for three days , it is a good deal . San Francisco ? No , sir.We only have this office here . You will have to return it here . No , sir . That's only with the very big companies . I'm sorry , but this car must be returned to this lot . Do you still want the car , sir ? It's a beautiful drive . Just a moment , sir . We have to finish filling out the forms .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Susan , we ’ re going to need those data before tomorrow . Yeah ? All right . Thanks , Susan .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "The consignments of chemical instruments have just reached us . We have to lodge a claim against you for inferior quality I am afraid . We bought 1,000 sets of chemical instruments from you , but there are 40 not up to the standard . Here is the survey report from a well-known public surveyor in London . You may inspect the defective instruments personally Forty faulty instruments means that 4 % are not up to the standard . You should compensate us for 4 % of the total account on the contract , as well as for the inspection fee . All right . In that case we are still willing to do business with you .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "You want to go get a facial with me today ? Not at all , guys also get facials , manicures and pedicures . There is nothing wrong with looking after your skin and looking good . Well , first they exfoliate my face , getting rid of all the dead skin . Then I get a face mask with nutrients that keep my skin healthy and young . Afterwards , they apply some moisturizer and you leave feeling like a million bucks . Well you should come with me one day , I'm sure you'll love it .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I'm afraid I can't complete my paper on time . I keep on meeting with difficulties in the experiment . I can hardly go on .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Can I have a look at that digital camera please ? How much does it cost ? It looks pretty good . I think I'll take it . That's all thank you .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Are you still hungry , Ryan ? How about some more squid balls ? Wow ! You really like fruit , huh ? You've already had 3 plates ! Well , whatever suits your fancy . I'll press the service button again .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Oh , my God ! I've been cheated ! It's a brick ! I can't believe how stupid I was . Damn it ! There was a guy on the sidewalk.He had three new boxes , Panasonic video camera boxes.He said he had to get rid of them quick . So he said he'd sell me one for twenty dollars . A four-hundred-dollar camera for twenty bucks . Yes . I wanted to . But he said , no , the box is still in its plastic wrap from the store.If it's opened , other people won't believe it's new . Yes , it was the kind of perfect plastic wrap that comes with new products.Look , it even had a bar-code price sticker on it ! It looked brand new . He said he had to get rid of them . They were stolen . C'mon , don't blame me ! I thought it was a new camera . We could use it.We were even thinking about buying a camera . I don't understand how he could have such a perfect-looking box . You're right , Sarah . I was a fool . I can't believe it . How could I fall for such a trick ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hello , Oriental Hotel . I ’ m sorry , Mr . Baker ’ s not in . May I take your message ? Alright . Mr . Cook , I have Mr . baker called you back as soon as he gets here .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Mr . : There are two things that you'll need to know . Mr . : The school has three lunch periods , and the kids are divided into three groups to go to lunch . Mr . : Furthermore , when you are dismissed in the afternoon , you will be divided into two waves . Mr . : The school parking lot is not big enough for all the school buses to come in at one time . So only half the buses come in first to pick up the first wave's students .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I have failed in my final examination . What can I do now ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "How do you like this one ? It's nice and cheap It's only thirty-four dollars . Sorry . I think that's the cheapest Yes . you can The fitting room is right over there .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Ah ! No ! Damn it ! So what ? I just lost one hour's worth of work . No , I didn't save this time.Damn it ! And I'm sick of writing this paper . Now I have to write it all over again too . I hate computers . Sometimes I think they cause more trouble than they're worth . I don't know . I feel like going out . It doesn't matter . I still can go out and buy a beer . Yes , that's true . Damn ! I just lost half my paper , and now I can't even do my homework.This is a bad time for this to happen . Thanks . I think I will try . Where are you going ? Maybe we can trade.Why don't you stay here and read for my exam , and I'll go drink beer ? So ? You can go to the class for me.Just write my name on the exam book and take the exam . Why not ? About fourteen . Damn !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Would you please put that cigarette out ? I get sick on it . Thank you so much . What ? I ’ m sorry ? !",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I really dislike reading academic books .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Delicious ! Did you make this chocolate cake yourself , Fred ? It's really good .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I ’ m hungry , let ’ s go grab a bite to eat . Will you take long ? Come on ! We have been here for almost an hour ! I thought you said you were only going to get a few things ! How long does it take you to pick out a lipstick and some nail polish ! Whoa whoa whoa ! Are you nuts ? How much is all this going to cost ? I ’ m looking at the price at each one of these little things and it ’ s outrageous ! This is basically a crayon ! Fine ! Get the stupid thirty dollar crayon !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Excuse me . Is anyone sitting here ? You don ’ t mind if I smoke , do you ? Oh , I ’ m sorry . But this isn ’ t a no-smoker , isn ’ t it ? I mean would you mind if I smoke here ? Sign ? What ’ s sign ? Oh , sorry . I didn ’ t notice it . Sorry .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Our neighbour ’ s tape recorder is so loud that it annoys us to death . I ’ Ve made up my mind to cut the electricity off . Then what shall we do ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Good evening , may I help you ? I am sorry , there are so many travelers that all our tables have been booked on that day . Thank you , sir . We will phone you as soon as we have a vacant table .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Have you finished washing clothes ? Well , when you do your darks , can you wash some of mine too ? They need to be washed on the gentle cycle . There aren't many clothes , is your load big ? If it's a problem , you don't have to do it for me . I greatly appreciate this .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Hi , dear , do you know what the important day is today ? Please think it over . Come on , dear . I know you mustn ’ t forget it . Ur , you really let me down . No , you haven ’ t . You just don ’ t care about me . You ’ re an indifferent husband . It ’ s an anniversary of our weeding .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hi.Ed , what's up ? Doesn't look like it to me . Woo , easy . What are you so ticked off about ? Maybe I could help . You've got be joking . Well , don't get bend on a ship about it .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Why are you arresting me ? What kind of warrant ? What is that ? I never went to court . This is unfair . I have rights , don't I ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Is there anything wrong with your food this evening , Miss ? Sorry , Miss . I'll place it immediately , can I get you another drink , or you wait ? I'm sorry , Miss , but I'm afraid we can't do that . You'll order something else instead . I'd love to suggest the steak , it's the special today , and quite tasty . Ok , Miss . I hope you enjoy the rest of your dinner .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "It seems to me that you are on very good terms with him . He must be all over you the first time he saw you . That means he was head over heels in love with you . But I think he can't hold a candle to you . I don't think he has ever popped the question .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Oh , my God ! I've been cheated ! It's a brick ! I can't believe how stupid I was . Damn it ! There was a guy on the sidewalk.He had three new boxes , Panasonic video camera boxes.He said he had to get rid of them quick . So he said he'd sell me one for twenty dollars . A four-hundred-dollar camera for twenty bucks . Yes . I wanted to . But he said , no , the box is still in its plastic wrap from the store.If it's opened , other people won't believe it's new . Yes , it was the kind of perfect plastic wrap that comes with new products.Look , it even had a bar-code price sticker on it ! It looked brand new . He said he had to get rid of them . They were stolen . C'mon , don't blame me ! I thought it was a new camera . We could use it.We were even thinking about buying a camera . I don't understand how he could have such a perfect-looking box . You're right , Sarah . I was a fool . I can't believe it . How could I fall for such a trick ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "how was school today , Dominic ? why ? What happened ? it's just one exam . Can you re-take the exam ? why didn't you do a good job ? do you think you studied enough for the exam ? what did you do last night ? did you study at all last night for your exam ? I am sure if you had studied , you would have done well . When can you re-take your exam ? alright . Get out your books and I'll help you prepare .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Did you hear about the robbery ? Are you serious ? What happened ? That's insane . Then what happened ? Did the cops show up in time ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I want to open an account . I want to open a checking account . How much is that ? Really ? What if I can ’ t meet that requirement ? How much is the fine ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Look at the catalogue , John . I think I want to get this red blouse Yah , but it doesn't have a red one . Yes !",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Look , that bamboo groves are flourishing . Let's go and play there . ' Please don't enter the bamboo groves . ' We're not allowed to go in . OK .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hi , Victor . How are you ? So , are you going to go to class tonight ? Really ? What's the matter ? Listen . Come with me to class , and after class we can go out for dinner .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "What's wrong with you , young man ? I see . You've got a cold . Take this medicine three times a day . Drink a lot of water and have a good rest . You'll be well soon .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hello , Kevin . I hate to do this , but I have to cancel our appointment . Yeah , I really wanted to come , too . But something unexpected in Shanghai have come up . I have to fly out for a few days , but I'll be back soon . I should have some free time next week . Say , next Wednesday evening ? Yeah , I'm expecting to come back on Tuesday . OK .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I'm terribly nervous .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I can't wait until my car is repaired . The commuting with public transportation is killing me . But it is ! Take this morning for example . The subway was so packed this morning , I got totally squished by about a hundred busy commuters on the way to work . That's true . The bus is even worse . Just thinking about taking the bus every day makes me tired ! Hey , how do you get to work every day ? I'll bet it's good exercise , too ... a good way to keep fit .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Good morning , welcome aboard . Yes , you can use your cell phone during the boarding process until the aircraft door is closed . The aircraft is equipped with onboard phones . They do not interfere with the communication and navigation of the aircraft . Of course . They will be used at anytime before or during flight .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Long Distance . May I help you ? No , sir . I'm afraid not . The charges vary according to the types of call you make . The cheapest is a station-to-stcrtion call , then a person-to-person call . The mini charge will apply for the first three minutes , then each additional minute will be charged . Certainly . Who are you calling ? And what's the number you are calling ? And your name and number ? Hang up and I'll call you back in a few minutes .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "What do you do ? Really ? That ’ s so cool . What station do you work at ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "The air conditioning is not working ! We need to call a handyman before we start to fry in here ! That would be convenient . They might as well ask him to fix the electrical wiring . The circuit breakers keep going out all the time . It ’ s really annoying ! I know ! I was in ankle deep water trying to get to my car that day ! The handyman definitely has his work cut out for him .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "What do you think of this flat ? Small , but it should be enough for our needs . I think . That's true . But I love the living room ; it's huge and filled with sunshine . It has a great balcony with an incredible view of the park . Maybe we could get some new furniture . Better stuff .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Merry Christmas ! I said Merry Christmas ! Don't you know that Christmas is almost here ? Huh ? Didn't you know ? Aren't you excited ? Forgotten about it ? How could you ? Oh , I'm sorry . I didn't know . I guess so . So what do you do around this time of year ? Well , would you be horribly offended if I invited you to a Christmas party at my house ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "The Phoenix team overpowered its counterpart 86 to 50 . If the Phoenix beats the Rocket , it will enter the final .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Would you like to mail it by air or sea ? About 10 days . You can send it express mail if you need it faster . It will only take three or four days . OK , the postage is 275 yuan . This is the receipt , please keep it . Have a good day .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I really dislike reading academic books .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Do you have the five dollars I lent you yesterday ? You don't have to go right away .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I'm very worried , doctor . I'm afraid that I'm very ill . Because I feel tired all the time , even when I wake up in the morning . I find it very difficult to do any work . I have no appetite . Very badly , doctor . Well , yes , I am . I'm worried about my work . I've just taken a new job . I earn a lot of money but it's difficult work . I'm always afraid of making a mistake .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Tom , is Jenny crying ? I ’ m just coming for that . She ’ s your sister . What she asked was only duck soup for you . Why can ’ t you be good to her ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Good afternoon . Can I help you ? OK , sir . Is there anything valuable or breakable in it ? Would you mind taking the necklace with you , or leaving it at the safe deposit box ? Thank you , sir . Here is your tag . This cloakroom is open till 11:00 p . m . , could you pick it up by then ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Everything's gone wrong . What are we going to do now ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Where are you going ? What's wrong with her . Congratulations to you .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I ’ m hungry , let ’ s grab a bite to eat . Nah ! Let ’ s go get a burger and fries . What are you talking about ? I have salads some times . Fine ! I ’ ll start drinking and having home cooked meals that are low in fat . Are you happy now ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Mark , can you dress the twins for me while I take a shower ? Please ! You can do it . Their clothes are all laid out on the bed . Are you referring to KC getting her head stuck in the pant leg ? Don't worry ! Today they are wearing dresses !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I ’ m sick of my job , I always have to work late at night , and the company keeps me working in the office . What do you suggest ? I can ’ t afford to quit my job until I get a new one .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hi . Yeah ? Yeah ? Oh , I'm sorry . I'm so sorry , I .. I didn't realize it was that loud . It's true.It was a bit loud . Oh , it's no problem.It ' s OK.You know , it only happened once .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Any plans tonight ? Well , I am wondering if we took a hang-out for a drink or something . You know , I just came back from a really tough interview . I was quite nervous during the interview . I really want to have the job . Right now , I am still a little on the edge . I am not sure if I could convince them during the interview . I don ’ t know . I think I did well in the paper exams . I was prepared to answer a lot of questions , but they didn ’ t ask those as I expected . To my surprise , the manager tried to talk about the Chinese poesy with me . Just did my best .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Oh , my goodness . The traffic is crawling . We are now running late . Let me check and look at the map . Yes , there is an exit three quarters of a mile ahead . We ’ ll exit Market Street , head west , then get on the Pennsylvania Freeway .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I'm done . Can I watch TV ? Uh ! I can't swallow them , Mom ! Do I have to take them ? Yuck !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Are you looking forward to seeing that big concert next week ?",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "There ’ s a letter here for you . What ’ s the letter about ? Tell me what it says ! You ’ re lying . Are you upset ? I ’ m sorry you didn ’ t get accepted .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I'm sorry , sir . I'm going to have to ask you to leave . Well , she apparently doesn't think it's so friendly . Let's go . You'd better cooperate with me , sir , or ...",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I wanna register for this mathematics course . Closed ? The clerk told me I could come back and register any time during the first week of classes . Some woman in here when I tried to register three weeks ago . She said I just had to pay a late fee . She said I couldn ’ t until I had my birth certificate . Here it is . Serious ? Only the proof of my address . But it ’ s unfair . Great .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "But how did you know I was working for WebTracker ? He couldn't have told you . Only a few people at WebTracker know about me . I can't believe it . I can't believe I fell into your trap .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "How dare you accuse me of stealing your computer ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I am fed up with Jack . He is so weak in dealing with other people and always eats dirt . How do you know that I didn ’ t try ? I just couldn ’ t manage it .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Well , I've never downloaded music before . How does it work ? Alright . But why is downloading music better than buying Cds at the store ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What seems to be the problem ? What ? You've got to be kidding me ! Of course I did . As recognition for a job well done . Once a month I invite the most productive employee to dinner . I think she's misinterpreted my intentions . What happens now ? I understand that . But I hope that we can get to the bottom fo this and show Miss Brown that she misunderstood my reaction .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What a nice tie you are wearing ! Certainly.It matches your suit perfectly . Yes.You look very smart today .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Honey , do you have a second ? We need to talk . I ’ Ve been thinking , and well , I think we need to start seeing other people . That ’ s just it , I ’ m not happy anymore , Tim . It ’ s not you , it ’ s me . I know that I can be hard to deal with , and you are a great guy ! You are the type of guy that any woman would kill for ! Tim , you are too good for me . You deserve someone who can make you smile and make you happy the way that you made me happy . Oh , I could say that I ’ ll be all you need , but that would be a lie . I know I ’ d only hurt you , I know I ’ d only make you cry . I can ’ t , Tim . I hope someday you can find some way to understand I ’ m only doing this for you . I don ’ t really wanna go but , deep in my heart I know this is the kindest thing to do . Here are your keys . I ’ ll send my sister to pick up the rest of my things next week . I ’ m sorry , Tim . I wish you all the best , and I hope that one day we can meet again . I ’ ll always love you . Goodbye .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hi , Helen ! how is it going ? Well , take it easy ! Don't let it get on top of you . Why don't you take a few days off ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "What's the matter , Paul ? So , what are you going to do ? I'm sorry , but I really need it this afternoon . Sure . That's no problem . Here you go . Anything else ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Taxi ! Please rush me to the railway station Can you speed up a bit ? But I have no time to lose . Can you drop me off here ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I hate doing the damn laundry .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I'm back . Going shopping . It tires me too much . Can I ? OK . What does it sell ? That's great .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "It ’ s dangerous . I don ’ t dare to go .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "You're late . My phone ? Really ? I had no idea . Let me check.Yes , it's dead . There's no dial tone . But this is terrible . I'm expecting important calls . You know what.The theater guild is supposed to call me and discuss a contract for my play.They are supposed to call me this evening.If I don't have a phone . Oh , what can I do ? Do you have a cell phone ? Can you drive me ? I will go to Ann's house . It isn't far . I can call the theater guild from there and give them her number.She will let us wait in her living room . Yes , I do.At Ann's house I will call the phone company and have them check my line.If they can fix it right away without coming to my house , then we'll just return here.But if not , I need to wait at Ann's house to talk with the theater guild.It ' s very important to me . Yes , let's go .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What ’ s the problem ? Things are getting out of hand . You keep sticking your nose where it doesn ’ t belong . Now , I am responsible for training new staff , but you keep overriding my authority by trying to pose your methods . I know you are a hotshot college graduate with something to prove . But I don ’ t like your way .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Sarah , what did you do today ? Did you buy anything ? What did you buy ? Yeah , I like it a lot . It's very pretty . Where did you buy it ? Was it expensive ? That's cheap . I don't think you'll need to wear it for a while . It's been really hot lately .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Kelly , the guys and I think you should run for senior class president . We talked to our older brothers and sisters last night and got the scoop on what that job is all about . Yes . Did you know that the senior class president works for the class for life ? The job doesn't stop when we graduate . Every class reunion is organized by the president and council and anything our class does for the school in later years is headed by the president .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I will take the coat . Do you receive checks ? Here you are . Please give me a receipt . OK , please wrap it for me first .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Welcome to our factory . Actually , you'll know our products better after the visit . I'll show you around and explain the operations as we go along . Maybe we could start with the Design Department . And then we could look at the production line . About 10 % of the gross sales .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Can ’ t you come in and have tea now , Peter ? Do you have to water it now ? What a nuisance ! Well , I ’ ll have tea by myself . That was quick ! Have you finished already ? It ’ s raining . That means you needn ’ t water the garden .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Good morning , Madam , can I take your order now ? Anything else ? How about drink ? Please wait a moment . OK . What's up , Madam ? OK . Yes , anything wrong ? Yes , I see . There's a question I want to ask you . Which leg do you want to have , right leg or left one ? Why do you say so many thanks ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "You look tired . Really ? How come ? You shouldn ’ t work so hard . What do you mean ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What a boring film ! And the plot is so simple .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hello ? Can I speak to Li Hong , please ? Hi , Li Hong.This is Alice . Not bad.Li Hong , I am sorry that I can ’ t go to see Mrs.Brown with you tomorrow morning.My mother is ill . I must take care of her . OK.Bye - bye .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Oriental China Airlines . Good morning , may I help you ? Lady , let me check . Do you want the morning or the afternoon flight ? 2:30 First class or economy ? Well , afternoon flight on December 10th to Shanghai . May I have your name , please ? You may take it up at the ticket office . That is located on International Street 150 .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I have learnt how to ride a bicycle . I plan to go to the Water Park by bike this weekend . Oh , my dear sister , I am no longer a baby !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hey Sandra , what's wrong ? You look furious ! But Sandra ... you love your job ! You spent months trying to get this position . It's perfect for you ! What kind of power struggles are you talking about ? So he talks about you behind your back ? I had a worker like that once . She was always taking credit for my ideas . My co-worker had a whole bunch of bad office habits . She liked to name-drop ... we would be in a meeting and she would say , yesterday I was chatting with Tom . She meant Tom Solomon ... our CEO .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Great . The bed is exactly what I have been looking for ! Oh , I like red wood . How much do you charge for it ? That's sheer robbery ! It's more than I can afford . Can I make an offer ? Shall we make it 250 dollars ? What about 260 dollars ? It's a deal .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I'm sorry . I've lost my tags and receipt . How can I do about it ? It's a suitcase . But I've forgot the exact color . Maybe it is red or something . It's like this . It's square with a leather cover . Yes , I remember , there is a green string around the handle . That's right . Yes , It is the right one . Here it is .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I think I'm going to China this vacation.How about you ? I went to France last summer .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What are you doing ? Come on ! Stop being so vain . You look great ! You are beautiful ! I don ’ t see any wrinkles or sagging skin ! You are 25 , stop being ridiculous . Besides , I think that people who get Boto , have facelifts , or tummy tucks look weird . It doesn ’ t look natural . I think you need to get brain surgery . I honestly don ’ t think you need cosmetic surgery . You look amazing . You don ’ t need plastic surgery to do that . You are fine the way you are and you have guys drooling all over you ! Plus , plastic surgery hurts ! Yeah ! When I got my nose job I was black and blue for a week !",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Order ! What ’ s your plea ? But all the evidence points to you . What are you saying ? Who is ? We can work something out .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "hi , Isaiah . How are you ? fine . How ’ s your job going ? really ? That ’ s fantastic . What kind of business is it ? how ’ s it going ? that ’ s such great news . I ’ m really happy for you ! Where is your office located ? where will those be located ? when will you find out ? well , good luck . I hope it all goes well for you tomorrow !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "how was your day ? it was really busy . I had to work straight through my lunch break . my boss told me that I could either go home early or take a long lunch break another day , so I decided to wait and take a long lunch break another time . let ’ s get back to you . How was your day ? you look pretty upset . Are you ok ? what ’ s that ? you ’ re kidding ! How did that happen ? how late were you ? you got fired for being a few minutes late ? oh well . You never really liked your boss anyway , did you ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Ah ! No ! Damn it ! So what ? I just lost one hour's worth of work . No , I didn't save this time.Damn it ! And I'm sick of writing this paper . Now I have to write it all over again too . I hate computers . Sometimes I think they cause more trouble than they're worth . I don't know . I feel like going out . It doesn't matter . I still can go out and buy a beer . Yes , that's true . Damn ! I just lost half my paper , and now I can't even do my homework.This is a bad time for this to happen . Thanks . I think I will try . Where are you going ? Maybe we can trade.Why don't you stay here and read for my exam , and I'll go drink beer ? So ? You can go to the class for me.Just write my name on the exam book and take the exam . Why not ? About fourteen . Damn !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Which film shall we see ? Yes , I'd love to.Here is a good one , Mozart and Beethoven.It ' s on the Festival Hall.Shall we go there ? No , I'm not hungry .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "My husband goes out drinking with his friends every night . I'm fed up with it .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hello , how are you ? I am Jack . What brings you here ? Yes , it is really a good deal . $ 1,000 discount . I've never seen a sale as good as this one . Sure . It has 1.8 liter engine . This one comes with all power options , air condition , CD player , full size spare tire , automatic transmission and ABC . The window price is $ 17,000 , and I can give You for $ 16.000 . You must be kidding ! You cannot get that price anywhere . Can you put down a $ 2,000 deposit , and I'll talk to my manager , see what we can do . Okay , I'll be right back ... Congratulations ! The manager approved the final price $ 15,000 . You are really tough . You got a deal .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Here's the dress you wanted to be made . What's the matter ? What's wrong with it ? This is a pity !",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Tom and Helen got married at last . I was invited to attend their wedding . How moving love is .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "It's all over . I'm bankrupt .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I ’ m sick of my job , I always have to work late at night , and the company keeps me working in the office . What do you suggest ? I can ’ t afford to quit my job until I get a new one .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "I hate doing the damn laundry .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Do you like watching TV ? What do you exactly mean by usually ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Why didn't you tell me you had a girlfriend ? But you should have told me you were in love with her . You know you didn't . Yes , but you might have told me before . You can't be serious.How dare you not tell me you were going to marry her ? Oh , you men ! You're all the same .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "so , are you enjoying the performance so far ? I think you're being a little critical . The actor in the lead role is fantastic . I suppose the chorus could be a bit better , though . actually , the woman playing Ophelia is a past classmate of mine . that's only part of it . I absolutely adore this director . Every play he works on turns out great . quite a few actually . By the way , after the play , there's always a big party for the cast and their friends . My friend has invited us . Do you want to go ? I've never had a part in a play before , but I used to be a part of the stage crew in high school . I helped build the sets and find props for the plays . What about you ? why not ? that sounds kind of boring . Oh , look . They're dimming the lights . I think we should get back to our seats for the second half of the play .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "How many rooms are you looking for ? 150 a month .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I was looking at my test score and think that it should be higher . I think an answer got marked wrong that should have been marked right . That would be great ! This one right here should be right . Yeah , let's do the math . Looks pretty good .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "can you help me pick out some fabric for a suit ? I'm going to get one made for a friend's wedding . it depends on the price , but I was thinking of getting a wool / cashmere blend . I was thinking of a brown pin-striped suit . haven't you heard ? Brown is the new black . that may be true , but black is so boring . Anyway , I already have three black suits . I might as well get a suit that stands out from the rest . I like the one on the left , but I don't like the pattern on it . It's too much . I want a pattern that's a bit subtler . I think that will do . Let's go talk to the tailor about getting it made .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Kelly , the guys and I think you should run for senior class president . We talked to our older brothers and sisters last night and got the scoop on what that job is all about . Yes . Did you know that the senior class president works for the class for life ? The job doesn't stop when we graduate . Every class reunion is organized by the president and council and anything our class does for the school in later years is headed by the president .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Are these your text books ? Biochemistry , General Ecology , Botany , Cell Genetics , Molecular Genetics ... Oh , right ! Do you have many exams at the end of each semester ? And when do you prepare for your final exam ? Really ? You only review your lessons in one month ? Does it work ? Wow , and all the key points are included in them ? You're so smart ! Do you have the classrooms open for the whole night ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Let's have seafood tonight and then go see the new movie at Mall Cinema.Betsy told me it's a beautiful love story and I shouldn't miss it . No , we didn't . Last week we went to see that movie about a man's struggle against mental illness . Oh , yeah , and I did promise to see it with you if we went to that movie last week.But you liked that movie , didn't you ? It wasn't that bad , and you're the one that insisted on skipping dinner.We went to an excellent restaurant . And I don't like meat that much.The only meat I eat is chicken . Well , I suppose that , to be fair , you should get to pick the movie and we can go to a restaurant that serves meat .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "I can ’ t believe my English teacher is making me read pride and prejudice ! But it ’ s so old . No , not at all . I didn ’ t realize it was a romance novel . What ’ s the main storyline ? Why does he want to do that ? Won ’ t they get his inheritance ? I see . This sounds interesting ! Maybe my teacher isn ’ t so horrible after all . There ’ s movie ? My teacher didn ’ t tell me that ! It would take a lot less time ... Ok . That sounds like a deal .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "How is the project going ? Do you have any problem during the process ? You should speed things up . Have you ever helped others when they are in trouble ? Most will give a hand to someone who has helped him . And you should have good co-operation with other colleagues , you know a scientific schedule brings efficiency to the work . Cheer up and pay more attention to your colleagues and the things will be much better . I am speaking from my experience . And you should read as much as possible to enrich the knowledge . We're approaching the critical point for success or failure of this project . you'd better speed up and catch up with books . If you have any problem in your work , let me know .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "What do you think of this dress ? Do you think it suits me ? It ’ s just the right size-a perfect fit ! Have you seen anything you like ? It looks too big for you , but I like the color and the material is good quality . Is it on sale ? I might get one too , but in a different colour . I prefer light blue to while . I ’ m getting this beret – doesn ’ t it look cool ? I ’ d like to get some jeans too , but I don ’ t have enough cash on me . Thanks ! Now I don ’ t need to come back to the shop a second time .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Be quick . Put our bags in the deposit box . I told you to hurry up a thousand times . You just put a deaf ear to it . I surely did ! Ask the customer service counter if we can deposit our stuff there . It's all your fault ! Now we can't get in shopping . That sounds like a good idea ! What color do you want ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Are you free next thursday ? A bunch of us in the office are planning a retiring party for Bob , he's been with the office for ages , so everyone was really surprised to hear he took early retirement . Retirement age is still 65 , but I think more and more people are retiring earlier , I think Bob's in upper fifties already , he just looks pretty young . Well , I think you prepare it well and capture good savings , retiring early can give you a lot more time for travel and other activities , you should get out and enjoy the life you still can't , don't you think ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "John , my father isn't there at all . Are you kidding ? It's ... oh it's the 1st April , April Fool's Day .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "I ’ Ve lost my purse . All my money .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What's taking you so long ? I need you to hurry up . I think there's more you need to do . My hair looks awful . I just don't like my hair . I won't be paying you for this .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Look at what you have done . All thumbs .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Hello . Excuse me . Do you know if there's a Commercial Bank around here ? Straight on , and turn right . Is it far ? Thanks very much .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "You did well on the math test . Don ’ t you always fail in the math tests ? Huh ? You mean you snuck a peek at his test ? Are you crazy ? You were cheating .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hi , Mike . We're having a party tonight , wanna come join us ? You can bring your girlfriend . What happened ? Did you have a fight ? Yeah , she is . She is pretty , caring , getting easy-going and she is a great cook . She is a gem . Oh ? ! Did you talk with her about it ? So , when are you going to tell her ? I know she ’ s head over heels in love with you . She will be badly hurt !",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I don't know what to do about the people who live in the flat above me ! They're incredibly selfish . They ' re always up until the wee hours of the night playing their music so loudly that I have to wear earplugs in order to fall asleep ! I tried to introduce myself to them when they moved in , but they were so arrogant that I didin't want to ever talk to them again ! They both just talk about how great they are all the time . They are ! Besides being loud and arrogant , they're also terrible gossips . They're always talking about everybody else in the apartment . I don't , but they talk so loudly that I can hear what they're talking about from my bedroom - and it's not very nice . Most of my other neighbours are scared of them . I can't afford to move right now . I think you're being a bit optimistic . If you met them , you'd understand .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "You got a letter in the mail . What is it ? What does it say ? You can ’ t be serious ! Are you all right ? I ’ m sorry that you didn ’ t get in .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hello , Parker . How's everything ? Business is booming . I understand you want to meet up with me next week . How's your schedule look ? Great .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Gross ! What are you doing to yourself ? It looks like some kind of primitive form of torture . Well , you might pinch your eyelid ! Or lose an eyeball ! What for ?",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Hurry up , get in . OK , make a left here . . . no wait , I meant make a right . Come on , speed up ! Don ’ t worry about it , just drive . Oh , no , the light is about to change . . . step on it ! Whatever . Just turn right here . . . The freeway will be packed at this hour . . . let ’ s take a side street . Go on ! Get out of our way ! Move , move ! Here , I know a short cut ... just go down here , and we ’ ll cut though Ashburn Heights . Let ’ s go , let ’ s go ! Watch out for that lady ! Yes ! We made it . 5 fifty-eight , just before the library closes .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Stephanie ! Did you just get to school ? But you were up and about when I left the dorm this morning ! That was about an hour and a half ago . This happens all the time ! Why do you always take so long Please explain because it makes no sense to me . How can a girl ’ s routine be so complicated ? You get up , you shower , you get dressed , you brush your teeth , you ’ re out the door . Half an hour , tops . True , I hardly ever see you without your hair done and your makeup on , even when you show up to class in sweatpants . Tell me , how long does it take you to choose that outfit in the morning ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "I'm tired of you always wearing my clothing !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Didn ’ t you punch in this morning , Monica ? That ’ s ok . I should have told you earlier . This is a company rule . According to the company rule , we should punch in before 8 o ’ clock and punch out after 5 o ’ clock every work day . From 11:30 to 1 o ’ clock . Sometimes , but not quite often .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "They're very good friends , aren't they ? Oh , it's unbelievable !",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hi , Anna . I haven ’ t seen you for ages . Where have you been ? No wonder I haven ’ t seen you recently . Where did you spend your holidays ? You must have a wonderful time . No , my wife doesn ’ t like traveling . We haven ’ t been traveling for more than ten years . The first time we traveled together was in 1978 when we just got married . We spent our honeymoon in the Alps .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "hello , Kate ! How are you doing ? fine . How are your term papers ? how could it be ? They are due two weeks later . Kate , you know , I am thinking of getting a part-time job next year because I really need more money and I don't want to ask my parents for any more . But I'm so busy ! How am I going to work and study my advisor ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "All I do all day is work and watch TV . I really should start thinking about my health . For starters , we should start doing more outdoor activities . That way we'll get some exercise . That's not a bad idea . How much is it ? Playing tennis twice a week will be a good start . Count me in .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Good afternoon , CCL press.Jennisse speaking , How can I help you ? Oh , I'm sorry . Mr.Li is in a meeting right now . Can I take a message ? Nigel Smith . Does he have your number , Mr . Smith ? 2781703 1 . Sure . I'll make sure he gets the message .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Excuse me , would you tell me how to return to Hilton Hotel . I'm afraid I lost my way . Let me see . Yes , I have the address and hotel telephone number here . I don't understand very well . Could you give me a map ?",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "That was really a nightmare ! I was stuck between 15th and 16th floors in the elevator . I pressed the emergency button ! And then I stayed in the elevator waiting for the rescue . A little bit , but I know that the elevator isn't enclosed . at least I wouldn't be smothered there . Of course , there are 6 other people in the elevator ; they were so scared that someone even started crying . Yes . I have to call the property management . Yes . They should check the elevator regularly . I have to give them something to remember about , and they should also equip fire extinguishers in the building . I know what you mean , but I'd better remind them again , and also remind them to repair the button in the elevator for the disabled people . That has brought the disabled people lots of inconvenience .",
+    "chosen_emotion": "fear",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Do you plan to further your study ? If you make every effort to the company , you will have a great chance to attend the on-the-job postgraduate . The tuition fee will be financed by our company .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Excuse me , Sir , you are not supposed to smoke here . Your seat is in the non-smoking section , so please refrain from smoking . Then I'll try to find a seat in the smoking section . One moment . please.Thank you for waiting . I found a seat in the smoking section for you .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hello , three-five . I'm sorry , I'm very tired . I'm going to bed early . I didn't have good time , and I don't really want to see you again . It was hardly all night . And I recall it was you doing all the laughing at your own jokes . No , I ' m sorry . I'm going to meet some friends tomorrow evening . And I ' m too tired now . I have to go to sleep . Goodbye .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Mark is parade his knowledge again . A well-learned person never does that .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "I have to find a living room set . I don't know . Where did you go to find yours ? Does the furniture from IKEA cost a lot ? How good of quality is the furniture ? I don't mind paying for quality workmanship .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "You know that ? Dan got a divorce . Yeah . But his relation with Sally come to a sticky end and was found by his wife .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "What dressing would you like on the salad ? I beg your pardon ? Sorry , it's not available now.Anything else ? Will you say it again ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Excuse me , can you tell me how to apply for a visa to America ? And what should I do next ? How long will I wait for ? What's the fee for application ? Thank you very much .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "What can I do for you today ? Can I do anything else for you ? We don ’ t allow people to check out magazines . It ’ s just a policy of ours . You may check out books or videos . You will have to just read it in the library .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hi , Mel , would you like to come and have a cup of coffee this afternoon ? I see . Then what about tomorrow , at Starbucks ? Are you kidding me ? Becky ? She ’ s a real bitch .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Don't use a hair spray . I want my hair set and dried . That's all right.Thank you .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Put all baggage on the conveyor belt.Walk through the detector gate one at a time , please . What for ? Really ? I'm in a hurry.All right . I'm embarrassed ! I forgot completely about them . I'm terribly sorry . Thank you .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Dear , time is up , let ’ s go there now . Have you taken the key to the door ? Where have you put it ? Are you sure ? Then , have you looked downstairs ? Look , dear . It ’ s over there . On the floor .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Why are there still so many people overweight despite the current fitness craze ? What are they ? Why ? That makes sense . Probably less time to make dinner and the junk food is cheaper . What's that ? Wow ! No wonder people are so fat . Say , Carl , looks like you could be doing a bit more exercising . You should consider eating healthier food and getting some more exercise . So what happened ? You should have kept trying .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Didn ’ t you punch in this morning , Monica ? That ’ s ok . I should have told you earlier . This is a company rule . According to the company rule , we should punch in before 8 o ’ clock and punch out after 5 o ’ clock every work day . From 11:30 to 1 o ’ clock . Sometimes , but not quite often .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Which of the two do you think is better ? I mean , what's the difference between them ? I only want it for the kitchen . I like to listen to the news at breakfast time . Hmm ... I'd like the cheaper one , please . Can I pay hy cheque ?",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "So how did you meet Bill ? Oh , really ? Which bulletin board ? I've heard about that , but I've never tried it . I have no desire to talk on a network with a bunch of strangers . I just want a private conversation with one other person . Well , maybe I'll tag along and watch how you talk . It ’ s that popular ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Could you tell me where the cereal is ? What aisle is that ? I know where that is at . Could you point me toward the dishwashing detergent ? I didn't even think about that . Thank you so much for helping me .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Mary ! What're you doing here ? You live in London , don't you ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "how did you do on your BELTS exam ? that's excellent ! Have you received your conditional offers yet ? do you know where the visa office is ? it's just near the Dong Si Shi Tiao subway stop . have you ever gone abroad before ? have you ever been denied a visa before ? that's good . Are you planning on immigrating to another country ? that's exactly what the visa officers want to hear . Do you have enough money for tuition and room and board ? I think you have a very good chance of getting a visa . I can help you prepare for the visa interview if you want .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "You ran the stop sign . May I see your driver's licence , please ? That doesn't justify your violation . May I see your licence , please ? Well , sir , your insurance looks good , but I still have to write you a ticket .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Excuse me . May I take a picture of you and your little boy ? It ’ s for a book . Thank you . I appreciate your help .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I watched a very interesting documentary about plants yesterday evening . It was called unusual plants and looked at several species of plants from around the world which have unusual features . Well . There was one type of plant that catches insects and eats them . No , it isn ’ t . it ’ s a pity , because I ’ d like to see it in action . They showed flowers that only provide their nectar to one type of butterfly or bee . The insect has to be the exact size to get the nectar . Other insects cannot get it . Of course , when the insect molle That ’ s right . That ’ s one reason why it ’ s so important to protect every species . According to the documentary , they have an incredible ability to find water supplies , however small , and then store them without losing much through evaporation .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Are you feeling OK ? What have you been eating ? Maybe the food had something wrong with it . Have you been under a lot of pressure lately ? Perhaps you have caught that bug that is going around .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "So how did you meet Bill ? Oh , really ? Which bulletin board ? I've heard about that , but I've never tried it . I have no desire to talk on a network with a bunch of strangers . I just want a private conversation with one other person . Well , maybe I'll tag along and watch how you talk . It ’ s that popular ?",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Martin ? Did you remember to bring back that software I lent you ? That ’ s okay , Martin . If you could just bring it in tomorrow , I ’ d appreciate it .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "How come it is slow as a snail today ? Yes , I wanted to look for some information on the company page just now . It took me almost one minute to open it . Then there is no response to any click . Ok .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Why are you quitting ?",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "They don't really think you took it , do they ? How many of them were there ? Like what ? What on earth has that got to do with some money disappearing ? Oh well , that's it . They obviously think you're a desperate criminal and you have to steal to eat . I should think you'll get thirty years .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Did you remember to bring back that software I lent to you ? That ’ s ok . If you could just bring it in tomorrow , I would appreciate it .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Wow , is that your sports car ? I love it ! I used to always want to drive a green jaguar . Is it in good condition ? What's wrong with it ? When's the last time you had it serviced ? I thought all cars needed regular servicing on a yearly basis . What else is wrong with it ? Anything else ? Why don't you get it all fixed ? Well , let me know when you can get it fixed . I ’ d love to go for a ride in it !",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "I really hate to say this , but don't go away mad , just go away . Then , why didn't you try to prevent it in the beginning ? I don't want to argue anymore . Please get out of my life ! No way ! Please don't follow me around . Yes , I do . Leave me alone !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "Excuse me , I don't feel good right now . Do you have any pills for airsickness ? Please fetch me a glass of water . Thanks .",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "Why are you up so early , Mary ? What are you watching ? At least five channels have morning cartoons on Saturdays . I agree . And some cartoons are entertaining even for adults . Are you kidding ? It's too early for her .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "May I take your order ? I'm afraid this course is for four persons . I'm afraid not , sir . I would recommend a soup with two or three small dishes . Would you like rice with your meal ? Thank you , sir . Just a moment , please .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Have you followed the value of dollar lately ? It's really frustrating , isn't it ? I have the same problem . I would feel a lot better if the currency was a little more stable . With the way the dollar plummeting lately , my securities have gone up in smoke . What we really should be making investment in is the Euro . I've followed the Euro's progress over the last quarter , I think it's about time to buy in . Are you kidding ? The Yen is in worse shape than the Dollar !",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  },
+  {
+    "prompt": "And we got a 50 thousand dollar ticket for construction workers peeing off the roof . See , I just told you he hit a deer . Man , I knew you weren ’ t listening to me . Nothing ? You and Patricia got engaged , didn ’ t you ? You can tell me . Come on . What ? I thought you liked Patricia .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Oh , the bus is gone . I'm afraid we have to wait for the next bus .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I'm sorry to interrupt you . Please take care not to make a mess while you are selecting goods . If you don't want it , please replace it . What's the brand ? Oh , it's out of stock at the moment . Why don't you choose another brand instead ? You can have a try . Maybe you will like it .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "I don't know why Mark often comes to me and asks me for advice . I smell some rat in it . Nonsense ! There's no indication that he's in love with me .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Excuse me , could you tell me how much is the lipstick ? Oh , it's too expensive . Can't you make it any cheaper ? But the price is too high . What about 15 yuan ? All right , I'll take it . Thank you .",
+    "chosen_emotion": "happiness",
+    "rejected_emotion": "surprise"
+  },
+  {
+    "prompt": "Didn ’ t you punch in this morning , Monica ? That ’ s ok . I should have told you earlier . This is a company rule . According to the company rule , we should punch in before 8 o ’ clock and punch out after 5 o ’ clock every work day . From 11:30 to 1 o ’ clock . Sometimes , but not quite often .",
+    "chosen_emotion": "sadness",
+    "rejected_emotion": "fear"
+  },
+  {
+    "prompt": "Hey ! Ask your mom for more old pictures , OK ? But we saved your parents so much money ... Speaking of plane tickets , don't forget to check on the reservations !",
+    "chosen_emotion": "neutral",
+    "rejected_emotion": "sadness"
+  },
+  {
+    "prompt": "I'm so glad that the spring festival is near at hand . Think of the big face down the eve , hmm . Hey , do you know any mystery belief serve the festival ? You know why fire crackers are set off in festival . And also to frighten away evil spirits . And my parents say the whole year will be as good or as bad as new year day itself and bad or rude words on the day will bring a bad year .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Jack and Mary broke up . Mary said Jack was cheating on her . Jack was seeing a girl from his hometown . One day , May saw them holding hands and ended the relationship immediately . No , he doesn ’ t . Anyway , she found out that he had been two-timing her for a long time . How so ? Poor Mary ! She really liked him . Do you think they ’ ll get back together ? I hope she ’ ll recover soon .",
+    "chosen_emotion": "surprise",
+    "rejected_emotion": "happiness"
+  },
+  {
+    "prompt": "Hey , your Chinese is coming along ! Yeah . It ’ s a lot better than mine . Hang in there . It ’ ll all come together one of these days .",
+    "chosen_emotion": "disgust",
+    "rejected_emotion": "anger"
+  },
+  {
+    "prompt": "Tom , it's time for you to take a shower . Why ? You can't be always so lazy . Alright . But you promise this is the last time .",
+    "chosen_emotion": "anger",
+    "rejected_emotion": "disgust"
+  }
+]
