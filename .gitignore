@@ -41,6 +41,9 @@ aac_server_lan.log
 # Large model files (基模在仓库外)
 Meta-Llama-3-8B-Instruct/
 qwen/
+Model/
+bertscore_model/
+models/
 
 # Large data files (合成训练数据,不入库)
 AAC2Text/data/beta1/

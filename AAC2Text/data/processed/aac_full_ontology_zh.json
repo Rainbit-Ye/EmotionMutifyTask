@@ -37,8 +37,8 @@
       "typical_modifiers": [],
       "aac_category": "content",
       "cs_role": "WHEN",
-      "core_semantic_zh": "圣诞节季节",
-      "label_zh": "进入",
+      "core_semantic_zh": "降临节",
+      "label_zh": "降临节",
       "super_concept_zh": "宗教观察",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -174,8 +174,8 @@
       ],
       "aac_category": "time",
       "cs_role": "WHEN",
-      "core_semantic_zh": "爵士乐日",
-      "label_zh": "爵士乐日",
+      "core_semantic_zh": "节礼日",
+      "label_zh": "节礼日",
       "super_concept_zh": "法定假日",
       "typical_objects_zh": [
         "星期一销售",
@@ -317,8 +317,8 @@
       ],
       "aac_category": "subject",
       "cs_role": "WHEN",
-      "core_semantic_zh": "圣诞节假期",
-      "label_zh": "圣诞节夜",
+      "core_semantic_zh": "平安夜",
+      "label_zh": "平安夜",
       "super_concept_zh": "庆祝活动",
       "typical_objects_zh": [
         "面条"
@@ -505,8 +505,8 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHAT_DOING",
-      "core_semantic_zh": "庆祝圣诞节",
-      "label_zh": "圣诞袜子",
+      "core_semantic_zh": "圣诞袜",
+      "label_zh": "圣诞袜",
       "super_concept_zh": "活动",
       "typical_objects_zh": [
         "短袜"
@@ -805,8 +805,8 @@
       ],
       "aac_category": "time",
       "cs_role": "WHEN",
-      "core_semantic_zh": "年度复活节活动",
-      "label_zh": "摇滚猎人",
+      "core_semantic_zh": "复活节寻彩蛋活动",
+      "label_zh": "复活节寻彩蛋",
       "super_concept_zh": "法定假日",
       "typical_objects_zh": [
         "竖蛋",
@@ -978,8 +978,8 @@
       ],
       "aac_category": "subject",
       "cs_role": "WHEN",
-      "core_semantic_zh": "博士节日",
-      "label_zh": "博士节",
+      "core_semantic_zh": "万圣节",
+      "label_zh": "万圣节",
       "super_concept_zh": "庆祝活动",
       "typical_objects_zh": [
         "面条"
@@ -1009,8 +1009,8 @@
       ],
       "aac_category": "time",
       "cs_role": "WHEN",
-      "core_semantic_zh": "节日收割庆祝",
-      "label_zh": "农历丰收节",
+      "core_semantic_zh": "丰收节",
+      "label_zh": "丰收节",
       "super_concept_zh": "季节性活动",
       "typical_objects_zh": [
         "水果"
@@ -1345,8 +1345,8 @@
       "typical_modifiers": [],
       "aac_category": "content",
       "cs_role": "WHAT_DOING",
-      "core_semantic_zh": "庆祝活动",
-      "label_zh": "最后晚餐",
+      "core_semantic_zh": "最后的晚餐",
+      "label_zh": "最后的晚餐",
       "super_concept_zh": "宗教仪式",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -2489,7 +2489,7 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "卡通角色",
+      "core_semantic_zh": "害怕的女性",
       "label_zh": "害怕的女人",
       "super_concept_zh": "字符",
       "typical_objects_zh": [],
@@ -3770,8 +3770,8 @@
       "typical_modifiers": [],
       "aac_category": "content",
       "cs_role": "WHO",
-      "core_semantic_zh": "姐妹",
-      "label_zh": "母系姐妹",
+      "core_semantic_zh": "母系女性亲属（姨妈）",
+      "label_zh": "姨妈",
       "super_concept_zh": "关系",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -3792,8 +3792,8 @@
       "typical_modifiers": [],
       "aac_category": "person",
       "cs_role": "WHO",
-      "core_semantic_zh": "表亲女性",
-      "label_zh": "母系表亲",
+      "core_semantic_zh": "父系女性亲属（姑妈）",
+      "label_zh": "姑妈",
       "super_concept_zh": "家庭关系",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -3850,7 +3850,7 @@
       ],
       "aac_category": "time",
       "cs_role": "WHEN",
-      "core_semantic_zh": "季节",
+      "core_semantic_zh": "秋天",
       "label_zh": "秋天",
       "super_concept_zh": "时间",
       "typical_objects_zh": [
@@ -6686,8 +6686,8 @@
       "typical_modifiers": [],
       "aac_category": "content",
       "cs_role": "WHAT",
-      "core_semantic_zh": "水果",
-      "label_zh": "黑莓子",
+      "core_semantic_zh": "黑加仑",
+      "label_zh": "黑加仑",
       "super_concept_zh": "生产",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -8983,7 +8983,7 @@
       "typical_modifiers": [],
       "aac_category": "person",
       "cs_role": "WHO",
-      "core_semantic_zh": "兄弟姐妹",
+      "core_semantic_zh": "兄弟",
       "label_zh": "兄弟",
       "super_concept_zh": "关系",
       "typical_objects_zh": [
@@ -12974,8 +12974,8 @@
       "typical_modifiers": [],
       "aac_category": "action",
       "cs_role": "WHAT_DOING",
-      "core_semantic_zh": "加法操作",
-      "label_zh": "收费",
+      "core_semantic_zh": "充电/收费",
+      "label_zh": "充电",
       "super_concept_zh": "数学运算",
       "typical_objects_zh": [
         "附加"
@@ -22293,7 +22293,7 @@
       ],
       "aac_category": "content",
       "cs_role": "WHO",
-      "core_semantic_zh": "父母角色",
+      "core_semantic_zh": "作为家长的爸爸",
       "label_zh": "爸爸",
       "super_concept_zh": "家庭",
       "typical_objects_zh": [
@@ -22534,7 +22534,7 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "女孩或后代",
+      "core_semantic_zh": "女儿",
       "label_zh": "女儿",
       "super_concept_zh": "家庭",
       "typical_objects_zh": [],
@@ -23134,8 +23134,8 @@
       ],
       "aac_category": "person",
       "cs_role": "WHO",
-      "core_semantic_zh": "长发女人",
-      "label_zh": "寻求的女人",
+      "core_semantic_zh": "渴望的女性",
+      "label_zh": "渴望的女人",
       "super_concept_zh": "人类",
       "typical_objects_zh": [
         "长发女子"
@@ -23162,8 +23162,8 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "具有特定外貌的人",
-      "label_zh": "寻求者",
+      "core_semantic_zh": "渴望的男性",
+      "label_zh": "渴望的男人",
       "super_concept_zh": "人类",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -38811,7 +38811,7 @@
       "aac_category": "subject",
       "cs_role": "WHO",
       "core_semantic_zh": "老年男性家庭成员",
-      "label_zh": "外公",
+      "label_zh": "爷爷/外公",
       "super_concept_zh": "家庭",
       "typical_objects_zh": [
         "爸爸",
@@ -38834,8 +38834,8 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "相关者",
-      "label_zh": "叔叔",
+      "core_semantic_zh": "老年女性家庭成员",
+      "label_zh": "奶奶/外婆",
       "super_concept_zh": "家庭",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -39594,8 +39594,8 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "人类",
-      "label_zh": "男人",
+      "core_semantic_zh": "家伙",
+      "label_zh": "家伙",
       "super_concept_zh": "人类",
       "typical_objects_zh": [
         "男人",
@@ -40497,8 +40497,8 @@
       "typical_modifiers": [],
       "aac_category": "person",
       "cs_role": "WHO",
-      "core_semantic_zh": "长发女子",
-      "label_zh": "快乐女士",
+      "core_semantic_zh": "快乐的女性",
+      "label_zh": "快乐的女人",
       "super_concept_zh": "性别",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -40517,7 +40517,7 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "笑容满面的人",
+      "core_semantic_zh": "快乐的表情",
       "label_zh": "快乐的人",
       "super_concept_zh": "个人",
       "typical_objects_zh": [],
@@ -44571,7 +44571,7 @@
       ],
       "aac_category": "content",
       "cs_role": "WHAT",
-      "core_semantic_zh": "水果",
+      "core_semantic_zh": "猕猴桃",
       "label_zh": "猕猴桃",
       "super_concept_zh": "食物",
       "typical_objects_zh": [
@@ -45326,7 +45326,7 @@
       ],
       "aac_category": "content",
       "cs_role": "WHAT",
-      "core_semantic_zh": "材料",
+      "core_semantic_zh": "铅材料",
       "label_zh": "铅",
       "super_concept_zh": "金属材料",
       "typical_objects_zh": [
@@ -49560,7 +49560,7 @@
       "typical_modifiers": [],
       "aac_category": "content",
       "cs_role": "WHAT",
-      "core_semantic_zh": "早饭食物",
+      "core_semantic_zh": "燕麦片",
       "label_zh": "燕麦片",
       "super_concept_zh": "正餐",
       "typical_objects_zh": [
@@ -49683,8 +49683,8 @@
       ],
       "aac_category": "person",
       "cs_role": "WHO",
-      "core_semantic_zh": "父亲作为家长",
-      "label_zh": "爷爷家长",
+      "core_semantic_zh": "作为家长的母亲",
+      "label_zh": "妈妈",
       "super_concept_zh": "管理",
       "typical_objects_zh": [
         "孩子"
@@ -61445,8 +61445,8 @@
       "typical_modifiers": [],
       "aac_category": "emotion",
       "cs_role": "HOW",
-      "core_semantic_zh": "表达",
-      "label_zh": "悲伤的男人",
+      "core_semantic_zh": "悲伤的表情",
+      "label_zh": "悲伤的人",
       "super_concept_zh": "情绪",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -65204,7 +65204,7 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "女儿",
+      "core_semantic_zh": "姐妹",
       "label_zh": "姐妹",
       "super_concept_zh": "家人",
       "typical_objects_zh": [],
@@ -66545,7 +66545,7 @@
       "typical_modifiers": [],
       "aac_category": "person",
       "cs_role": "WHAT",
-      "core_semantic_zh": "子女",
+      "core_semantic_zh": "儿子",
       "label_zh": "儿子",
       "super_concept_zh": "家庭成员",
       "typical_objects_zh": [
@@ -67544,7 +67544,7 @@
       ],
       "aac_category": "time",
       "cs_role": "WHEN",
-      "core_semantic_zh": "季节生长",
+      "core_semantic_zh": "春天",
       "label_zh": "春天",
       "super_concept_zh": "季节",
       "typical_objects_zh": [
@@ -68245,8 +68245,8 @@
       "typical_modifiers": [],
       "aac_category": "content",
       "cs_role": "WHO",
-      "core_semantic_zh": "血缘兄弟通过婚姻",
-      "label_zh": "堂弟",
+      "core_semantic_zh": "继兄弟",
+      "label_zh": "继兄弟",
       "super_concept_zh": "家庭",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -68379,8 +68379,8 @@
       ],
       "aac_category": "content",
       "cs_role": "WHO",
-      "core_semantic_zh": "家庭成员",
-      "label_zh": "兄弟姐妹家长",
+      "core_semantic_zh": "继母",
+      "label_zh": "继母",
       "super_concept_zh": "社会关系",
       "typical_objects_zh": [
         "弟弟",
@@ -68409,8 +68409,8 @@
       "typical_modifiers": [],
       "aac_category": "entity",
       "cs_role": "WHO",
-      "core_semantic_zh": "女性亲属",
-      "label_zh": "舅甥女",
+      "core_semantic_zh": "继姐妹",
+      "label_zh": "继姐妹",
       "super_concept_zh": "亲戚",
       "typical_objects_zh": [
         "亲戚",
@@ -75453,8 +75453,8 @@
       "typical_modifiers": [],
       "aac_category": "subject",
       "cs_role": "WHO",
-      "core_semantic_zh": "妈妈的男性亲属",
-      "label_zh": "外祖母",
+      "core_semantic_zh": "母系男性亲属（舅舅）",
+      "label_zh": "舅舅",
       "super_concept_zh": "人类",
       "typical_objects_zh": [],
       "typical_modifiers_zh": []
@@ -75477,8 +75477,8 @@
       ],
       "aac_category": "content",
       "cs_role": "WHO",
-      "core_semantic_zh": "父亲亲属",
-      "label_zh": "哥哥",
+      "core_semantic_zh": "父系男性亲属（伯伯）",
+      "label_zh": "伯伯",
       "super_concept_zh": "关系",
       "typical_objects_zh": [
         "亲戚"
@@ -78357,8 +78357,8 @@
       ],
       "aac_category": "time",
       "cs_role": "WHEN",
-      "core_semantic_zh": "季节",
-      "label_zh": "冬季",
+      "core_semantic_zh": "冬天",
+      "label_zh": "冬天",
       "super_concept_zh": "气候",
       "typical_objects_zh": [],
       "typical_modifiers_zh": [
