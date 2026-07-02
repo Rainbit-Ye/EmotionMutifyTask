@@ -1,0 +1,50 @@
+# AAC 中文 SFT 模型训练配置 — Llama-3-8B + DeepSpeed ZeRO-2
+
+# 数据配置
+data:
+  train_data: "/home/user1/liuduanye/EmotionClassify/AAC2Text/data/cleardata/sft_train.json"
+  val_data: "/home/user1/liuduanye/EmotionClassify/AAC2Text/data/cleardata/sft_val.json"
+  num_train: null  # null表示全部 1689 条
+  val_ratio: 0.1   # 验证集比例
+
+# 模型配置
+model:
+  base_model: "/home/user1/liuduanye/Meta-Llama-3-8B-Instruct"
+  output_dir: "/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_model_zh"
+  max_length: 128
+
+# 训练配置 — 2卡 DeepSpeed
+training:
+  epochs: 3
+  batch_size: 2           # 每卡2条, 2卡 × 2 = 4, × grad_accum 8 = 32 有效batch
+  learning_rate: 2.0e-4   # LoRA 用更大的lr
+  weight_decay: 0.01
+  warmup_ratio: 0.05
+  gradient_accumulation_steps: 8
+  logging_steps: 50
+  eval_steps: 200
+  save_steps: 200
+  save_total_limit: 3
+
+# LoRA 配置 — 与英文 SFT 一致
+lora:
+  r: 32
+  lora_alpha: 64
+  lora_dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+
+# 测试配置
+test:
+  test_samples:
+    - ["I", "want_to", "water"]
+    - ["I", "am", "happy"]
+    - ["I", "eat_to", "apple"]
+    - ["I", "go_to", "school"]
+    - ["doctor", "help_to", "patient"]

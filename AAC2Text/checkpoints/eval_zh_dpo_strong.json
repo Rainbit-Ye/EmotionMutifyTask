@@ -1,0 +1,16 @@
+[
+  {
+    "checkpoint": "/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_dpo_zh_v2_strong",
+    "num_samples": 168,
+    "bertscore": {
+      "bertscore_precision": 0.9354147911071777,
+      "bertscore_recall": 0.9412509202957153,
+      "bertscore_f1": 0.9382176995277405
+    },
+    "bleu": {
+      "bleu": 9.045102490841083,
+      "chrf": 17.537192188881544
+    },
+    "name": "aac_dpo_zh_v2_strong"
+  }
+]

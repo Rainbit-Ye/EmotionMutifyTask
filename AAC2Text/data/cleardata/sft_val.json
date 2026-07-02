@@ -1,0 +1,2121 @@
+[
+  {
+    "labels": [
+      "who",
+      "copy"
+    ],
+    "target_zh": "他抄了吗？",
+    "target_en": "Who is copying.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1638,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "archery",
+      "Harvest_Festival"
+    ],
+    "target_zh": "我用射箭来庆祝丰收",
+    "target_en": "I participate in the Harvest Festival with archery.",
+    "source": "other_corrected_unchanged",
+    "item_id": 273,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "short_hair",
+      "pink_pale"
+    ],
+    "target_zh": "你有淡粉色的头发。",
+    "target_en": "He has short hair made of wood.",
+    "source": "other_corrected_replaced",
+    "item_id": 1528,
+    "deleted_labels": [
+      "wood"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "eggs_scrambled",
+      "sneering_lady"
+    ],
+    "target_zh": "你不爱吃煎蛋。",
+    "target_en": "You are swinging to scrambled eggs, but the person with a sneering face is not happy about it.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1795,
+    "deleted_labels": [
+      "swing_to"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "busy"
+    ],
+    "target_zh": "你在工作中忙碌。",
+    "target_en": "You are busy.",
+    "source": "reasonable_unchanged",
+    "item_id": 18,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "salt_to",
+      "muesli"
+    ],
+    "target_zh": "我在燕麦片里撒了一些盐",
+    "target_en": "I watch comedy TV on Easter.",
+    "source": "other_corrected_replaced",
+    "item_id": 1239,
+    "deleted_labels": [
+      "comedy_tv",
+      "Easter_egg_hunt",
+      "muesli"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "Christmas_sock",
+      "hard"
+    ],
+    "target_zh": "我很难脱下圣诞袜",
+    "target_en": "I struggle to decorate Christmas socks.",
+    "source": "other_corrected_unchanged",
+    "item_id": 567,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "close_to",
+      "lizard",
+      "afraid_lady"
+    ],
+    "target_zh": "靠近爬行动物，我有点害怕。",
+    "target_en": "I'm close to celebrating the Harvest Festival when.",
+    "source": "other_corrected_replaced",
+    "item_id": 1191,
+    "deleted_labels": [
+      "Harvest_Festival"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "fats_high"
+    ],
+    "target_zh": "你体内的脂肪含量增多了。",
+    "target_en": "You're taking a history class about Romania, which has high fat content.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1056,
+    "deleted_labels": [
+      "country_Romania",
+      "history_class",
+      "great"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "open_shop",
+      "beetroot",
+      "worried_man"
+    ],
+    "target_zh": "你担心在商店买不到萝卜",
+    "target_en": "You are worried because you need to open a shop and buy beetroot.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1330,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "harvest"
+    ],
+    "target_zh": "我收获庄稼。",
+    "target_en": "I am harvesting.",
+    "source": "reasonable_unchanged",
+    "item_id": 842,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "download_to"
+    ],
+    "target_zh": "你可以把数据下载到这里",
+    "target_en": "You can download it.",
+    "source": "other_corrected_unchanged",
+    "item_id": 849,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "guy",
+      "burn",
+      "female_body"
+    ],
+    "target_zh": "我被这个东西烫到了",
+    "target_en": "The guy is healing from his burn.",
+    "source": "other_corrected_unchanged",
+    "item_id": 155,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "step_dad_parent",
+      "takeaway_chinese",
+      "breakfast_time"
+    ],
+    "target_zh": "他在晚餐点了份儿外卖",
+    "target_en": "He orders Chinese takeaway for breakfast time.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1331,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "cow_shed"
+    ],
+    "target_zh": "你在牛棚里",
+    "target_en": "You can see the cattle slide smoothly to the cow shed from the aerial indoor view.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1713,
+    "deleted_labels": [
+      "aerial_indoor",
+      "slide_to"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "finger_painting",
+      "colour"
+    ],
+    "target_zh": "你能用各种颜色画画",
+    "target_en": "You use a specific painting technique on something with a certain color.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1459,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "is_this_enough",
+      "Boxing_Day"
+    ],
+    "target_zh": "我在平安夜晚上反复确认过",
+    "target_en": "I confirm on Boxing Day.",
+    "source": "other_corrected_unchanged",
+    "item_id": 370,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "good_to_drink",
+      "sugar_brown"
+    ],
+    "target_zh": "加了糖之后很好喝",
+    "target_en": "I'm feeling good to walk up to a drink.",
+    "source": "other_corrected_replaced",
+    "item_id": 1394,
+    "deleted_labels": [
+      "walk_up_to_,_to"
+    ]
+  },
+  {
+    "labels": [
+      "brother",
+      "bowling",
+      "video_camera",
+      "Christmas_Day"
+    ],
+    "target_zh": "哥哥带了个相机来记录圣诞节跟朋友们打篮球时候的瞬间",
+    "target_en": "My brother went to the Christmas Day celebration to capture the fun of bowling with his friends using a video camera.",
+    "source": "other_corrected_unchanged",
+    "item_id": 359,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "good_to_eat",
+      "school",
+      "concentrating_lady"
+    ],
+    "target_zh": "你皱着眉头，因为你不喜欢学校的食物吃得不好。",
+    "target_en": "You don't like the food at school because you're concentrating hard.",
+    "source": "reasonable_unchanged",
+    "item_id": 263,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "brother",
+      "download_to"
+    ],
+    "target_zh": "我哥哥在做数字传输",
+    "target_en": "He downloads data.",
+    "source": "other_corrected_unchanged",
+    "item_id": 91,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "C",
+      "shoe_-_ladies"
+    ],
+    "target_zh": "你是这鞋的主人",
+    "target_en": "You wear the ladies' shoe.",
+    "source": "other_corrected_unchanged",
+    "item_id": 222,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "necklace",
+      "star"
+    ],
+    "target_zh": "你的项链非常闪耀。",
+    "target_en": "You're counting down with parallel lines.",
+    "source": "other_corrected_replaced",
+    "item_id": 1111,
+    "deleted_labels": [
+      "Advent_calendar",
+      "line_parallel"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "step_by_step",
+      "mobile_phone_silent"
+    ],
+    "target_zh": "你需要按照手机上的步骤一步步来，保持安静。",
+    "target_en": "You need to follow the steps on your silent phone step by step.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1149,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "how",
+      "handsome"
+    ],
+    "target_zh": "你是怎么保持面部清洁的",
+    "target_en": "How do you find your handsome way?",
+    "source": "other_corrected_unchanged",
+    "item_id": 325,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "drink_to",
+      "muesli"
+    ],
+    "target_zh": "我喝了燕麦片。",
+    "target_en": "I drink thin.",
+    "source": "other_corrected_replaced",
+    "item_id": 1710,
+    "deleted_labels": [
+      "thin"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "shape_puzzle",
+      "fish_and_chips"
+    ],
+    "target_zh": "我玩了一个鱼类拼图",
+    "target_en": "What are you doing with fish and chips?",
+    "source": "other_corrected_unchanged",
+    "item_id": 801,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "fish_to",
+      "book_shelf"
+    ],
+    "target_zh": "你可以到书架上看看有关鱼类的书",
+    "target_en": "You catch fish.",
+    "source": "other_corrected_unchanged",
+    "item_id": 890,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "bowling",
+      "food_hot"
+    ],
+    "target_zh": "你打完保龄球后吃了一些现做的食物",
+    "target_en": "You can enjoy hot food while bowling.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1302,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "cut",
+      "cheese_brie"
+    ],
+    "target_zh": "你切奶酪的时候受伤了。",
+    "target_en": "You cut something.",
+    "source": "other_corrected_only_added",
+    "item_id": 974,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "plant_to",
+      "cloudy"
+    ],
+    "target_zh": "我种植的植物受天气的影响。",
+    "target_en": "I'm feeling affected by the cloudy weather.",
+    "source": "reasonable_unchanged",
+    "item_id": 1304,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "scanning",
+      "passport"
+    ],
+    "target_zh": "我扫描文件。",
+    "target_en": "I am scanning.",
+    "source": "other_corrected_only_added",
+    "item_id": 1788,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "email_attachment"
+    ],
+    "target_zh": "你可以将数字文件传输。",
+    "target_en": "You can send the digital file.",
+    "source": "reasonable_unchanged",
+    "item_id": 515,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "watch_to",
+      "hamster",
+      "winter"
+    ],
+    "target_zh": "你在冬天看到仓鼠了？",
+    "target_en": "Do you have a hamster in winter?",
+    "source": "other_corrected_replaced",
+    "item_id": 1209,
+    "deleted_labels": [
+      "is_this_enough"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "drink_cold",
+      "back_ache"
+    ],
+    "target_zh": "喝完冷饮后我后背痛",
+    "target_en": "You're feeling backache while drinking something cold.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1702,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "tennis",
+      "step_sister"
+    ],
+    "target_zh": "我的表姐在参加网球比赛。",
+    "target_en": "I'm the one who plays tennis the most.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1783,
+    "deleted_labels": [
+      "most"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "drink_small",
+      "country_Cayman_Islands",
+      "afternoon"
+    ],
+    "target_zh": "你下午在多米尼克群岛喝了一小杯饮料",
+    "target_en": "You drink a small beverage in the Cayman Islands in the afternoon.",
+    "source": "other_corrected_unchanged",
+    "item_id": 556,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "Milky_Way",
+      "confused_man"
+    ],
+    "target_zh": "你对银河系感到困惑",
+    "target_en": "You're feeling confused while watching a tennis game at the Milky Way.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1724,
+    "deleted_labels": [
+      "tennis"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "open_2_,_to"
+    ],
+    "target_zh": "我挥手告别。",
+    "target_en": "I wave goodbye.",
+    "source": "reasonable_unchanged",
+    "item_id": 520,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "volleyball",
+      "this_month"
+    ],
+    "target_zh": "你这个月一直在打排球",
+    "target_en": "You play volleyball this month.",
+    "source": "other_corrected_unchanged",
+    "item_id": 336,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "fire_helmet",
+      "yesterday"
+    ],
+    "target_zh": "我昨天戴了消防帽。",
+    "target_en": "What did I do with my fire helmet yesterday?",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1036,
+    "deleted_labels": [
+      "open_2_,_to"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "pet_comb",
+      "concentrating_man"
+    ],
+    "target_zh": "你专心刷牙。",
+    "target_en": "You are focusing on brushing your teeth.",
+    "source": "reasonable_unchanged",
+    "item_id": 1426,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "pet_comb",
+      "mauve_light"
+    ],
+    "target_zh": "我刷牙之后牙膏泡沫变成了紫色",
+    "target_en": "You use a purple comb to brush your teeth.",
+    "source": "other_corrected_unchanged",
+    "item_id": 883,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "paint_childs",
+      "tea_time"
+    ],
+    "target_zh": "你在吃完下午茶后画画。",
+    "target_en": "You will paint the children after tea time.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1125,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "badminton",
+      "breakfast_time"
+    ],
+    "target_zh": "你在早餐后打了羽毛球。",
+    "target_en": "You play badminton at breakfast time.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1460,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "drink"
+    ],
+    "target_zh": "我喝了一杯饮料。",
+    "target_en": "I drink.",
+    "source": "reasonable_unchanged",
+    "item_id": 545,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "tape_recorder",
+      "masking_tape",
+      "when"
+    ],
+    "target_zh": "你记录了录制胶带声音的音频",
+    "target_en": "Who records audio with masking tape when?",
+    "source": "other_corrected_unchanged",
+    "item_id": 675,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "power_switch",
+      "cow_shed",
+      "tomorrow"
+    ],
+    "target_zh": "明天记得打开牛棚开关。",
+    "target_en": "You will turn it on tomorrow.",
+    "source": "other_corrected_only_added",
+    "item_id": 1523,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "xray",
+      "video_tape",
+      "toothache"
+    ],
+    "target_zh": "我需要去医院做 X 光检查来诊断牙痛。",
+    "target_en": "I'm feeling a toothache.",
+    "source": "reasonable_unchanged",
+    "item_id": 1266,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "inside_out",
+      "high_chair"
+    ],
+    "target_zh": "我把衣服搭在儿童餐椅上",
+    "target_en": "I eat at the high chair.",
+    "source": "other_corrected_unchanged",
+    "item_id": 542,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "stir_fry"
+    ],
+    "target_zh": "你做饭炒菜",
+    "target_en": "You stir-fry.",
+    "source": "other_corrected_unchanged",
+    "item_id": 163,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "hat_-_mans",
+      "football_kit_Leicester",
+      "flag_Syria"
+    ],
+    "target_zh": "他戴着帽子，穿着队服，举着国旗走过观众席",
+    "target_en": "He wears a Leicester team uniform and holds the Syrian flag, wearing a man's hat.",
+    "source": "other_corrected_unchanged",
+    "item_id": 526,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "mop"
+    ],
+    "target_zh": "你在扫地。",
+    "target_en": "You use your right hand every minute.",
+    "source": "other_corrected_replaced",
+    "item_id": 894,
+    "deleted_labels": [
+      "right_hand",
+      "minute"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "slide_to",
+      "Harvest_Festival"
+    ],
+    "target_zh": "你顺利地完成了丰收节的庆祝活动",
+    "target_en": "You celebrate the Harvest Festival with smooth movement.",
+    "source": "other_corrected_unchanged",
+    "item_id": 663,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "travel",
+      "worried_man"
+    ],
+    "target_zh": "你担心旅行。",
+    "target_en": "You are worried about traveling.",
+    "source": "reasonable_unchanged",
+    "item_id": 1712,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "bubbles_blow",
+      "yesterday"
+    ],
+    "target_zh": "我在昨天吹出了泡泡",
+    "target_en": "I blew bubbles yesterday.",
+    "source": "other_corrected_unchanged",
+    "item_id": 722,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "lots_more",
+      "sugar_white",
+      "quiet"
+    ],
+    "target_zh": "我悄悄的往饮料里加了许多白糖",
+    "target_en": "I add more white sugar quietly.",
+    "source": "other_corrected_unchanged",
+    "item_id": 136,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "cricket",
+      "when"
+    ],
+    "target_zh": "我棒球要打到什么时候？",
+    "target_en": "What am I doing when I see a cricket?",
+    "source": "other_corrected_unchanged",
+    "item_id": 1766,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "test",
+      "hard"
+    ],
+    "target_zh": "你的考试有点难。",
+    "target_en": "You are being tested with the Canadian flag, and it's hard.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 697,
+    "deleted_labels": [
+      "flag_Canada"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "save",
+      "nail_polish",
+      "Christmas_Eve"
+    ],
+    "target_zh": "平安夜的时候我囤了一些护肤品。",
+    "target_en": "I save my nail polish on Christmas Eve.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1646,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "next",
+      "cart",
+      "country_Taiwan"
+    ],
+    "target_zh": "你可以用载货的车辆去台湾。",
+    "target_en": "You can take a cart to Taiwan.",
+    "source": "reasonable_unchanged",
+    "item_id": 470,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "drink_cold",
+      "riding_hat"
+    ],
+    "target_zh": "你戴着帽子喝冷饮",
+    "target_en": "You wear a hat while drinking something that symbolizes love.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1246,
+    "deleted_labels": [
+      "heart"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "drink_to",
+      "hot_brush",
+      "date"
+    ],
+    "target_zh": "我每天都刷牙",
+    "target_en": "I drink hot water every morning.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1463,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "busy",
+      "hair_plaits"
+    ],
+    "target_zh": "你正在忙于编辫子。",
+    "target_en": "You are busy styling your hair with a strong flair.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1419,
+    "deleted_labels": [
+      "strong"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "picnic",
+      "concentrating_man"
+    ],
+    "target_zh": "我在户外集中精力生火做饭",
+    "target_en": "I'm having a picnic with someone who is concentrating.",
+    "source": "other_corrected_unchanged",
+    "item_id": 530,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "pool_snooker",
+      "winter"
+    ],
+    "target_zh": "我在冬天打台球。",
+    "target_en": "I play pool snooker in winter.",
+    "source": "reasonable_unchanged",
+    "item_id": 838,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "good_to_eat",
+      "meatballs_and_spaghetti"
+    ],
+    "target_zh": "意大利肉丸意面是你最喜欢的食物",
+    "target_en": "You can eat meatballs and spaghetti well.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1044,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "open_to"
+    ],
+    "target_zh": "你打开门",
+    "target_en": "You need to open it.",
+    "source": "other_corrected_unchanged",
+    "item_id": 380,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "trampoline_to",
+      "skate_park"
+    ],
+    "target_zh": "我在户外的蹦床上玩",
+    "target_en": "I jump on a trampoline at a skate park near the Malawian flag.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1728,
+    "deleted_labels": [
+      "flag_Malawi"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "plane_landing",
+      "takeaway_burger_and_chips",
+      "date"
+    ],
+    "target_zh": "我降落后吃了一份汉堡和薯条。",
+    "target_en": "I had a takeaway burger and chips after the plane landed.",
+    "source": "reasonable_unchanged",
+    "item_id": 1548,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "aerobics_dance",
+      "nine",
+      "ramp"
+    ],
+    "target_zh": "你可以在这条坡道上做九种健身舞。",
+    "target_en": "You do aerobics dance on the ramp nine times.",
+    "source": "reasonable_unchanged",
+    "item_id": 1204,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "around",
+      "yellow"
+    ],
+    "target_zh": "我在绕着一个黄色的东西转。",
+    "target_en": "I'm feeling around something yellow.",
+    "source": "reasonable_unchanged",
+    "item_id": 396,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "orange_juice",
+      "place_setting"
+    ],
+    "target_zh": "我把饮料和盘子摆好",
+    "target_en": "I copy the orange juice.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1409,
+    "deleted_labels": [
+      "copy_to"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "scales",
+      "camera",
+      "save"
+    ],
+    "target_zh": "我用专业的摄影设备测量数据",
+    "target_en": "I weigh myself with salt using a camera.",
+    "source": "other_corrected_replaced",
+    "item_id": 1355,
+    "deleted_labels": [
+      "salt"
+    ]
+  },
+  {
+    "labels": [
+      "parents",
+      "barbeque_to"
+    ],
+    "target_zh": "我和家人一起去烤肉",
+    "target_en": "The parents are barbecuing.",
+    "source": "other_corrected_unchanged",
+    "item_id": 175,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "bib",
+      "good_to_eat"
+    ],
+    "target_zh": "我吃东西时候挤着肚兜",
+    "target_en": "I examine my lungs around the clock.",
+    "source": "other_corrected_replaced",
+    "item_id": 1440,
+    "deleted_labels": [
+      "around",
+      "lungs",
+      "day"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "can_opener",
+      "lager"
+    ],
+    "target_zh": "你用瓶起子打开酒瓶",
+    "target_en": "I use a can opener to tie something.",
+    "source": "other_corrected_replaced",
+    "item_id": 1643,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "toy_soldier",
+      "squash_to"
+    ],
+    "target_zh": "玩具小兵在饮料旁边。",
+    "target_en": "He squashes the toy soldier.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1488,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "barbeque_to",
+      "football_kit_Hull_City",
+      "lunch_time"
+    ],
+    "target_zh": "我中午穿着芝加哥足球队的队服去吃烧烤",
+    "target_en": "I wear my Hull City football kit to the barbeque at lunch time.",
+    "source": "other_corrected_unchanged",
+    "item_id": 524,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "nuts",
+      "empty"
+    ],
+    "target_zh": "我缺少一些坚果。",
+    "target_en": "I eat the nuts from the inside out.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1619,
+    "deleted_labels": [
+      "inside_out"
+    ]
+  },
+  {
+    "labels": [
+      "step_dad_parent",
+      "bowling"
+    ],
+    "target_zh": "我的爸爸喜欢打保龄球",
+    "target_en": "He enjoys bowling.",
+    "source": "other_corrected_unchanged",
+    "item_id": 860,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "second",
+      "tall"
+    ],
+    "target_zh": "这段时间你长得挺高",
+    "target_en": "You are the second tallest.",
+    "source": "other_corrected_unchanged",
+    "item_id": 787,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "paint_childs",
+      "worksheet"
+    ],
+    "target_zh": "我用颜料画画。",
+    "target_en": "I paint children.",
+    "source": "other_corrected_only_added",
+    "item_id": 816,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "finger_painting",
+      "pie_cherry"
+    ],
+    "target_zh": "我在蛋糕上绘画",
+    "target_en": "I make a cherry pie using finger painting.",
+    "source": "other_corrected_unchanged",
+    "item_id": 379,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "swing_to",
+      "laughing_lady"
+    ],
+    "target_zh": "我荡秋千很高兴。",
+    "target_en": "I'm feeling stubble.",
+    "source": "other_corrected_replaced",
+    "item_id": 806,
+    "deleted_labels": [
+      "stubble"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "sieve_to",
+      "noodles",
+      "wrong_thought"
+    ],
+    "target_zh": "你过筛面条是不对的。",
+    "target_en": "You're having a wrong thought about sifting or straining.",
+    "source": "other_corrected_only_added",
+    "item_id": 1410,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "around",
+      "goldfish_bowl"
+    ],
+    "target_zh": "金鱼一直在鱼缸里转圈。",
+    "target_en": "I'm feeling around a pentagon.",
+    "source": "other_corrected_replaced",
+    "item_id": 1024,
+    "deleted_labels": [
+      "pentagon",
+      "I"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "ready_meal_lamb"
+    ],
+    "target_zh": "我准备牛肉饭",
+    "target_en": "I eat the pre-cooked meal inside out.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 678,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "add",
+      "budgie",
+      "minute"
+    ],
+    "target_zh": "你可以和一只小鹦鹉呆一会儿。",
+    "target_en": "You can join the budgie for a minute.",
+    "source": "reasonable_unchanged",
+    "item_id": 1679,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "clean_dishes",
+      "roast_dinner",
+      "tomorrow"
+    ],
+    "target_zh": "明天吃完饭也要记得刷完",
+    "target_en": "You will roast a dinner and clean the dishes tomorrow.",
+    "source": "other_corrected_unchanged",
+    "item_id": 247,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "forward"
+    ],
+    "target_zh": "我向前走",
+    "target_en": "I feel pretty moving forward.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1706,
+    "deleted_labels": [
+      "pretty"
+    ]
+  },
+  {
+    "labels": [
+      "parents",
+      "drink_medium"
+    ],
+    "target_zh": "他的爸爸喝了一杯饮料",
+    "target_en": "The parents are drinking a beverage.",
+    "source": "other_corrected_unchanged",
+    "item_id": 189,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "email_attachment"
+    ],
+    "target_zh": "我正在传输数字文件",
+    "target_en": "I send digital files.",
+    "source": "other_corrected_unchanged",
+    "item_id": 609,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "noisy",
+      "afternoon"
+    ],
+    "target_zh": "你下午听到刺耳的噪音",
+    "target_en": "You make a lot of noise in the afternoon.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1552,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "race_athletics",
+      "yesterday"
+    ],
+    "target_zh": "你昨天参加了田径比赛。",
+    "target_en": "You ran in a race event yesterday.",
+    "source": "reasonable_unchanged",
+    "item_id": 487,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "noisy",
+      "back_ache"
+    ],
+    "target_zh": "你因为背部疼痛而发出痛苦的声音",
+    "target_en": "You're feeling back ache because of the noisy surroundings.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1452,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "happy_man",
+      "iron_to"
+    ],
+    "target_zh": "用熨斗熨平衣服很解压",
+    "target_en": "He smooths the fabric with a happy expression.",
+    "source": "other_corrected_unchanged",
+    "item_id": 701,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "forward"
+    ],
+    "target_zh": "你向前走。",
+    "target_en": "You move forward.",
+    "source": "reasonable_unchanged",
+    "item_id": 170,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "lots_more",
+      "purse"
+    ],
+    "target_zh": "我有更多的钱包",
+    "target_en": "I have a purse full of money in the Faroe Islands.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1493,
+    "deleted_labels": [
+      "country_The_Faroe_Islands"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "swing_to",
+      "helmet_pilot",
+      "headache"
+    ],
+    "target_zh": "你头部摆动时需要戴上头盔，以免磕破",
+    "target_en": "When you swing to, do you wear a helmet pilot to avoid a headache?",
+    "source": "other_corrected_unchanged",
+    "item_id": 1130,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "dirty",
+      "cleaner_spray"
+    ],
+    "target_zh": "你需要用清洁剂把衣服洗干净",
+    "target_en": "You need to swing back and forth to clean dirty shoes.",
+    "source": "other_corrected_replaced",
+    "item_id": 1289,
+    "deleted_labels": [
+      "swing_to"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "cricket",
+      "leg_warmers",
+      "summer"
+    ],
+    "target_zh": "我夏天穿长腿袜去打棒球。",
+    "target_en": "I play cricket in the summer.",
+    "source": "other_corrected_unchanged",
+    "item_id": 800,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "bowling",
+      "Christmas_Day"
+    ],
+    "target_zh": "你在圣诞节打保龄球",
+    "target_en": "You celebrate Christmas Day bowling.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1375,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "is_this_enough",
+      "sauce_apple"
+    ],
+    "target_zh": "苹果酱加够了吗？",
+    "target_en": "Are you from Lebanon?",
+    "source": "other_corrected_replaced",
+    "item_id": 1396,
+    "deleted_labels": [
+      "country_Lebanon"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "stir_fry",
+      "soup_tomato",
+      "whole"
+    ],
+    "target_zh": "你的烹饪西红柿汤的方法是正确完整的",
+    "target_en": "You stir-fry the whole tomato soup.",
+    "source": "other_corrected_unchanged",
+    "item_id": 619,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "playing_cards_patience",
+      "hot"
+    ],
+    "target_zh": "一玩电脑游戏，cpu就会发热",
+    "target_en": "I am feeling hot while playing patience.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1237,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "drink_cold"
+    ],
+    "target_zh": "我喝了一杯冷饮。",
+    "target_en": "I drink a cold beverage.",
+    "source": "reasonable_unchanged",
+    "item_id": 192,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "sink_to",
+      "chestnuts"
+    ],
+    "target_zh": "你正在清洗核桃",
+    "target_en": "He sinks into the water.",
+    "source": "other_corrected_only_added",
+    "item_id": 835,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "mum_parent",
+      "drink_small",
+      "hot_chocolate",
+      "first"
+    ],
+    "target_zh": "妈妈作为家长，在开始帮她选择了小份的热饮",
+    "target_en": "Mum helps her drink hot chocolate first.",
+    "source": "other_corrected_unchanged",
+    "item_id": 298,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "Christmas_sock",
+      "mittens",
+      "winter"
+    ],
+    "target_zh": "我在冬天穿上圣诞袜和手套",
+    "target_en": "I wear mittens for Christmas.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1201,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "short_hair",
+      "past"
+    ],
+    "target_zh": "我前段时间把头发剪短了。",
+    "target_en": "I had short hair in the past.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1038,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "afternoon",
+      "double_bed"
+    ],
+    "target_zh": "我下午在床上睡了一会儿。",
+    "target_en": "I take a break in the afternoon.",
+    "source": "other_corrected_replaced",
+    "item_id": 1594,
+    "deleted_labels": [
+      "second"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "up"
+    ],
+    "target_zh": "我上去。",
+    "target_en": "I am going up.",
+    "source": "reasonable_unchanged",
+    "item_id": 84,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "lots_more",
+      "passion_fruit"
+    ],
+    "target_zh": "你可以拥有更多的热带水果吧。",
+    "target_en": "You can have lots more passion fruit.",
+    "source": "reasonable_unchanged",
+    "item_id": 519,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "step_brother",
+      "chicken_deep_fried"
+    ],
+    "target_zh": "表哥在吃炸鸡",
+    "target_en": "My stepbrother loves to cut and paste chicken deep-fried.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1319,
+    "deleted_labels": [
+      "cut_and_paste"
+    ]
+  },
+  {
+    "labels": [
+      "grandmother",
+      "sink_to",
+      "daffodil"
+    ],
+    "target_zh": "奶奶把花插到水中",
+    "target_en": "Does the grandmother carefully drop the daffodil into the water?",
+    "source": "other_corrected_only_deleted",
+    "item_id": 754,
+    "deleted_labels": [
+      "pointed"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "burn",
+      "fourteen",
+      "egg_fried"
+    ],
+    "target_zh": "你弄坏了14个鸡蛋。",
+    "target_en": "You have been burned for fourteen.",
+    "source": "other_corrected_only_added",
+    "item_id": 795,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "out"
+    ],
+    "target_zh": "我往出口方向走。",
+    "target_en": "I am going out.",
+    "source": "reasonable_unchanged",
+    "item_id": 238,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "counters",
+      "good_to_eat"
+    ],
+    "target_zh": "你准备好吃点好吃的了。",
+    "target_en": "You're ready to eat something good.",
+    "source": "reasonable_unchanged",
+    "item_id": 839,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "right_click"
+    ],
+    "target_zh": "我点击了操作。",
+    "target_en": "I click the operation.",
+    "source": "reasonable_unchanged",
+    "item_id": 226,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "drama"
+    ],
+    "target_zh": "你看戏剧",
+    "target_en": "You're feeling away from the diagonal line.",
+    "source": "other_corrected_replaced",
+    "item_id": 1722,
+    "deleted_labels": [
+      "away",
+      "line_diagonal"
+    ]
+  },
+  {
+    "labels": [
+      "daughter",
+      "shuttlecock",
+      "winter"
+    ],
+    "target_zh": "女儿在冬天打羽毛球",
+    "target_en": "The daughter is circling around the shuttlecock in winter.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 738,
+    "deleted_labels": [
+      "around"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "what",
+      "chinese_food"
+    ],
+    "target_zh": "我想知道吃什么中国菜？",
+    "target_en": "What kind of Chinese food do I eat over there?",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1752,
+    "deleted_labels": [
+      "left"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "copy",
+      "shrimp",
+      "summer"
+    ],
+    "target_zh": "夏天的时候我在外面烤了一对虾吃，并记录了下来",
+    "target_en": "You can copy shrimp during the summer.",
+    "source": "other_corrected_unchanged",
+    "item_id": 460,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "salt_to",
+      "large"
+    ],
+    "target_zh": "我撒了一把大盐。",
+    "target_en": "I sprinkle a lot of salt.",
+    "source": "reasonable_unchanged",
+    "item_id": 365,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "good_to_eat",
+      "next_week"
+    ],
+    "target_zh": "下周去吃好吃的食物",
+    "target_en": "You will enjoy eating well next week.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1691,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "short_hair",
+      "red"
+    ],
+    "target_zh": "你把短发染成了红色",
+    "target_en": "I have a short haircut with the Indonesian flag on it, which is pointed.",
+    "source": "other_corrected_replaced",
+    "item_id": 745,
+    "deleted_labels": [
+      "flag_Indonesia",
+      "pointed"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "celebrate_birthday",
+      "pie"
+    ],
+    "target_zh": "你过生日并且吃了甜点。",
+    "target_en": "You celebrate your birthday in a dark green way.",
+    "source": "other_corrected_replaced",
+    "item_id": 962,
+    "deleted_labels": [
+      "green_dark"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "out",
+      "waste_paper_bin"
+    ],
+    "target_zh": "我朝着回收箱旁的出口走去",
+    "target_en": "I throw away the waste paper bin in Northern Cyprus.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1484,
+    "deleted_labels": [
+      "country_Northern_Cyprus"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "short_hair",
+      "baseball_game"
+    ],
+    "target_zh": "你留着短发去打棒球",
+    "target_en": "You are going to watch the baseball game with short hair.",
+    "source": "other_corrected_unchanged",
+    "item_id": 371,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "hair_curler",
+      "curly"
+    ],
+    "target_zh": "我用卷发器把头发弄卷",
+    "target_en": "I wave goodbye with a hair curler.",
+    "source": "other_corrected_replaced",
+    "item_id": 1676,
+    "deleted_labels": [
+      "open_2_,_to"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "when"
+    ],
+    "target_zh": "现在什么时间了？",
+    "target_en": "What am I doing with my right hand when?",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1743,
+    "deleted_labels": [
+      "right_hand"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "iron_to"
+    ],
+    "target_zh": "你用熨斗熨布",
+    "target_en": "You iron it.",
+    "source": "other_corrected_unchanged",
+    "item_id": 11,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "short",
+      "tinned_sweetcorn"
+    ],
+    "target_zh": "我只能够到低处的那个罐装玉米",
+    "target_en": "I eat canned sweetcorn.",
+    "source": "other_corrected_unchanged",
+    "item_id": 584,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "who",
+      "begin_start",
+      "R"
+    ],
+    "target_zh": "你开始做他的女朋友了吗",
+    "target_en": "Who is starting something R?",
+    "source": "other_corrected_unchanged",
+    "item_id": 1314,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "drink_hot",
+      "chaise_lounge"
+    ],
+    "target_zh": "我坐在沙发上喝热饮",
+    "target_en": "You can drink hot on the chaise lounge next week.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1013,
+    "deleted_labels": [
+      "next_week"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "volleyball",
+      "science_class",
+      "inside_room"
+    ],
+    "target_zh": "我打完排球就去实验室上课",
+    "target_en": "You are playing volleyball in science class inside the room.",
+    "source": "other_corrected_unchanged",
+    "item_id": 462,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "download_to",
+      "confused_man",
+      "ready"
+    ],
+    "target_zh": "我已经准备好下载数据了。",
+    "target_en": "I am feeling confused when downloading.",
+    "source": "other_corrected_only_added",
+    "item_id": 935,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "who",
+      "need_toilet"
+    ],
+    "target_zh": "谁想去厕所？",
+    "target_en": "Who needs to use the access key?",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1717,
+    "deleted_labels": [
+      "at_key"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "golf",
+      "dinner_time"
+    ],
+    "target_zh": "我打完高尔夫回来吃晚饭。",
+    "target_en": "I play golf at dinner time.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1487,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "pepper_mill",
+      "when"
+    ],
+    "target_zh": "我研磨多久合适？",
+    "target_en": "What am I grinding with when?",
+    "source": "other_corrected_unchanged",
+    "item_id": 1442,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "barbeque_to",
+      "takeaway_pizza"
+    ],
+    "target_zh": "我烤了个披萨吃。",
+    "target_en": "I take my dog to the kennel and eat barbecue takeaway pizza.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1519,
+    "deleted_labels": [
+      "kennel"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "plane_take_off",
+      "fingernails",
+      "eyes_closed"
+    ],
+    "target_zh": "当飞机起飞的时候我手紧紧抓住扶手，闭着眼睛",
+    "target_en": "As I take off, I have my fingernails and I'm feeling closed-eyed.",
+    "source": "other_corrected_unchanged",
+    "item_id": 444,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "scanning",
+      "Houses_of_Parliament",
+      "front"
+    ],
+    "target_zh": "请问我想知道会议大厦应该怎么走",
+    "target_en": "I am scanning the Houses of Parliament from the front.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1255,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "tennis",
+      "tea_time"
+    ],
+    "target_zh": "你在网球比赛后用下午茶歇息吧。",
+    "target_en": "You will have tea time after playing tennis.",
+    "source": "reasonable_unchanged",
+    "item_id": 42,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "chicken_run",
+      "country_Angola",
+      "front"
+    ],
+    "target_zh": "你把安哥拉的鸡往前面赶了。",
+    "target_en": "You are moving the chickens in Angola to the front.",
+    "source": "reasonable_unchanged",
+    "item_id": 1347,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "Christmas_sock",
+      "doidy_cup",
+      "sticky"
+    ],
+    "target_zh": "圣诞袜里面装了点胶水",
+    "target_en": "He, the mole, is feeling excited to decorate Christmas with a doidy cup and sticky things.",
+    "source": "other_corrected_only_deleted",
+    "item_id": 1110,
+    "deleted_labels": [
+      "mole"
+    ]
+  },
+  {
+    "labels": [
+      "U",
+      "noisy",
+      "scarecrow",
+      "country_Colombia"
+    ],
+    "target_zh": "你在哥伦比亚这个地区用稻草人发出噪音驱赶鸟类",
+    "target_en": "You are making a scarecrow noisy in Colombia.",
+    "source": "other_corrected_unchanged",
+    "item_id": 729,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "is_this_enough",
+      "pink_pale"
+    ],
+    "target_zh": "你知道这个粉色液体装满了吗",
+    "target_en": "Is this pale pink enough for you?",
+    "source": "other_corrected_unchanged",
+    "item_id": 468,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "brother",
+      "short",
+      "line_vertical",
+      "worried_lady"
+    ],
+    "target_zh": "哥哥因为他个子矮有点担心",
+    "target_en": "He is worried because he is short.",
+    "source": "other_corrected_unchanged",
+    "item_id": 230,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "grandfather",
+      "group_work",
+      "paw",
+      "lunch_time"
+    ],
+    "target_zh": "爷爷帮助大家一起做午饭。",
+    "target_en": "The grandfather helps people work together to prepare lunch at noon.",
+    "source": "reasonable_unchanged",
+    "item_id": 50,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "paint_to"
+    ],
+    "target_zh": "我正在涂漆",
+    "target_en": "I decorate myself.",
+    "source": "other_corrected_unchanged",
+    "item_id": 124,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "begin_start",
+      "asparagus",
+      "night"
+    ],
+    "target_zh": "你在晚上开始切菜。",
+    "target_en": "You eat asparagus at night.",
+    "source": "other_corrected_unchanged",
+    "item_id": 954,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "download",
+      "milk",
+      "theme_park"
+    ],
+    "target_zh": "你可以在主题公园下载数据，并享用牛奶。",
+    "target_en": "You can download milk at the theme park.",
+    "source": "reasonable_unchanged",
+    "item_id": 1317,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "power_switch"
+    ],
+    "target_zh": "你关掉电源开关。",
+    "target_en": "You turn off the power switch.",
+    "source": "reasonable_unchanged",
+    "item_id": 210,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "right_hand",
+      "minute"
+    ],
+    "target_zh": "我用右手表示一个分钟。",
+    "target_en": "I use my right hand for a minute.",
+    "source": "reasonable_unchanged",
+    "item_id": 1223,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "hairbrush",
+      "tomorrow"
+    ],
+    "target_zh": "我明天梳头。",
+    "target_en": "I will paste tomorrow.",
+    "source": "other_corrected_replaced",
+    "item_id": 1688,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "bird",
+      "north_east"
+    ],
+    "target_zh": "东北方向有一群鸟",
+    "target_en": "I use my claw to crush garlic when I head north east?",
+    "source": "other_corrected_replaced",
+    "item_id": 1628,
+    "deleted_labels": [
+      "garlic_crusher",
+      "claw"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "stir_fry_to",
+      "pint_half",
+      "last"
+    ],
+    "target_zh": "我用啤酒作为调料来做饭，但这是最后一瓶啤酒了",
+    "target_en": "I stir-fry with a half pint of beer, and it's the last.",
+    "source": "other_corrected_unchanged",
+    "item_id": 249,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "history",
+      "iron"
+    ],
+    "target_zh": "我研究铁的发展史",
+    "target_en": "I study the history of iron.",
+    "source": "other_corrected_unchanged",
+    "item_id": 1755,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "short",
+      "winter"
+    ],
+    "target_zh": "过了一个冬天我长高了",
+    "target_en": "I am short in winter.",
+    "source": "other_corrected_unchanged",
+    "item_id": 327,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "aerobics_dance"
+    ],
+    "target_zh": "我正在锻炼",
+    "target_en": "I do aerobics dance.",
+    "source": "other_corrected_unchanged",
+    "item_id": 477,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "squash_to"
+    ],
+    "target_zh": "我压扁了某物。",
+    "target_en": "I squash it.",
+    "source": "reasonable_unchanged",
+    "item_id": 552,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "open_to"
+    ],
+    "target_zh": "我打开。",
+    "target_en": "I open to.",
+    "source": "reasonable_unchanged",
+    "item_id": 580,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "U",
+      "tennis",
+      "garden_chair_folding",
+      "between"
+    ],
+    "target_zh": "你的位置在网球比赛观众席的中间",
+    "target_en": "You're playing tennis in the middle.",
+    "source": "other_corrected_replaced",
+    "item_id": 1774,
+    "deleted_labels": [
+      "middle"
+    ]
+  },
+  {
+    "labels": [
+      "I",
+      "bingo_marker"
+    ],
+    "target_zh": "我玩标记游戏。",
+    "target_en": "I play the game.",
+    "source": "reasonable_unchanged",
+    "item_id": 37,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "sink_to"
+    ],
+    "target_zh": "我去洗手",
+    "target_en": "I sink into the water.",
+    "source": "other_corrected_unchanged",
+    "item_id": 267,
+    "deleted_labels": []
+  },
+  {
+    "labels": [
+      "I",
+      "away",
+      "basketball_game"
+    ],
+    "target_zh": "我经常打篮球。",
+    "target_en": "I am leaving.",
+    "source": "other_corrected_only_added",
+    "item_id": 1418,
+    "deleted_labels": []
+  }
+]

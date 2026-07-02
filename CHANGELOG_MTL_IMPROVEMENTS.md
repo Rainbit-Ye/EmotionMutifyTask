@@ -993,3 +993,153 @@
 1. 运行全量双语pipeline验证EN→ZH翻译质量
 2. 更新 `train.py` 和 `test.py` 适配双语数据格式（`sentence_en`/`sentence_zh`）
 3. 中文本体剩余质量优化（`typical_objects_zh` 约1.3%英文，个别语义翻译偏差）
+
+---
+
+### 2026-07-01：DPO 偏好数据 v2 生成（基于人工修正，输入一致对比）
+
+#### 背景
+
+v1 `dpo_pairs.json`（1632 条）训练 DPO 后效果不明显。分析发现核心问题在**负样本质量**：
+- 1266/1632 条 rejected 用的是 `sentence_zh`（polished 版，本来就不差）
+- 366/1632 条 rejected 用的是 `original_zh`（改前图标序列的翻译，**输入都不一样**，模型学不到翻译质量）
+- 模型学到的是"polished vs 原始"的文体差异，不是"对 vs 错"
+- 存在长度捷径（改前序列更长 → rejected 句子更长 → 模型靠"短=好"作弊）
+
+#### 改动：v2 `dpo_pairs_v2.json`（1341 条）
+
+**核心设计**：chosen 和 rejected 对应**同一个 `labels` 序列**，差异只在翻译质量 → DPO 信号纯净，无长度捷径，无图标序列差异。
+
+| 维度 | v1 (`dpo_pairs.json`) | v2 (`dpo_pairs_v2.json`) |
+|------|----------------------|--------------------------|
+| 条数 | 1632 | 1341 |
+| chosen | `zh_correction` 优先，回落 `sentence_zh` | **统一用 `zh_correction`**（无修正则跳过） |
+| rejected | `original_zh`（366条）或 `sentence_zh`（1266条） | **对 `labels` 重新跑 Llama(EN)+Qwen(ZH) 生成的翻译** |
+| 输入一致性 | chosen 和 rejected 对应**不同**图标序列（改前 vs 改后） | chosen 和 rejected 对应**同一个** `labels`（人工修改后） |
+| 信号类型 | 文体差异（polished vs 原始） | 翻译质量差异（人工对 vs AI 错译） |
+| 长度捷径 | 存在（改前序列更长 → rejected 更长） | 无（同输入，差异只在翻译质量） |
+| 数据筛选 | 1697 条 valid 全用 | 1345 条 valid + 有 `zh_correction`，最终 1341 条（4 条生成失败/等同跳过） |
+| 跳过统计 | — | `is_valid=0`: 127 条；无 `zh_correction`: 352 条；生成失败: 4 条 |
+
+**负样本生成方法**（复刻 `generate_training_data.py` 原始流程）：
+- 英文：Llama-3-8B，按 `subject_type` 选 `translation_prompt_{first/second/third}`（icon → EN）
+- 中文：Qwen2.5-1.5B，`translation_en_to_zh` 模板（EN → ZH）
+- 贪心解码（`do_sample=False`），与原数据生成一致
+
+#### 关键字段（v2 新增，向后兼容 v1 schema）
+
+| 字段 | 说明 |
+|------|------|
+| `labels` | 人工修改后的图标序列（同 v1） |
+| `chosen` | `zh_correction`（人工手输修正） |
+| `rejected` | AI 对 `labels` 重新生成的中文翻译 |
+| `source` | `v2_edit_derived_ai_rejected`（v1 是 6 种细分 source） |
+| `item_id` | 标注样本 ID（同 v1） |
+| `deleted_labels` | 人工删除的图标（同 v1） |
+| `generated_en` | **v2 新增** AI 生成的英文句（追溯用） |
+| `subject_type` | **v2 新增** 人称类型（first/second/third） |
+| `original_zh` | **v2 新增** 改前原始中文翻译（追溯用） |
+| `sentence_zh` | **v2 新增** 改后 polished 中文翻译（追溯用） |
+
+#### 质量验证
+
+- `chosen == rejected`: 0/1341（全部有差异）
+- 有图标编辑（`deleted_labels` 非空）: 466/1341
+- chosen 平均长度 10.8 字符，rejected 平均长度 13.2 字符
+  - 差异来自 AI 翻译的翻译腔/冗长（真实质量差异），非输入差异
+- 样例（id=0）：
+  - labels: `['I', 'forwards', 'flag_Belgium', 'operating_theatre']`
+  - chosen（人工）: "我带着国旗去手术室"
+  - rejected（AI）: "我将前往手术室，手持国旗。"（翻译腔"前往""手持"）
+
+#### 新增文件
+
+| 文件 | 说明 |
+|------|------|
+| `AAC2Text/scripts/generate_dpo_v2.py` | v2 偏好数据生成脚本（Llama EN + Qwen ZH，断点续跑） |
+| `AAC2Text/data/cleardata/dpo_pairs_v2.json` | v2 偏好数据（1341 条） |
+
+#### 后续步骤
+
+1. 用 `dpo_pairs_v2.json` 重跑 `train_dpo.py`（改 `--dpo-data` 参数）
+2. 对比 v1/v2 DPO 后的 BLEU/BERTScore/人工评估
+3. 若 v2 仍无显著提升，考虑：增大 beta、增加 K（多负样本）、或换 IPO/KTO
+
+---
+
+### 2026-07-02：DPO v2 三配置对比实验（弱/中/强）
+
+#### 背景
+
+v2 数据（1341 条）训练后，弱配置（beta=0.1, 3 epochs）几乎无效果（12% 输出改变率）。为找到最佳平衡点，跑三组配置对比。
+
+#### 三组配置
+
+| 配置 | beta | lr | epochs | train loss | rewards/acc | rewards/margins | 输出改变率 |
+|------|------|----|--------|------------|-------------|-----------------|------------|
+| 弱 | 0.1 | 5e-7 | 3 | 0.666 | 92% | 0.056 | 12% |
+| **中（最佳）** | **0.2** | **1e-6** | **4** | **0.435** | **97.8%** | **0.644** | **48%** |
+| 强 | 0.3 | 1e-6 | 6 | 0.191 | 98% | 1.91 | 74% |
+
+#### 评估方法
+
+1. **测试集字面指标**（168 条 sft_val）：BERTScore-F1 / BLEU / chrF
+2. **LLM-as-Judge**（Llama-3-8B 盲评 SFT vs DPO 输出，A/B 位置随机化）
+
+#### 结果
+
+| 配置 | BERTScore-F1 | BLEU | chrF | LLM Judge: DPO 胜率 |
+|------|--------------|------|------|----------------------|
+| SFT baseline | 0.9406 | 11.48 | 18.21 | — |
+| 弱 | 0.9404 | 11.47 | 18.50 | ≈50%（改变太少） |
+| **中** | 0.9400 | 10.63 | **18.55** | **48.3%**（42/87） |
+| 强 | 0.9382 | 9.05 | 17.54 | 42.7%（50/117） |
+
+#### 结论：中配置（beta=0.2, lr=1e-6, epochs=4）为最佳平衡点
+
+- **48% 输出改变率**：介于弱（12%）和强（74%）之间，既不是"几乎没改"也不是"改得太狠"
+- **LLM Judge 胜率 48.3%**：几乎打平 SFT（45 vs 42），优于强配置（42.7% 落败）
+- **chrF 最高（18.55）**：字面指标也最佳
+- **修好了 strong 引入的几个错误**：中英混杂（"crystals"）、幻觉（"喷到球道上"）、人称错乱（U→我）
+
+#### Strong 配置的问题（中配置解决）
+
+1. **中英混杂**：`sugar_brown` → "棕色糖 crystals"（strong 引入，mid 干净）
+2. **幻觉啰嗦**：`bowling food_hot` → "吃了个热乎的东西吧？那你要小心不要把它喷到球道上吧"（strong 幻觉，mid 只加一个"吗"）
+3. **人称错乱**：`U short_hair` → "我有短短的粉色发型"（strong 把 U 错译成"我"，mid 预测不变避免错误）
+
+#### 根本限制
+
+DPO 未能显著超过 SFT 的两个原因：
+1. **训练数据上限**：1341 条偏好对，信号有限
+2. **测试 ref 与训练目标分布不一致**：测试 ref 是 `sentence_zh`（polished 版），DPO 学的是 `zh_correction`（人工手输风格）— 即使 DPO 更自然，字面指标和 judge 也可能因参考偏颇判 SFT 胜
+
+#### 最终采用
+
+**`aac_dpo_zh_v2_mid`** 作为最终 DPO checkpoint。
+
+#### 新增 checkpoint
+
+| Checkpoint | 配置 | 路径 |
+|------------|------|------|
+| `aac_dpo_zh_v2` | 弱（beta=0.1, 3ep） | `AAC2Text/checkpoints/aac_dpo_zh_v2` |
+| `aac_dpo_zh_v2_mid` | **中（beta=0.2, 4ep，采用）** | `AAC2Text/checkpoints/aac_dpo_zh_v2_mid` |
+| `aac_dpo_zh_v2_strong` | 强（beta=0.3, 6ep） | `AAC2Text/checkpoints/aac_dpo_zh_v2_strong` |
+
+#### 评估结果文件
+
+| 文件 | 说明 |
+|------|------|
+| `AAC2Text/checkpoints/eval_zh_sft_vs_dpov2.json` | SFT vs DPO-v1 vs DPO-v2弱 测试集指标 |
+| `AAC2Text/checkpoints/eval_zh_dpo_strong.json` | DPO-strong 测试集指标 |
+| `AAC2Text/checkpoints/eval_zh_dpo_mid.json` | DPO-mid 测试集指标 |
+| `AAC2Text/checkpoints/llm_judge_results.json` | LLM Judge 评估 strong（SFT 67 vs DPO 50） |
+| `AAC2Text/checkpoints/llm_judge_mid_results.json` | LLM Judge 评估 mid（SFT 45 vs DPOmid 42） |
+
+#### 后续方向（若需进一步提升）
+
+1. 换 IPO 或 KTO（对噪声偏好更鲁棒）
+2. 扩大 DPO 数据（放宽 chosen 到 `sentence_zh` 回落，可恢复到 1697 条）
+3. 用 `zh_correction` 作为测试 ref 重新评估（对齐训练目标）
+
+

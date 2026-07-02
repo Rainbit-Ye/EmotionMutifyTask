@@ -1,0 +1,1361 @@
+{
+  "summary": {
+    "total": 168,
+    "sft_wins": 45,
+    "dpo_wins": 42,
+    "ties": 81,
+    "n_diff": 87
+  },
+  "results": [
+    {
+      "i": 0,
+      "sft": "他是谁的副本？",
+      "dpo": "他是谁的副本？",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 1,
+      "sft": "我在丰收节参加射箭比赛。",
+      "dpo": "我在丰收节参加射箭比赛。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 2,
+      "sft": "你有淡粉色的短发。",
+      "dpo": "你有淡粉色的短发。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 3,
+      "labels": "U eggs_scrambled sneering_lady",
+      "ref": "你不爱吃煎蛋。",
+      "sft": "你做的鸡蛋炒饭不太好吃，女人一脸不情愿的吃着。",
+      "dpo": "你做的炒蛋不太好吃，女人一脸不满。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 4,
+      "labels": "U busy",
+      "ref": "你在工作中忙碌。",
+      "sft": "你很忙。",
+      "dpo": "你正在上班。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 5,
+      "labels": "I salt_to muesli",
+      "ref": "我在燕麦片里撒了一些盐",
+      "sft": "我在燕麦片上撒了点盐。",
+      "dpo": "我在燕麦片里撒了点盐。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 6,
+      "sft": "我觉得圣诞袜很难做。",
+      "dpo": "我觉得圣诞袜很难做。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 7,
+      "sft": "我对蜥蜴感到了恐惧。",
+      "dpo": "我对蜥蜴感到了恐惧。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 8,
+      "labels": "U fats_high",
+      "ref": "你体内的脂肪含量增多了。",
+      "sft": "你需要减掉多余的脂肪。",
+      "dpo": "你要少吃高脂肪含量的食物。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 9,
+      "sft": "我对开个地里种植蔬菜的店铺感受担忧。",
+      "dpo": "我对开个地里种植蔬菜的店铺感受担忧。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 10,
+      "sft": "我收获庄稼。",
+      "dpo": "我收获庄稼。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 11,
+      "labels": "U download_to",
+      "ref": "你可以把数据下载到这里",
+      "sft": "你可以下载数据。",
+      "dpo": "你可以把数据传输到电脑上。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 12,
+      "sft": "他对女性身体感到好奇，结果被烧伤了。",
+      "dpo": "他对女性身体感到好奇，结果被烧伤了。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 13,
+      "sft": "他在早餐的时候给家里订了外卖。",
+      "dpo": "他在早餐的时候给家里订了外卖。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 14,
+      "sft": "你在牛棚里。",
+      "dpo": "你在牛棚里。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 15,
+      "sft": "你用手指绘画。",
+      "dpo": "你用手指绘画。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 16,
+      "labels": "I is_this_enough Boxing_Day",
+      "ref": "我在平安夜晚上反复确认过",
+      "sft": "我在圣诞节的时候在工作吗？",
+      "dpo": "圣诞节的时候我在确认一下需求是否已经满足了。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 17,
+      "labels": "I good_to_drink sugar_brown",
+      "ref": "加了糖之后很好喝",
+      "sft": "我喜欢加棕色糖浸泡的饮料。",
+      "dpo": "我喜欢在饮料里加一些棕色糖。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 18,
+      "labels": "brother bowling video_camera Christmas_Day",
+      "ref": "哥哥带了个相机来记录圣诞节跟朋友们打篮球时候的瞬间",
+      "sft": "我在圣诞节打保龄球，并且拍了视频。",
+      "dpo": "我在圣诞节跟兄弟一起打保龄球，并且拍了视频。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 19,
+      "labels": "U good_to_eat school concentrating_lady",
+      "ref": "你皱着眉头，因为你不喜欢学校的食物吃得不好。",
+      "sft": "你在学校吃完好吃的东西后又能集中精力学习了。",
+      "dpo": "你在学校吃完喜欢的食物后才能集中精力学习。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 20,
+      "labels": "brother download_to",
+      "ref": "我哥哥在做数字传输",
+      "sft": "他哥哥在下载数据。",
+      "dpo": "我的哥哥在下载数据。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 21,
+      "sft": "你穿着高跟鞋。",
+      "dpo": "你穿着高跟鞋。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 22,
+      "labels": "U necklace star",
+      "ref": "你的项链非常闪耀。",
+      "sft": "你戴着一个星形的项链。",
+      "dpo": "你有颗星形的项链。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 23,
+      "labels": "U step_by_step mobile_phone_silent",
+      "ref": "你需要按照手机上的步骤一步步来，保持安静。",
+      "sft": "你可以按照步骤来静音手机。",
+      "dpo": "你可以按照步骤来把手机静音。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 24,
+      "labels": "U how handsome",
+      "ref": "你是怎么保持面部清洁的",
+      "sft": "你是不是很帅气？我想知道你的秘密。",
+      "dpo": "你的方法很有吸引力。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 25,
+      "sft": "我喝了一杯燕麦片。",
+      "dpo": "我喝了一杯燕麦片。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 26,
+      "sft": "你可以用鱼和薯条做成各种形状。",
+      "dpo": "你可以用鱼和薯条做成各种形状。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 27,
+      "sft": "你可以把鱼类收纳到书架上。",
+      "dpo": "你可以把鱼类收纳到书架上。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 28,
+      "labels": "U bowling food_hot",
+      "ref": "你打完保龄球后吃了一些现做的食物",
+      "sft": "你在打保龄球的时候吃了热乎的食物。",
+      "dpo": "你在打保龄球的时候吃了热乎的食物吗？",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 29,
+      "labels": "U cut cheese_brie",
+      "ref": "你切奶酪的时候受伤了。",
+      "sft": "你在切奶酪的时候不小心被划伤了。",
+      "dpo": "你在切奶酪的时候不小心把手割破了。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 30,
+      "labels": "I plant_to cloudy",
+      "ref": "我种植的植物受天气的影响。",
+      "sft": "我在云朵中种植植物。",
+      "dpo": "我在云里种了一棵树。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 31,
+      "labels": "I scanning passport",
+      "ref": "我扫描文件。",
+      "sft": "我正在查找文档。",
+      "dpo": "我正在查验文件。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 32,
+      "labels": "U email_attachment",
+      "ref": "你可以将数字文件传输。",
+      "sft": "你可以用电子邮件传输数据。",
+      "dpo": "你可以用电子邮件传输一些数据。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 33,
+      "sft": "你在冬天看仓鼠玩。",
+      "dpo": "你在冬天看仓鼠玩。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 34,
+      "labels": "U drink_cold back_ache",
+      "ref": "喝完冷饮后我后背痛",
+      "sft": "我喝冷饮后后背开始疼痛了。",
+      "dpo": "我一杯冷饮后后背开始疼痛了。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 35,
+      "sft": "我姐姐教我打网球。",
+      "dpo": "我姐姐教我打网球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 36,
+      "labels": "U drink_small country_Cayman_Islands afternoon",
+      "ref": "你下午在多米尼克群岛喝了一小杯饮料",
+      "sft": "你下午在岛国喝了一小杯饮料。",
+      "dpo": "你在下午岛国喝了一小杯饮料。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 37,
+      "labels": "U Milky_Way confused_man",
+      "ref": "你对银河系感到困惑",
+      "sft": "你对宇宙的理解有一些偏见吧？你认为银河系是由液体组成的吗？你对这个问题感到困惑吗？你需要更多的信息来理解这个问题吗？你可以通过研究和学习来提高对宇宙的理解吧。",
+      "dpo": "你对宇宙的理解有一些偏见吧？",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 38,
+      "labels": "I open_2_,_to",
+      "ref": "我挥手告别。",
+      "sft": "我打开了两遍。",
+      "dpo": "我打开了两遍文档。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 39,
+      "labels": "U volleyball this_month",
+      "ref": "你这个月一直在打排球",
+      "sft": "你这个月打了排球。",
+      "dpo": "你这段时间内打了排球。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 40,
+      "labels": "I fire_helmet yesterday",
+      "ref": "我昨天戴了消防帽。",
+      "sft": "我昨天戴着防火帽。",
+      "dpo": "我昨天戴着火帽工作。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 41,
+      "sft": "你一边刷牙一边思考问题。",
+      "dpo": "你一边刷牙一边思考问题。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 42,
+      "labels": "U pet_comb mauve_light",
+      "ref": "我刷牙之后牙膏泡沫变成了紫色",
+      "sft": "你用紫色光源照亮宠物梳。",
+      "dpo": "你用紫色光源照着牙刷。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 43,
+      "labels": "U paint_childs tea_time",
+      "ref": "你在吃完下午茶后画画。",
+      "sft": "你在下午茶点后又涂了点儿颜色。",
+      "dpo": "你下午茶的时候在画画。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 44,
+      "labels": "U badminton breakfast_time",
+      "ref": "你在早餐后打了羽毛球。",
+      "sft": "你在早饭的时候打羽毛球。",
+      "dpo": "你羽毛球比赛之后吃早饭。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 45,
+      "sft": "我喝了一杯。",
+      "dpo": "我喝了一杯。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 46,
+      "labels": "U tape_recorder masking_tape when",
+      "ref": "你记录了录制胶带声音的音频",
+      "sft": "你可以在录音机上贴上胶带来控制音量。",
+      "dpo": "你可以用胶带纸条来标记音频记录的时间。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 47,
+      "sft": "明天你要打开牛棚的电源开关。",
+      "dpo": "明天你要打开牛棚的电源开关。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 48,
+      "labels": "I xray video_tape toothache",
+      "ref": "我需要去医院做 X 光检查来诊断牙痛。",
+      "sft": "我在看X光片的时候不小心咬到了舌头，疼痛了。",
+      "dpo": "我在看X光片的时候不小心把磁带给摔到了地上，结果磁带上有个涟漾的东西看起来很像牙痛的症状。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 49,
+      "sft": "我翻转了高椅子。",
+      "dpo": "我翻转了高椅子。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 50,
+      "sft": "你炒菜。",
+      "dpo": "你炒菜。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 51,
+      "labels": "hat_-_mans football_kit_Leicester flag_Syria",
+      "ref": "他戴着帽子，穿着队服，举着国旗走过观众席",
+      "sft": "他穿着莱斯特队的球衣，并且头上系着叙利亚国旗。",
+      "dpo": "他穿着莱斯特队的球衣，头上系着叙利亚国旗的领带。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 52,
+      "sft": "你用拖把清理地板。",
+      "dpo": "你用拖把清理地板。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 53,
+      "sft": "你在丰收节的时候玩滑梯。",
+      "dpo": "你在丰收节的时候玩滑梯。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 54,
+      "labels": "U travel worried_man",
+      "ref": "你担心旅行。",
+      "sft": "你对交通工具有一些偏见。",
+      "dpo": "我对交通工具有一些偏见。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 55,
+      "sft": "我昨天吹了泡泡。",
+      "dpo": "我昨天吹了泡泡。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 56,
+      "labels": "I lots_more sugar_white quiet",
+      "ref": "我悄悄的往饮料里加了许多白糖",
+      "sft": "我悄悄地又加了一些白糖。",
+      "dpo": "我悄悄地又加了一点糖。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 57,
+      "sft": "你什么时候打的棒球的？",
+      "dpo": "你什么时候打的棒球的？",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 58,
+      "sft": "这段时间里我在努力学习。",
+      "dpo": "这段时间里我在努力学习。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 59,
+      "sft": "我在平安夜保存了我的化妆品。",
+      "dpo": "我在平安夜保存了我的化妆品。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 60,
+      "labels": "U next cart country_Taiwan",
+      "ref": "你可以用载货的车辆去台湾。",
+      "sft": "你可以坐电瓶车去台湾。",
+      "dpo": "你可以坐电瓶车去台湾了。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 61,
+      "labels": "U drink_cold riding_hat",
+      "ref": "你戴着帽子喝冷饮",
+      "sft": "你戴着帽子喝冷饮。",
+      "dpo": "我戴着帽子喝冷饮。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 62,
+      "sft": "我在这个时间段用热刷喝饮料。",
+      "dpo": "我在这个时间段用热刷喝饮料。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 63,
+      "labels": "U busy hair_plaits",
+      "ref": "你正在忙于编辫子。",
+      "sft": "我上班的时候一直在打发时间，打发时间的方法是梳头发。",
+      "dpo": "我上班的时候一直在打发时间，打发时间的方法是梳个辫子。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 64,
+      "sft": "我一边享用野餐一边思考问题。",
+      "dpo": "我一边享用野餐一边思考问题。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 65,
+      "sft": "我在冬天打台球。",
+      "dpo": "我在冬天打台球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 66,
+      "labels": "U good_to_eat meatballs_and_spaghetti",
+      "ref": "意大利肉丸意面是你最喜欢的食物",
+      "sft": "你吃了肉balls和意大利面，感觉很好。",
+      "dpo": "你吃了肉球和意大利面，感觉很不错。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 67,
+      "sft": "你可以打开它。",
+      "dpo": "你可以打开它。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 68,
+      "sft": "我在户外的运动公园里玩蹦床。",
+      "dpo": "我在户外的运动公园里玩蹦床。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 69,
+      "labels": "I plane_landing takeaway_burger_and_chips date",
+      "ref": "我降落后吃了一份汉堡和薯条。",
+      "sft": "我在飞机上吃了薯条和汉堡。",
+      "dpo": "我在飞机上点了个外卖，买了汉堡和薯条，还有饮料。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 70,
+      "labels": "U aerobics_dance nine ramp",
+      "ref": "你可以在这条坡道上做九种健身舞。",
+      "sft": "你需要爬上九个台阶去参加健身舞活动。",
+      "dpo": "你需要上下坡度变化的舞台来进行9小时的锻炼。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 71,
+      "sft": "我绕着黄色的东西转圈。",
+      "dpo": "我绕着黄色的东西转圈。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 72,
+      "labels": "I orange_juice place_setting",
+      "ref": "我把饮料和盘子摆好",
+      "sft": "我在餐具上撒了些橙汁。",
+      "dpo": "我在桌子上摆了一个橙汁杯。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 73,
+      "labels": "I scales camera save",
+      "ref": "我用专业的摄影设备测量数据",
+      "sft": "我用摄像头记录了我的体重变化。",
+      "dpo": "我用摄像头测量体重。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 74,
+      "labels": "parents barbeque_to",
+      "ref": "我和家人一起去烤肉",
+      "sft": "父母在烤肉。",
+      "dpo": "父母在烤肉吧。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 75,
+      "labels": "I bib good_to_eat",
+      "ref": "我吃东西时候挤着肚兜",
+      "sft": "我喜欢吃饭的时候带着围裙。",
+      "dpo": "我吃得很好，吃得安心。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 76,
+      "sft": "我用啤酒开罐器。",
+      "dpo": "我用啤酒开罐器。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 77,
+      "sft": "小兵被压扁了。",
+      "dpo": "小兵被压扁了。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 78,
+      "sft": "我穿着球衣在户外烤肉吃午饭。",
+      "dpo": "我穿着球衣在户外烤肉吃午饭。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 79,
+      "labels": "I nuts empty",
+      "ref": "我缺少一些坚果。",
+      "sft": "我吃完了所有的核桃。",
+      "dpo": "我吃完核桃了，碗里没啦。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 80,
+      "sft": "他和继父一起去打保龄球。",
+      "dpo": "他和继父一起去打保龄球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 81,
+      "labels": "U second tall",
+      "ref": "这段时间你长得挺高",
+      "sft": "你是第二高的。",
+      "dpo": "你是第二高的了。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 82,
+      "sft": "我用颜料画画。",
+      "dpo": "我用颜料画画。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 83,
+      "labels": "I finger_painting pie_cherry",
+      "ref": "我在蛋糕上绘画",
+      "sft": "我用手指绘画了一些水果。",
+      "dpo": "我用手指绘画了一些水果形状的蛋糕。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 84,
+      "sft": "我荡秋千的时候很开心。",
+      "dpo": "我荡秋千的时候很开心。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 85,
+      "labels": "U sieve_to noodles wrong_thought",
+      "ref": "你过筛面条是不对的。",
+      "sft": "你过滤了面条里面的水分。",
+      "dpo": "你过滤了一遍面条，但你过滤的想法是错的。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 86,
+      "sft": "他围着鱼缸转圈。",
+      "dpo": "他围着鱼缸转圈。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 87,
+      "labels": "I ready_meal_lamb",
+      "ref": "我准备牛肉饭",
+      "sft": "我准备吃牛肉。",
+      "dpo": "我准备吃牛肉了。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 88,
+      "labels": "U add budgie minute",
+      "ref": "你可以和一只小鹦鹉呆一会儿。",
+      "sft": "你一会儿就能买到一只鸟。",
+      "dpo": "你一会儿就能买到一只鸟了。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 89,
+      "sft": "你明天要洗碗吃烤肉饭。",
+      "dpo": "你明天要洗碗吃烤肉饭。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 90,
+      "sft": "我向前走。",
+      "dpo": "我向前走。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 91,
+      "sft": "父母喝了中杯饮料。",
+      "dpo": "父母喝了中杯饮料。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 92,
+      "labels": "I email_attachment",
+      "ref": "我正在传输数字文件",
+      "sft": "我正在传输一个电子文档。",
+      "dpo": "我正在传输一些数据。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 93,
+      "labels": "U noisy afternoon",
+      "ref": "你下午听到刺耳的噪音",
+      "sft": "下午很吵闹。",
+      "dpo": "你下午听到了很多噪声。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 94,
+      "sft": "你昨天参加了田径比赛。",
+      "dpo": "你昨天参加了田径比赛。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 95,
+      "labels": "U noisy back_ache",
+      "ref": "你因为背部疼痛而发出痛苦的声音",
+      "sft": "你后背疼痛，可能是因为环境噪声引起的。",
+      "dpo": "你在后背上感到疼痛，可能是因为环境噪声干扰了你的耳朵引起的。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 96,
+      "sft": "他用平板熨衣机熨衣服很高兴。",
+      "dpo": "他用平板熨衣机熨衣服很高兴。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 97,
+      "sft": "你向前走。",
+      "dpo": "你向前走。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 98,
+      "sft": "我需要更多的钱包。",
+      "dpo": "我需要更多的钱包。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 99,
+      "labels": "U swing_to helmet_pilot headache",
+      "ref": "你头部摆动时需要戴上头盔，以免磕破",
+      "sft": "你戴着头盔在荡秋千的时候会感到头痛。",
+      "dpo": "你戴着头盔在荡秋千的时候过敏了，后背开始疼痛了。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 100,
+      "sft": "你可以用一些清洁剂来清理污染物。",
+      "dpo": "你可以用一些清洁剂来清理污染物。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 101,
+      "labels": "I cricket leg_warmers summer",
+      "ref": "我夏天穿长腿袜去打棒球。",
+      "sft": "我在夏天穿着运动袜。",
+      "dpo": "我在夏天穿着运动袜玩棒球。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 102,
+      "sft": "你在圣诞节打保龄球。",
+      "dpo": "你在圣诞节打保龄球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 103,
+      "labels": "U is_this_enough sauce_apple",
+      "ref": "苹果酱加够了吗？",
+      "sft": "你在确认这个苹果味的沙拉味道吗？",
+      "dpo": "你在确认这个苹果味的沙拉衣料够了吗？",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 104,
+      "labels": "U stir_fry soup_tomato whole",
+      "ref": "你的烹饪西红柿汤的方法是正确完整的",
+      "sft": "你可以用西红柿炒饭。",
+      "dpo": "你可以用西红柿炒饭做全方位的菜品。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 105,
+      "labels": "I playing_cards_patience hot",
+      "ref": "一玩电脑游戏，cpu就会发热",
+      "sft": "我耐心的用扑克牌玩游戏。",
+      "dpo": "我耐心的等待在外面发热了。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 106,
+      "sft": "我喝冷饮。",
+      "dpo": "我喝冷饮。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 107,
+      "sft": "你把些核桃扔进水池里。",
+      "dpo": "你把些核桃扔进水池里。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 108,
+      "labels": "mum_parent drink_small hot_chocolate first",
+      "ref": "妈妈作为家长，在开始帮她选择了小份的热饮",
+      "sft": "妈妈在喝第一杯热巧。",
+      "dpo": "妈妈先喝了一小杯热巧。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 109,
+      "sft": "我在冬天戴着手套装饰圣诞袜。",
+      "dpo": "我在冬天戴着手套装饰圣诞袜。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 110,
+      "labels": "I short_hair past",
+      "ref": "我前段时间把头发剪短了。",
+      "sft": "我过去的头发都长过短发型。",
+      "dpo": "我过去一直都有短发。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 111,
+      "labels": "I afternoon double_bed",
+      "ref": "我下午在床上睡了一会儿。",
+      "sft": "下午我睡了两次床。",
+      "dpo": "下午我睡了双人床。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 112,
+      "sft": "我向上看。",
+      "dpo": "我向上看。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 113,
+      "sft": "你可以多吃一些热情果。",
+      "dpo": "你可以多吃一些热情果。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 114,
+      "labels": "step_brother chicken_deep_fried",
+      "ref": "表哥在吃炸鸡",
+      "sft": "表弟在吃炸鸡。",
+      "dpo": "我的堂兄弟给鸡做了个炸鸡块。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 115,
+      "labels": "grandmother sink_to daffodil",
+      "ref": "奶奶把花插到水中",
+      "sft": "他奶奶在洗花。",
+      "dpo": "他奶奶不小心把花掉到了水池子里。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 116,
+      "sft": "你做了 14 个烧过的鸡蛋。",
+      "dpo": "你做了 14 个烧过的鸡蛋。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 117,
+      "labels": "I out",
+      "ref": "我往出口方向走。",
+      "sft": "我要出门了。",
+      "dpo": "我往出口方向走。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 118,
+      "labels": "U counters good_to_eat",
+      "ref": "你准备好吃点好吃的了。",
+      "sft": "你吃到了你喜欢吃的东西。",
+      "dpo": "你吃到了三种你喜欢的食物。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 119,
+      "sft": "我用鼠标右键点击。",
+      "dpo": "我用鼠标右键点击。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 120,
+      "sft": "你在看剧情片。",
+      "dpo": "你在看剧情片。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 121,
+      "sft": "女儿在冬天打羽毛球。",
+      "dpo": "女儿在冬天打羽毛球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 122,
+      "labels": "I what chinese_food",
+      "ref": "我想知道吃什么中国菜？",
+      "sft": "我想知道什么是中国菜？我想吃中国菜。",
+      "dpo": "我想问一下你喜欢吃什么中国菜？我想了解一下你的口味。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 123,
+      "labels": "U copy shrimp summer",
+      "ref": "夏天的时候我在外面烤了一对虾吃，并记录了下来",
+      "sft": "你在夏天复制了一些虾。",
+      "dpo": "你在夏天复制了一些虾的结构。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 124,
+      "labels": "I salt_to large",
+      "ref": "我撒了一把大盐。",
+      "sft": "我撒了很多盐。",
+      "dpo": "我撒了好多盐。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 125,
+      "sft": "你下周能吃到喜欢的食物。",
+      "dpo": "你下周能吃到喜欢的食物。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 126,
+      "labels": "I short_hair red",
+      "ref": "你把短发染成了红色",
+      "sft": "我有短红发。",
+      "dpo": "我有短红色发型。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 127,
+      "sft": "你吃了生日蛋糕。",
+      "dpo": "你吃了生日蛋糕。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 128,
+      "sft": "我把纸丢进桶里。",
+      "dpo": "我把纸丢进桶里。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 129,
+      "labels": "U short_hair baseball_game",
+      "ref": "你留着短发去打棒球",
+      "sft": "你参加了棒球比赛，结果输了。",
+      "dpo": "我喜欢参加体育活动，喜欢短发型的运动员。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 130,
+      "sft": "我用卷发卷固定了我的头发。",
+      "dpo": "我用卷发卷固定了我的头发。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 131,
+      "labels": "I when",
+      "ref": "现在什么时间了？",
+      "sft": "我什么时候到达的？",
+      "dpo": "我什么时候再吃的？",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 132,
+      "sft": "你熨衣服。",
+      "dpo": "你熨衣服。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 133,
+      "sft": "我买了个短颈的罐头。",
+      "dpo": "我买了个短颈的罐头。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 134,
+      "labels": "who begin_start R",
+      "ref": "你开始做他的女朋友了吗",
+      "sft": "他是谁在开始的？",
+      "dpo": "他是谁开始的？",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 135,
+      "sft": "你在沙发上喝热饮。",
+      "dpo": "你在沙发上喝热饮。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 136,
+      "sft": "你在体育课里打排球。",
+      "dpo": "你在体育课里打排球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 137,
+      "sft": "我下载数据的时候感觉很困惑，但是我已经准备好接受了。",
+      "dpo": "我下载数据的时候感觉很困惑，但是我已经准备好接受了。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 138,
+      "labels": "who need_toilet",
+      "ref": "谁想去厕所？",
+      "sft": "谁需要去卫生间？",
+      "dpo": "谁去卫生间了？",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 139,
+      "labels": "I golf dinner_time",
+      "ref": "我打完高尔夫回来吃晚饭。",
+      "sft": "我在下午打完高尔夫球后吃晚饭。",
+      "dpo": "我打完高尔夫球后吃晚饭。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 140,
+      "labels": "I pepper_mill when",
+      "ref": "我研磨多久合适？",
+      "sft": "我什么时候用黑椒研磨机的？",
+      "dpo": "我什么时候再用黑椒研磨机的？我还没有用过它。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 141,
+      "sft": "我外卖订了个烤肉披萨。",
+      "dpo": "我外卖订了个烤肉披萨。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 142,
+      "labels": "I plane_take_off fingernails eyes_closed",
+      "ref": "当飞机起飞的时候我手紧紧抓住扶手，闭着眼睛",
+      "sft": "我闭着眼睛飞机起飞时不小心剪掉了自己的指甲。",
+      "dpo": "我闭着眼睛坐飞机的时候才发现自己还在剪指甲。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 143,
+      "labels": "I scanning Houses_of_Parliament front",
+      "ref": "请问我想知道会议大厦应该怎么走",
+      "sft": "我在议会大楼前进行安检。",
+      "dpo": "我沿着议会大楼的前面一段距离进行安检。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 144,
+      "sft": "你在下午茶点后打网球。",
+      "dpo": "你在下午茶点后打网球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 145,
+      "sft": "你带着鸡走进安哥拉。",
+      "dpo": "你带着鸡走进安哥拉。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 146,
+      "labels": "Christmas_sock doidy_cup sticky",
+      "ref": "圣诞袜里面装了点胶水",
+      "sft": "圣诞袜上涂有胶水。",
+      "dpo": "圣诞袜上沾满了胶水。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 147,
+      "labels": "U noisy scarecrow country_Colombia",
+      "ref": "你在哥伦比亚这个地区用稻草人发出噪音驱赶鸟类",
+      "sft": "你在哥伦比亚的乡村地区看到了一些吓人的稻草人。",
+      "dpo": "你在哥伦比亚的乡村地区看到过一个吵闹的 scarecrow。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 148,
+      "labels": "U is_this_enough pink_pale",
+      "ref": "你知道这个粉色液体装满了吗",
+      "sft": "你能确定这个粉色是淡粉色吗？",
+      "dpo": "你能不能再给我的粉色淡了一点？我觉得现在的粉色还不够淡。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 149,
+      "labels": "brother short line_vertical worried_lady",
+      "ref": "哥哥因为他个子矮有点担心",
+      "sft": "我的哥哥对我竖着的短线表示担忧。",
+      "dpo": "我的哥哥对我在一段时间内的变化感受很担忧。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 150,
+      "labels": "grandfather group_work paw lunch_time",
+      "ref": "爷爷帮助大家一起做午饭。",
+      "sft": "爷爷和一群人一起吃午饭时用手势交流。",
+      "dpo": "爷爷和一群人一起吃午饭的时候都用手势交流。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 151,
+      "sft": "我在涂油漆。",
+      "dpo": "我在涂油漆。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 152,
+      "labels": "U begin_start asparagus night",
+      "ref": "你在晚上开始切菜。",
+      "sft": "你晚上开始吃芦笋。",
+      "dpo": "你晚上开始吃西葫芦了。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 153,
+      "labels": "U download milk theme_park",
+      "ref": "你可以在主题公园下载数据，并享用牛奶。",
+      "sft": "你可以在游乐场下载牛奶。",
+      "dpo": "你可以在游乐场下载牛奶相关的内容。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 154,
+      "sft": "你可以按下电源开关。",
+      "dpo": "你可以按下电源开关。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 155,
+      "labels": "I right_hand minute",
+      "ref": "我用右手表示一个分钟。",
+      "sft": "我一会儿就来。",
+      "dpo": "我一分钟后用右手做出一个手势。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 156,
+      "sft": "明天我要刷牙。",
+      "dpo": "明天我要刷牙。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 157,
+      "sft": "我看到一只鸟飞往东北方向。",
+      "dpo": "我看到一只鸟飞往东北方向。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 158,
+      "sft": "我一半杯炒饭还剩下了。",
+      "dpo": "我一半杯炒饭还剩下了。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 159,
+      "sft": "我研究铁的历史。",
+      "dpo": "我研究铁的历史。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 160,
+      "labels": "I short winter",
+      "ref": "过了一个冬天我长高了",
+      "sft": "我冬天个子还算矮。",
+      "dpo": "我冬天长高了一点儿。",
+      "winner": "sft",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 161,
+      "sft": "我锻炼舞蹈。",
+      "dpo": "我锻炼舞蹈。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 162,
+      "labels": "I squash_to",
+      "ref": "我压扁了某物。",
+      "sft": "我压扁了什么？压扁了什么？我压扁了什么？我不知道我压扁了什么。",
+      "dpo": "我压扁了什么东西？我压扁了个虫子。",
+      "winner": "dpo",
+      "raw_judge": "胜者: B"
+    },
+    {
+      "i": 163,
+      "sft": "我打开它。",
+      "dpo": "我打开它。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 164,
+      "sft": "你在庭院的椅子之间打网球。",
+      "dpo": "你在庭院的椅子之间打网球。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 165,
+      "labels": "I bingo_marker",
+      "ref": "我玩标记游戏。",
+      "sft": "我玩标记游戏。",
+      "dpo": "我玩标记游戏吧。",
+      "winner": "sft",
+      "raw_judge": "胜者: A"
+    },
+    {
+      "i": 166,
+      "sft": "我掉到了水里。",
+      "dpo": "我掉到了水里。",
+      "winner": "same",
+      "raw": ""
+    },
+    {
+      "i": 167,
+      "labels": "I away basketball_game",
+      "ref": "我经常打篮球。",
+      "sft": "我要去参加篮球比赛。",
+      "dpo": "我要去参加篮球比赛了。",
+      "winner": "dpo",
+      "raw_judge": "胜者: A"
+    }
+  ]
+}

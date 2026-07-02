@@ -1,0 +1,44 @@
+[
+  {
+    "checkpoint": "/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_model_zh",
+    "num_samples": 168,
+    "bertscore": {
+      "bertscore_precision": 0.9393746256828308,
+      "bertscore_recall": 0.9420897364616394,
+      "bertscore_f1": 0.9406346082687378
+    },
+    "bleu": {
+      "bleu": 11.48433108700115,
+      "chrf": 18.20725584694301
+    },
+    "name": "中文SFT"
+  },
+  {
+    "checkpoint": "/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_dpo_zh",
+    "num_samples": 168,
+    "bertscore": {
+      "bertscore_precision": 0.9387450218200684,
+      "bertscore_recall": 0.9425598382949829,
+      "bertscore_f1": 0.940550684928894
+    },
+    "bleu": {
+      "bleu": 11.254919271363722,
+      "chrf": 18.45744676051175
+    },
+    "name": "SFT+DPOv1"
+  },
+  {
+    "checkpoint": "/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_dpo_zh_v2",
+    "num_samples": 168,
+    "bertscore": {
+      "bertscore_precision": 0.9386969208717346,
+      "bertscore_recall": 0.9423683881759644,
+      "bertscore_f1": 0.9404299855232239
+    },
+    "bleu": {
+      "bleu": 11.465844138936651,
+      "chrf": 18.498711162680966
+    },
+    "name": "SFT+DPOv2"
+  }
+]

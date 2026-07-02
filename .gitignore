@@ -1,13 +1,12 @@
-# Model weights
-Model/
-AAC2Text/checkpoints/aac_model
-bertscore_model/
-# Output files
-output/
-models/
+# Model checkpoints (大文件,不入库)
+AAC2Text/checkpoints/aac_dpo_zh/
+AAC2Text/checkpoints/aac_dpo_zh_v2/
+AAC2Text/checkpoints/aac_dpo_zh_v2_mid/
+AAC2Text/checkpoints/aac_dpo_zh_v2_strong/
+AAC2Text/checkpoints/aac_model/
+AAC2Text/checkpoints/aac_model_zh/
 
-# Data files (uncomment if needed)
-# data/
+# 保留评估结果 JSON (checkpoints/eval_*.json 和 llm_judge_*.json 不忽略)
 
 # Python
 __pycache__/
@@ -15,55 +14,53 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
+.eggs/
+dist/
+build/
 
-# Virtual environment
-venv/
-ENV/
-env/
+# Virtual env
 .venv/
+venv/
+env/
 
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
-*~
-
-# Jupyter Notebook
-.ipynb_checkpoints/
-
-# PyTorch / Transformers
-*.pt
-*.bin
-*.pth
-*.ckpt
-*.safetensors
-
-# Logs
-*.log
-logs/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Temporary files
-*.tmp
-*.temp
-.cache/
-data/sasrec_dpo_train.json
+# Logs
+*.log
+aac_server_lan.log
+
+# Large model files (基模在仓库外)
+Meta-Llama-3-8B-Instruct/
+qwen/
+
+# Large data files (合成训练数据,不入库)
+AAC2Text/data/beta1/
+AAC2Text/data/processed/training_data.json
+data/icon_sequences_train.json
+data/icon_sequences_val.json
+data/icon_sequences_test.json
+data/sasrec_dpo_train*.json
+data/sasrec_dpo_val.json
+
+# DeepSpeed optimizer states
+AAC2Text/checkpoints/**/global_step*/
+AAC2Text/checkpoints/**/optimizer.pt
+AAC2Text/checkpoints/**/checkpoint-*/
+
+# Node
+node_modules/
+node-v24.13.0-linux-x64.tar.xz
+
+# Output / cache
+output/
+__pycache__/
+*.pyc
