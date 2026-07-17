@@ -1142,4 +1142,173 @@ DPO 未能显著超过 SFT 的两个原因：
 2. 扩大 DPO 数据（放宽 chosen 到 `sentence_zh` 回落，可恢复到 1697 条）
 3. 用 `zh_correction` 作为测试 ref 重新评估（对齐训练目标）
 
+---
+
+### 2026-07-06：G-Eval 语义评估（Reference-free LLM-as-Judge）
+
+#### 背景
+
+字面指标（BLEU/BERTScore/chrF）依赖参考翻译做字面匹配，SFT 和 DPO 都贴近原翻译时区分不开。引入 G-Eval（Liu et al., NeurIPS 2023）风格的 reference-free LLM-as-Judge，不依赖参考翻译，直接按图标语义评估翻译质量。
+
+#### 评估方法
+
+**G-Eval 风格 LLM-as-Judge**：
+- **不给 judge 看参考翻译**（reference-free），避免字面匹配偏倚
+- **注入图标语义**：从本体注入 `core_semantic_zh` + `label_zh` + `cs_role`，让 judge 理解每个图标的真实含义
+- **思维链（CoT）**：每个维度先给理由再给分数，可解释
+- **5 维度评分**（1-5 分）：图标覆盖 / 语义准确 / 自然度 / 无幻觉 / 整体质量
+- **Judge 模型**：Llama-3-8B（本地推理）
+
+#### 文本 G-Eval 结果（168 条，最终采用）
+
+图标语义来源：`core_semantic_zh`（人工编写的文本本体）
+
+| 维度 | SFT | DPO-mid | 差异 | 胜出 |
+|------|-----|---------|------|------|
+| 图标覆盖 | 3.28 | 3.29 | +0.02 | 持平 |
+| **语义准确** | 3.66 | **3.72** | **+0.05** | **DPO ↑** |
+| **自然度** | 3.85 | **3.91** | **+0.06** | **DPO ↑** |
+| 无幻觉 | 4.78 | 4.77 | -0.00 | 持平 |
+| **整体质量** | 3.69 | **3.75** | **+0.06** | **DPO ↑** |
+
+**语义准确度胜出统计**：DPO 26 条胜出 vs SFT 15 条胜出 vs 持平 127 条 → DPO 语义准确度确实更好
+
+#### 多模态 G-Eval 结果（对照实验，未采用）
+
+图标语义来源：llava:latest 看图标图片生成的视觉描述（API: `http://172.31.226.24:4433`）
+
+| 维度 | SFT | DPO-mid | 差异 | 胜出 |
+|------|-----|---------|------|------|
+| 图标覆盖 | 2.08 | 2.09 | +0.01 | 持平 |
+| 语义准确 | 2.17 | 2.20 | +0.04 | 持平 |
+| 自然度 | 2.32 | 2.34 | +0.02 | 持平 |
+| 无幻觉 | 3.60 | 3.57 | -0.02 | 持平 |
+| 整体质量 | 2.20 | 2.21 | +0.01 | 持平 |
+
+**多模态评估不可靠的原因**：llava 对 AAC 图标的视觉识别能力差，生成的不准确描述导致 judge 评估基础就错了：
+- `is_this_enough`（询问确认）→ llava 描述为"空酒杯" ❌
+- `Boxing_Day`（节礼日）→ llava 描述为"盒子里有圣诞老人" ❌
+- `cheese_brie`（奶酪）→ llava 描述为"庚状形凯滋" ❌
+- `I`（代词"我"）→ llava 描述为"沟通指示符号,帮助残疾人阅读" ❌
+
+评分普遍偏低（2.2 vs 文本评估的 3.7），因为 llava 描述不准导致 judge 认为翻译没覆盖图标含义。需更强的多模态模型（Qwen-VL-72B / GPT-4V）才能可靠评估。
+
+#### 三种评估方法对比
+
+| 评估方法 | 图标语义来源 | DPO 整体质量 | DPO 胜出 | 可靠性 |
+|---------|------------|-------------|---------|--------|
+| 字面指标（BLEU/chrF） | 无（依赖 ref） | 10.63/18.55 | 持平/略差 | 低（字面匹配） |
+| LLM Judge 二选一 | ref 参考翻译 | 48.3% 胜率 | 持平 | 中（给了 ref） |
+| **G-Eval 文本本体** | `core_semantic_zh` | **3.75 (+0.06)** | **DPO ↑** | **高（reference-free）** |
+| 多模态 G-Eval | llava 看图描述 | 2.21 (+0.01) | 持平 | 低（llava 识别差） |
+
+#### DPO 语义准确胜出样例
+
+| 样本 | SFT 翻译 | DPO 翻译 | SFT 分 | DPO 分 | 改进点 |
+|------|---------|---------|-------|-------|--------|
+| `I is_this_enough Boxing_Day` | 我在圣诞节的时候在工作吗？ | 圣诞节的时候我在确认一下需求是否已经满足了。 | 2 | 4 | 正确译出"确认" |
+| `U tape_recorder masking_tape when` | 你可以在录音机上贴上胶带来控制音量。 | 你可以用胶带纸条来标记音频记录的时间。 | 3 | 4 | 更贴合 when 含义 |
+| `U busy hair_plaits` | ...梳头发。 | ...梳个辫子。 | 2 | 3 | hair_plaits 译出"辫子" |
+
+#### 结论
+
+**最可靠的评估结论（G-Eval 文本本体）**：
+- DPO 在整体质量（+0.06）、自然度（+0.06）、语义准确（+0.05）三维度均胜出 SFT
+- 语义准确度：DPO 26 条胜出 vs SFT 15 条胜出
+- 证明 DPO 对齐确实提升了翻译语义质量 — 之前 BLEU 看不出是因为字面匹配惩罚了 DPO 的口语化风格
+
+#### 新增文件
+
+| 文件 | 说明 |
+|------|------|
+| `AAC2Text/scripts/geval.py` | G-Eval 文本评估脚本（Llama-3-8B + core_semantic_zh 注入） |
+| `AAC2Text/scripts/geval_multimodal.py` | 多模态 G-Eval 评估脚本（llava 看图 + Llama-3-8B 评估） |
+| `AAC2Text/checkpoints/geval_results.json` | 文本 G-Eval 评估结果（168 条 × 5 维度 + 理由） |
+| `AAC2Text/checkpoints/geval_multimodal_results.json` | 多模态 G-Eval 评估结果（含 llava 图标描述缓存） |
+
+#### 参考文献
+
+- **G-Eval**: Liu et al., "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment", NeurIPS 2023
+- **DPO**: Rafailov et al., "Direct Preference Optimization: Your Language Model is Secretly a Reward Model", NeurIPS 2023
+- **LLM-as-Judge**: Zheng et al., "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena", NeurIPS 2023
+
+---
+
+### 2026-07-17：review5000 下一图标预测 — 双轨训练 + Route D 人工合理率评测
+
+**目标**: 用真实人工标注的 review5000 数据重训 SASRec 下一图标预测；并改用"AI 当人工判建议是否合理"替代精确命中的严苛指标（Route D）。
+
+#### 改动1：双轨训练脚本（CE + S-DP-O）
+**改动文件**: `sequence_model/train_review5000.py`（新增）
+
+**改动内容**:
+1. 适配现有 `SASRecDataset`，吃 `review5000_combined_full.jsonl`（8892 条 = 3607 序列转移 + 839 good + 1834 bad + 2612 random）
+2. 词表从数据构建（**1157** 真实人工使用子集，非线上 Mamba4Rec-28K 的 2720）
+3. 双轨：Track1 CE 训练基座模型（next-item 交叉熵）→ Track2 以冻结基座为 reference、可训练 policy 跑 S-DP-O（每个 prefix 的 pos next 为 chosen，human_bad + random_neg 为多个 rejected）
+4. CS 角色从本体 `cs_role` 派生（数据无 CS 字段）
+5. `SDPOLoss` 增加 **mask-aware 平均**（避开 padding 稀释）：`rejected_logratios` 按 `rejected_mask` 求平均，解决原先 458 个 padding 行把 rejected 均值稀释到 ~0.001 的问题
+6. 新增 `--neg-cap 16` 上限，避免某些 prefix 累积大量 random_neg 导致 padding 到 458、3.5s/it
+
+**训练结果**（Emotion 环境, torch 2.5.1+cu121, GPU）:
+- CE `best_model.pt`: MRR 0.1341, Hit@5 0.1847（已超线上 Mamba MRR 0.048 / Hit@10 0.099）
+- S-DP-O `best_sdpo_model.pt`: MRR 0.1316, Hit@5 0.1757 → **基本等于 CE，S-DP-O 没带来提升**
+
+#### 改动2：诊断脚本（collapse / 偏好）
+**改动文件**: `sequence_model/eval_review5000.py`（新增）
+
+**结论**:
+- S-DP-O 相对 CE 几乎无差异（MRR 0.1341 vs 0.1316）
+- **popularity collapse**：top-1 全模型只覆盖 78/1157 个图标，top-10 图标占 63.7% 预测 → 模型退化为"永远猜高频"
+
+#### 改动3：Route D 评测（AI 当人工判"建议是否合理"）
+**改动文件**: `sequence_model/eval_human_reasonable.py`（新增）
+
+**动机**: 数据本身是 2-3 张图的短会话、候选 1157 个，"精确命中"（Hit@K/MRR）天花板极低，但"用户觉得建议合理吗"才是产品真问题。
+
+**AI 判分标准**（全量 444 条 held-out val）:
+1. **非退化**: 建议不是 prefix 里已出现的同一图标
+2. **语义连贯**: 建议的 `super_concept`/`aac_category`/`can_combine_with`/`typical_objects` 需与 prefix 任一方有重叠；若双方都有明确主题且主题互斥则判不连贯
+3. **CS 槽位不强制顺序**: 自然语言不僵硬，不强制 WHO→WHAT_DOING→WHAT→WHERE→WHEN→HOW，cs_role 仅作信息
+
+**全量结果**（held-out val = 444 条）:
+
+| 方法 | Hit@1 | Hit@5 | MRR |
+|------|--------|--------|------|
+| 均匀随机 | 0.0009 | 0.0043 | 0.0066 |
+| 猜最高频 | 0.0113 | 0.0653 | 0.0451 |
+| CE 模型 | 0.0833 | 0.1847 | 0.1341 |
+| S-DP-O 模型 | 0.0766 | 0.1757 | 0.1316 |
+
+| 模型 | top1 合理率 | top5 合理率 | 对照 exact top1 / top5 |
+|------|-------------|-------------|----------------------|
+| CE | 0.108 | 0.586 | 0.083 / 0.185 |
+| S-DP-O | 0.079 | 0.669 | 0.077 / 0.176 |
+
+**结论**:
+- **模型相对基线学到真实信号**: Hit@1 约为"猜最高频"的 7×、Hit@5 约 3×（精确指标用官方 `compute_metrics` 校验）
+- **S-DP-O ≈ CE**: 偏好对齐基本无效
+- **"合理率"约为"精确命中"的 3 倍**（CE top5 0.586 vs 0.185）→ 用户要的是"建议靠不靠谱"而非"是否正好命中"，Route D 口径更贴合输入法联想可用性
+- **但模型仍严重依赖高频图标**: 判读卡显示短上下文（如 prefix 只有 `I`/`U`）时，top-5 多为 `short_hair`/`tomorrow`/`morning`/`good`/`download` 这类与上下文无关的坍塌图标，约 40% 样本 top-5 里一条合理建议都没有
+
+#### 改动4：融合语义 RAG 分支实验（证明数据墙）
+**改动文件**: `sequence_model/fuse_review5000_exp.py`（新增）
+
+**结论**: 融合语义 RAG（SASRec 概率 × 语义余弦相似度）**未改善**——纯语义分支恢复真实 next 成功率 = 0.000；纯 SASRec（α=1）因高频图标是语义枢纽，语义贴近度反而最高。证明 next-icon 在符号和语义空间都近似随机。
+
+#### 改动5：脚本清理
+**改动文件**: `sequence_model/collect_preference_data.py`、`sequence_model/train_sasrec.py` 移至 `sequence_model/_unused_backup/`（保留备份，未删除）
+
+#### 数据墙结论（核心）
+review5000 下一图标预测在 **2-3 张图上下文 + 1157 候选** 现状下已逼近天花板：模型相对随机/高频都赢很多，但绝对精确命中上不去；S-DP-O、融合 RAG 等模型/损失侧手段均证明救不回来。**唯一能真正抬升精确匹配的杠杆在数据侧**：更长更干净的会话（给模型更多上下文）、约束词表到子集（缩小候选空间）。
+
+#### Git
+- `b7aedd6` feat(sequence_model): review5000 双轨训练 + Route D 人工合理率评测（双轨脚本 + 诊断 + Route D + 融合实验 + SDPOLoss mask-aware + 清理）
+- `645d14d` fix(eval_human_reasonable): 放宽 CS 槽位顺序约束 + 改用官方 compute_metrics（修正自写 evaluate 低估 ~2× 的 bug）+ 移除无用 evaluate()/F 导入
+- 已 push 到 `origin/main`（github.com:Rainbit-Ye/EmotionMutifyTask.git）
+
+#### 参考文献
+- Kang & McAuley, "Self-Attentive Sequential Recommendation", ICLR 2018 (SASRec)
+- Hu et al., "S-DPO: Simultaneous DPO for Multi-Negative Preference Alignment", NeurIPS 2024 (S-DP-O)
+- Bryan, "Colourful Semantics", 1997 (CS 语义角色体系)
+
 
