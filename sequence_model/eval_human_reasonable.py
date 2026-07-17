@@ -20,7 +20,6 @@ Route D 评测：用 AI（基于 ontology 语义）替代人工，判"建议是�
 import os, sys, json, math, random
 from collections import defaultdict
 import torch
-import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -63,7 +62,9 @@ def load_sem(onto_path):
         data = json.load(f)
     arr = data["ontology"] if "ontology" in data else data
     for it in arr:
-        sem[it["icon_id"]] = it
+        iid = it.get("icon_id")
+        if iid:
+            sem[iid] = it
     return sem
 
 sem = load_sem(ONTO)
@@ -83,20 +84,6 @@ def tagset(d):
 def label_of(ic):
     d = sem.get(ic)
     return f"{d['label']} ({ic})" if d and d.get("label") else ic
-
-ROLE_ORDER = {"WHO":1,"WHAT_DOING":2,"WHAT":3,"WHERE":4,"WHEN":5,"HOW":6}
-ROLE_NAME = {v:k for k,v in ROLE_ORDER.items()}
-
-def expected_role(prefix):
-    filled = set()
-    for ic in prefix:
-        r = sem.get(ic, {}).get("cs_role")
-        if r in ROLE_ORDER:
-            filled.add(ROLE_ORDER[r])
-    for order in (1,2,3,4,5,6):
-        if order not in filled:
-            return order
-    return 6
 
 def coherence_ok(prefix, sug):
     s = sem.get(sug, {})
@@ -119,19 +106,18 @@ def coherence_ok(prefix, sug):
     return True
 
 def ai_judge(prefix, sug):
-    """返回 (reasonable: bool, reason: str)。即"AI 当人工"的判分。"""
+    """返回 (reasonable: bool, reason: str)。即"AI 当人工"的判分。
+    注意：自然语言不强制 CS 规范语序，cs_role 仅作信息，不作为硬拒绝。"""
     s = sem.get(sug, {})
-    sr = ROLE_ORDER.get(s.get("cs_role"))
-    er = expected_role(prefix)
     if sug in prefix:
         return (False, f"与上下文重复 ({label_of(sug)})")
-    if sr is None:
-        return (False, f"无 CS 槽位信息 ({label_of(sug)})")
-    if sr < er:
-        return (False, f"槽位错: 建议 {s.get('cs_role')} 但下一个待填 {ROLE_NAME[er]}")
+    if not s:
+        return (False, f"无语义信息 ({label_of(sug)})")
+    # 不强制 WHO→...→HOW 顺序；只判语义是否连贯 + 是否退化
     if not coherence_ok(prefix, sug):
         return (False, f"语义不连贯: {label_of(sug)} 与上下文主题互斥")
-    return (True, f"槽位 {s.get('cs_role')} 契合且语义可搭配 ({label_of(sug)})")
+    sr = s.get("cs_role")
+    return (True, f"语义可搭配 ({label_of(sug)}" + (f", CS={sr}" if sr else "") + ")")
 
 # ---------------- 载入模型 ----------------
 def load(path):
@@ -160,29 +146,6 @@ def predict_topk(model, prefix, k=TOPK):
     return [(idx2item.get(i, "?"), round(p_, 4)) for i, p_ in zip(idx, prob)]
 
 # ---------------- 基线 ----------------
-def evaluate(model, samples):
-    model.eval()
-    hits = defaultdict(int); mrr_sum = 0.0; total = 0
-    with torch.no_grad():
-        for s in samples:
-            p = s["prefix"][-MAX_SEQ:]
-            item_ids = torch.tensor([[item2idx.get(i,0) for i in p]], dtype=torch.long, device=device)
-            cs_ids   = torch.tensor([[icon2cs.get(i, CS_ROLE_TO_ID["WHAT"]) for i in p]], dtype=torch.long, device=device)
-            logits = model(item_ids, cs_ids); logits[0,0] = float("-inf")
-            probs = F.softmax(logits, dim=-1)[0]
-            t = item2idx.get(s["next"], 0)
-            if t == 0: continue
-            ranked = torch.argsort(probs, descending=True)
-            rank = (ranked == t).nonzero(as_tuple=True)[0]
-            if len(rank) == 0: continue
-            rank = rank[0].item() + 1
-            total += 1
-            if rank <= 1: hits[1] += 1
-            if rank <= 5: hits[5] += 1
-            mrr_sum += 1.0/rank
-    return {"hit@1": hits[1]/max(total,1), "hit@5": hits[5]/max(total,1),
-            "mrr": mrr_sum/max(total,1), "total": total}
-
 def popularity_baseline(train_pos, samples):
     cnt = defaultdict(int)
     for d in train_pos: cnt[d["next"]] += 1
@@ -208,7 +171,7 @@ print(f"{'方法':<14}{'Hit@1':>10}{'Hit@5':>10}{'MRR':>10}")
 print(f"{'均匀随机':<14}{uni['hit@1']:>10.4f}{uni['hit@5']:>10.4f}{uni['mrr']:>10.4f}")
 print(f"{'猜最高频':<14}{pop['hit@1']:>10.4f}{pop['hit@5']:>10.4f}{pop['mrr']:>10.4f}")
 for name, m in models.items():
-    r = evaluate(m, val_samples)
+    r = compute_metrics(m, val_loader, idx2item, device)
     print(f"{name+' 模型':<14}{r['hit@1']:>10.4f}{r['hit@5']:>10.4f}{r['mrr']:>10.4f}")
 
 # ---------------- AI 当人工：全量判读 ----------------
@@ -223,7 +186,7 @@ for name, m in models.items():
         if r1: top1_r += 1
         any5 = any(ai_judge(s["prefix"], ic)[0] for ic, _ in top5)
         if any5: top5_r += 1
-    met = evaluate(m, val_samples)
+    met = compute_metrics(m, val_loader, idx2item, device)
     print(f"{name:<10}{top1_r/max(n,1):>12.3f}{top5_r/max(n,1):>12.3f}{met['hit@1']:>16.3f}{met['hit@5']:>12.3f}")
 
 # ---------------- 判读卡示例（供人工审计我的判分口径）----------------
