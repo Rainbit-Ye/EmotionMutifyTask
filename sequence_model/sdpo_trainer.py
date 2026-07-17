@@ -41,6 +41,7 @@ class SDPOLoss(nn.Module):
         policy_rejected_logps: torch.Tensor,
         ref_chosen_logps: torch.Tensor,
         ref_rejected_logps: torch.Tensor,
+        rejected_mask: torch.Tensor = None,
     ) -> torch.Tensor:
         """
         Compute S-DPO loss.
@@ -58,8 +59,14 @@ class SDPOLoss(nn.Module):
         chosen_logratios = policy_chosen_logps - ref_chosen_logps  # [batch]
         rejected_logratios = policy_rejected_logps - ref_rejected_logps  # [batch, K-1]
 
-        # Average over K-1 rejected items (S-DPO key difference from DPO)
-        avg_rejected_logratio = rejected_logratios.mean(dim=-1)  # [batch]
+        # Average over rejected items. Mask-aware: padding rows (mask=0) must
+        # NOT dilute the average (otherwise rejected signal collapses to ~0).
+        if rejected_mask is not None:
+            m = rejected_mask.float()
+            denom = m.sum(dim=-1).clamp(min=1.0)
+            avg_rejected_logratio = (rejected_logratios * m).sum(dim=-1) / denom  # [batch]
+        else:
+            avg_rejected_logratio = rejected_logratios.mean(dim=-1)  # [batch]
 
         # S-DPO loss
         loss = -F.logsigmoid(
