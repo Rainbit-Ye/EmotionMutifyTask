@@ -67,3 +67,14 @@ node-v24.13.0-linux-x64.tar.xz
 output/
 __pycache__/
 *.pyc
+
+# Frontend build output
+frontend/dist/
+
+# 未使用的大/实验数据：保留在磁盘，但不入库（避免仓库被 100MB+ 撑大）
+# 仅匹配仓库根目录下的 data/（不影响已跟踪的 AAC2Text/data/cleardata/ 训练数据）
+/data/
+/AAC2Text/checkpoints/retriever/
+sequence_model/generated_for_human_review.jsonl
+sequence_model/generated_review_1806.jsonl
+sequence_model/generated_review_1806.jsonl.merged

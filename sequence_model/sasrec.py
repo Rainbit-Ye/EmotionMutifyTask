@@ -182,7 +182,9 @@ class SASRec(nn.Module):
         # Get the last non-padding position for each sequence
         # Find the last non-zero position
         seq_lengths = (item_ids != 0).sum(dim=1)  # [batch]
-        last_positions = seq_lengths - 1  # 0-indexed
+        # Clamp to >=0: a fully-padding (all-OOV) sequence yields seq_lengths=0
+        # and would otherwise produce last_positions=-1 -> gather index out of bounds.
+        last_positions = (seq_lengths - 1).clamp(min=0)  # 0-indexed
 
         # Gather the hidden states at last positions
         idx = last_positions.unsqueeze(1).unsqueeze(2).expand(-1, 1, self.hidden_size)

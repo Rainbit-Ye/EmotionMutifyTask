@@ -167,6 +167,11 @@ class FusedIconPredictor:
             item_ids = [self.item2idx.get(icon, 0) for icon in sequence]
             cs_ids = [CS_ROLE_TO_ID.get(role, 0) for role in cs_roles]
 
+            # Sequence has no in-vocab items (all OOV -> mapped to padding 0).
+            # SASRec cannot score it; skip to avoid garbage predictions / index errors.
+            if not any(item_ids):
+                return {}
+
             # Pad to max_seq_len
             max_len = self.sasrec.max_seq_len
             if len(item_ids) > max_len:

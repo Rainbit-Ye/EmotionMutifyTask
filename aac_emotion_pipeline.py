@@ -15,6 +15,8 @@ import os
 import sys
 import json
 import re
+import threading
+from datetime import datetime
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -89,22 +91,33 @@ class AACIconPredictor:
         print(f"[IconPredictor] Loaded {len(self.ontology)} icons (skipped {skipped} empty)")
 
     def _init_embeddings(self):
-        """初始化嵌入模型并预计算图标嵌入"""
-        print(f"[IconPredictor] Loading embedding model: {self.embedding_model_name}")
-        from sentence_transformers import SentenceTransformer
-        
-        self.embedding_model = SentenceTransformer(self.embedding_model_name, local_files_only=True)
-        
-        # 预计算所有图标的嵌入
-        texts = [icon['embed_text'] for icon in self.icon_list]
-        print(f"[IconPredictor] Computing embeddings for {len(texts)} icons...")
-        
-        self.icon_embeddings = self.embedding_model.encode(
-            texts, 
-            convert_to_tensor=True,
-            show_progress_bar=False
-        )
-        print(f"[IconPredictor] Embeddings shape: {self.icon_embeddings.shape}")
+        """初始化嵌入模型并预计算图标嵌入
+
+        注意：sentence_transformers 为可选依赖。若未安装或加载失败，
+        则 embedding_model / icon_embeddings 置为 None，RAG 分支自动停用，
+        但不影响翻译、情感分析、SASRec 预测主流程。
+        """
+        try:
+            print(f"[IconPredictor] Loading embedding model: {self.embedding_model_name}")
+            from sentence_transformers import SentenceTransformer
+
+            self.embedding_model = SentenceTransformer(self.embedding_model_name, local_files_only=True)
+
+            # 预计算所有图标的嵌入
+            texts = [icon['embed_text'] for icon in self.icon_list]
+            print(f"[IconPredictor] Computing embeddings for {len(texts)} icons...")
+
+            self.icon_embeddings = self.embedding_model.encode(
+                texts,
+                convert_to_tensor=True,
+                show_progress_bar=False
+            )
+            print(f"[IconPredictor] Embeddings shape: {self.icon_embeddings.shape}")
+        except Exception as e:
+            self.embedding_model = None
+            self.icon_embeddings = None
+            print(f"[IconPredictor] Warning: embedding model unavailable ({type(e).__name__}: {e}). "
+                  f"RAG icon suggestions disabled; SASRec + translation still work.")
 
     def predict_next_icons_by_context(self,
                                        conversation_context: List[str],
@@ -482,7 +495,7 @@ class MultiTaskEmotionClassifier(nn.Module):
 
 class AACTranslator:
     """AAC符号到自然语言翻译器"""
-    def __init__(self, model_path, base_model_path, device='cuda'):
+    def __init__(self, model_path, base_model_path, device='cuda', sft_model_path=None):
         from transformers import AutoModelForCausalLM, AutoTokenizer
         from peft import PeftModel
 
@@ -502,7 +515,17 @@ class AACTranslator:
             local_files_only=True
         )
 
-        # 加载LoRA权重
+        # 可选：先合并 SFT LoRA 到基座。
+        # 关键：中文 DPO 权重必须叠在 SFT(aac_model_zh) 之上，不能从基座直接加载，
+        # 否则输出退化（如 "A simple one!"）。配方与 AAC2Text/scripts/test_zh.py 一致。
+        if (sft_model_path and os.path.exists(sft_model_path)
+                and os.path.abspath(sft_model_path) != os.path.abspath(model_path)):
+            print(f"[AAC2Text] Merging SFT LoRA first: {sft_model_path}")
+            self.model = PeftModel.from_pretrained(self.model, sft_model_path)
+            self.model = self.model.merge_and_unload()
+            print("[AAC2Text] SFT merged into base")
+
+        # 加载主 LoRA 权重（SFT 或 DPO）
         if os.path.exists(model_path):
             print(f"[AAC2Text] Loading LoRA weights: {model_path}")
             self.model = PeftModel.from_pretrained(self.model, model_path)
@@ -526,7 +549,8 @@ class AACTranslator:
         import time as _time
         _t0 = _time.time()
 
-        prompt = f"Translate these AAC symbols into ONE simple English sentence: {' '.join(symbols)}"
+        # 与中文 SFT 训练（scripts/train_zh.py）保持一致：中文指令 -> 中文输出
+        prompt = f"请把这些 AAC 图标序列翻译成一个简单的中文句子：{' '.join(symbols)}"
         messages = [{"role": "user", "content": prompt}]
         input_text = self.tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
@@ -539,6 +563,7 @@ class AACTranslator:
                 **inputs,
                 max_new_tokens=30,
                 do_sample=False,
+                repetition_penalty=1.15,  # 抑制模型重复/闲扯
                 stop_strings=["<|eot_id|>", "<|end_of_text|>", "\n"],
                 tokenizer=self.tokenizer,
             )
@@ -547,10 +572,12 @@ class AACTranslator:
             outputs[0][inputs.input_ids.shape[1]:],
             skip_special_tokens=True
         )
-        # 只取第一句，避免生成过多内容
-        for sep in ['\n', '.']:
-            if sep in response:
-                response = response[:response.index(sep)] + ('.' if sep == '.' else '')
+        # 只取第一句，避免模型闲扯/重复/解释图标（如 "xx表示…"）。
+        # 关键：模型输出的是全角句号 "。"，原代码只匹配半角 "." 导致从不截断。
+        for sep in ['\n', '。', '！', '？', '；']:
+            idx = response.find(sep)
+            if idx != -1:
+                response = response[:idx + len(sep)]
                 break
         response = response.strip()
 
@@ -678,12 +705,23 @@ class EmotionAnalyzer:
             'emotion_distribution': emotion_distribution
         }
 
-    def get_trend(self) -> Dict:
-        """获取情感趋势"""
-        if len(self.history) < 2:
+    def get_trend(self, conversation_history=None) -> Dict:
+        """获取情感趋势
+
+        Args:
+            conversation_history: 可选，传入该会话的对话历史（每项为含 'single_emotion' 的 dict）
+                以实现每会话独立趋势；为 None 时回退到 self.history（兼容旧用法）。
+        """
+        if conversation_history is not None:
+            hist = [t.get('single_emotion', 'neutral') if isinstance(t, dict) else t
+                    for t in conversation_history]
+        else:
+            hist = list(self.history)
+
+        if len(hist) < 2:
             return {'trend': 'stable', 'direction': 0.0}
 
-        valences = [EMOTION_VALENCE.get(e, 0.0) for e in self.history]
+        valences = [EMOTION_VALENCE.get(e, 0.0) for e in hist]
         x = np.arange(len(valences))
         slope = np.polyfit(x, valences, 1)[0]
 
@@ -769,11 +807,16 @@ class AACEmotionPipeline:
                  ontology_path: str = None,
                  embedding_model: str = './Model/all-MiniLM-L6-v2',
                  device: str = 'cuda',
-                 mode: str = 'batch'):
+                 mode: str = 'batch',
+                 log_path: str = './output/incremental_usage.jsonl',
+                 aac_sft_model_path: str = None,
+                 aac_translator_device: str = None):
         """初始化Pipeline
 
         Args:
             mode: 'batch' (整段输入后预测) 或 'incremental' (逐icon即时预测)
+            aac_translator_device: 翻译器(8B Llama)单独占用的 GPU。
+                与 SASRec/RoBERTa 分开可彻底消除点击时的 GPU 争用（默认与 device 相同）。
         """
 
         print("=" * 60)
@@ -782,9 +825,16 @@ class AACEmotionPipeline:
 
         self.mode = mode
         self.device = device
+        self.log_path = log_path
+        self.session_id = None  # 由服务端按会话设置（多用户并发落盘区分）
+        self._log_lock = threading.Lock()
 
-        # 加载翻译器
-        self.translator = AACTranslator(aac_model_path, aac_base_model_path, device)
+        # 加载翻译器（8B Llama，可放独立 GPU 以不阻塞预测）
+        translator_device = aac_translator_device or device
+        self.translator = AACTranslator(
+            aac_model_path, aac_base_model_path, translator_device,
+            sft_model_path=aac_sft_model_path,
+        )
 
         # 加载情感分析器
         self.analyzer = EmotionAnalyzer(emotion_model_path, emotion_base_model_path, device)
@@ -821,16 +871,27 @@ class AACEmotionPipeline:
         else:
             sasrec_config = {}
 
-        # 构建词汇表
-        self.item2idx, self.idx2item = build_item_vocabulary(self.icon_predictor.ontology)
-        num_items = len(self.item2idx) - 1  # exclude padding
-
-        # 创建SASRec模型
+        # 解析模型路径并优先加载 checkpoint
         model_path = sasrec_config.get('model_path', './output/sasrec/best_model.pt')
+        checkpoint = None
         if os.path.exists(model_path):
             print(f"[Incremental] Loading trained SASRec from: {model_path}")
             checkpoint = torch.load(model_path, map_location=device, weights_only=False)
-            saved_args = checkpoint.get('args', {})
+        else:
+            print(f"[Incremental] Warning: SASRec model not found at {model_path}")
+
+        # 词表：优先使用 checkpoint 自带的 item2idx/idx2item（=训练时的 review5000 词表），
+        # 否则回退到从本体构建（此时若 checkpoint 存在会与模型尺寸不匹配）。
+        if checkpoint and 'item2idx' in checkpoint and 'idx2item' in checkpoint:
+            self.item2idx = checkpoint['item2idx']
+            self.idx2item = checkpoint['idx2item']
+        else:
+            self.item2idx, self.idx2item = build_item_vocabulary(self.icon_predictor.ontology)
+        num_items = len(self.item2idx) - 1  # exclude padding
+
+        # 创建SASRec模型
+        saved_args = checkpoint.get('args', {}) if checkpoint else {}
+        if checkpoint is not None:
             self.sasrec_model = SASRec(
                 num_items=num_items,
                 num_cs_roles=len(CS_ROLE_TO_ID),
@@ -844,7 +905,6 @@ class AACEmotionPipeline:
             self.sasrec_model.load_state_dict(checkpoint['model_state_dict'])
             self.sasrec_model.eval()
         else:
-            print(f"[Incremental] Warning: SASRec model not found at {model_path}")
             print(f"[Incremental] Creating untrained SASRec (predictions will be random)")
             self.sasrec_model = SASRec(
                 num_items=num_items,
@@ -875,6 +935,23 @@ class AACEmotionPipeline:
         )
 
         print("[Incremental] SASRec + FusedIconPredictor loaded")
+
+    def _log_usage(self, record: Dict):
+        """将真实使用记录追加写入 jsonl（供后续用真实数据重训 / 优化）。
+        多用户并发时由 _log_lock 保护，并把 session_id 写入记录以便区分。"""
+        if not self.log_path:
+            return
+        try:
+            record = {
+                'ts': datetime.now().isoformat(),
+                'session_id': getattr(self, 'session_id', None),
+                **record
+            }
+            with self._log_lock:
+                with open(self.log_path, 'a', encoding='utf-8') as f:
+                    f.write(json.dumps(record, ensure_ascii=False) + '\n')
+        except Exception as e:
+            print(f"[UsageLog] Warning: failed to write log: {e}")
 
     def process(self, symbols: List[str], role: str = "user") -> Dict:
         """处理AAC符号输入"""
@@ -939,11 +1016,21 @@ class AACEmotionPipeline:
 
     # ==================== 增量模式API ====================
 
-    def add_icon(self, icon_id: str) -> Dict:
+    def add_icon(self, icon_id: str, state=None, history=None, session_id=None,
+                 do_translate: bool = True) -> Dict:
         """增量模式: 用户点击一个icon -> 即时预测下一个icon
 
         Args:
+            do_translate: True=每次点击都用 8B Llama 翻译（质量高但每次 ~4-5s，
+                是点击卡顿的根因）；False=用图标 label 快速拼接预览（即时），
+                真正的高质量翻译放到后台/提交时再做。Web 端默认 False 以保证点击即时响应。
+
+        Args:
             icon_id: 用户选择的icon ID
+            state: 可选，传入 IncrementalState 以实现每会话独立状态（多用户并发）。
+                  为 None 时使用 self.incremental_state（兼容交互/批量旧用法）。
+            history: 可选，传入该会话的 conversation_history list。
+            session_id: 可选，写入使用日志以区分多用户。
 
         Returns:
             预测结果，包含下一个icon推荐
@@ -951,25 +1038,39 @@ class AACEmotionPipeline:
         if self.mode != 'incremental':
             raise RuntimeError("add_icon() only works in incremental mode. Use process() for batch mode.")
 
+        state = state if state is not None else self.incremental_state
+        history = history if history is not None else self.conversation_history
+        self.session_id = session_id
+
         # 1. 更新增量状态
         cs_role = self.icon_predictor.ontology.get(icon_id, {}).get('cs_role', 'WHAT')
-        self.incremental_state.add_icon(icon_id, cs_role)
+        state.add_icon(icon_id, cs_role)
 
-        # 2. 局部翻译 (最近3个icon，降低延迟)
-        current_seq = self.incremental_state.current_sequence
-        if len(current_seq) >= 2:
-            partial_translation = self.translator.translate(current_seq[-3:])
+        # 2. 局部翻译（点击即时预览用）。
+        #    默认 do_translate=False：直接拼最近3个图标的 label 作为预览，
+        #    不跑 8B Llama，保证每次点击 <0.1s。高质量翻译由服务端后台线程异步完成。
+        current_seq = state.current_sequence
+        if do_translate:
+            if len(current_seq) >= 2:
+                partial_translation = self.translator.translate(current_seq[-3:])
+            else:
+                partial_translation = self.icon_predictor.ontology.get(icon_id, {}).get('label', icon_id)
         else:
-            partial_translation = self.icon_predictor.ontology.get(icon_id, {}).get('label', icon_id)
+            # 快速预览：最近3个图标的 label 直接拼接（如 "我 想 水"）
+            _tail = current_seq[-3:] if current_seq else (
+                [icon_id] if icon_id != '__undo_rerun__' else [])
+            partial_translation = ''.join(
+                self.icon_predictor.ontology.get(i, {}).get('label', i) for i in _tail
+            )
 
         # 3. 情感分析 (使用局部翻译)
-        emotion_result = self.analyzer.analyze(partial_translation, self.conversation_history)
+        emotion_result = self.analyzer.analyze(partial_translation, history)
 
         # 4. 获取SASRec上下文 + 融合预测
-        context_icons, context_cs = self.incremental_state.get_context_for_sasrec()
+        context_icons, context_cs = state.get_context_for_sasrec()
 
         used_symbols = []
-        for t in self.conversation_history:
+        for t in history:
             used_symbols.extend(t.get('symbols', []))
         used_symbols.extend(current_seq)
 
@@ -980,11 +1081,32 @@ class AACEmotionPipeline:
             next_emotion=emotion_result.get('next_emotion'),
             current_sentence=partial_translation,
             used_symbols=used_symbols,
-            conversation_context=[t['sentence'] for t in self.conversation_history],
+            conversation_context=[t['sentence'] for t in history],
         )
 
         # 5. 返回结果
-        cs_display = [f"{r}:{i}" for i, r in zip(current_seq, self.incremental_state.current_cs_roles)]
+        cs_display = [f"{r}:{i}" for i, r in zip(current_seq, state.current_cs_roles)]
+
+        # 6. 记录真实使用数据（供后续重训/优化）；跳过 undo 内部重跑的哨兵
+        if icon_id != '__undo_rerun__':
+            top_items = []
+            for cat in ('actions', 'entities', 'emotions', 'others'):
+                for it in predictions.get(cat, []):
+                    top_items.append({
+                        'icon_id': it['icon_id'],
+                        'label': it.get('label', ''),
+                        'score': it.get('final_score', 0.0),
+                    })
+            top_items.sort(key=lambda x: -x['score'])
+            self._log_usage({
+                'event': 'icon_add',
+                'prefix': current_seq[:-1] if len(current_seq) > 1 else [],
+                'chosen_icon': icon_id,
+                'chosen_label': self.icon_predictor.ontology.get(icon_id, {}).get('label', icon_id),
+                'model_top_k': top_items[:10],
+                'partial_translation': partial_translation,
+                'emotion_single': emotion_result['single_emotion'],
+            })
 
         return {
             'current_sequence': current_seq[:],
@@ -1000,8 +1122,13 @@ class AACEmotionPipeline:
             'sequence_length': len(current_seq),
         }
 
-    def commit_sequence(self) -> Dict:
+    def commit_sequence(self, state=None, history=None, session_id=None) -> Dict:
         """增量模式: 用户完成当前序列 -> 完整翻译+情感分析+提交
+
+        Args:
+            state: 可选，传入 IncrementalState 实现每会话独立状态。
+            history: 可选，该会话的 conversation_history list。
+            session_id: 可选，写入使用日志区分多用户。
 
         Returns:
             完整分析结果（类似batch模式的process()输出）
@@ -1009,7 +1136,11 @@ class AACEmotionPipeline:
         if self.mode != 'incremental':
             raise RuntimeError("commit_sequence() only works in incremental mode.")
 
-        current_seq = self.incremental_state.current_sequence
+        state = state if state is not None else self.incremental_state
+        history = history if history is not None else self.conversation_history
+        self.session_id = session_id
+
+        current_seq = state.current_sequence
         if not current_seq:
             return {'error': 'No icons in current sequence'}
 
@@ -1017,10 +1148,10 @@ class AACEmotionPipeline:
         full_translation = self.translator.translate(current_seq)
 
         # 2. 完整情感分析
-        emotion_result = self.analyzer.analyze(full_translation, self.conversation_history)
+        emotion_result = self.analyzer.analyze(full_translation, history)
 
         # 3. 记录到对话历史
-        self.conversation_history.append({
+        history.append({
             'role': 'user',
             'symbols': current_seq,
             'sentence': full_translation,
@@ -1030,15 +1161,24 @@ class AACEmotionPipeline:
         })
 
         # 4. 提交到增量状态
-        self.incremental_state.commit_turn(full_translation, emotion_result)
+        state.commit_turn(full_translation, emotion_result)
+
+        # 4b. 记录真实使用数据（整句序列 + 翻译）
+        self._log_usage({
+            'event': 'commit',
+            'full_sequence': current_seq,
+            'full_translation': full_translation,
+            'emotion_single': emotion_result['single_emotion'],
+            'emotion_theme': emotion_result['theme_emotion'],
+        })
 
         # 5. 获取趋势
-        trend = self.analyzer.get_trend()
+        trend = self.analyzer.get_trend(history)
 
         # 6. 完整预测 (使用完整翻译)
-        history_sentences = [t['sentence'] for t in self.conversation_history[:-1]]
+        history_sentences = [t['sentence'] for t in history[:-1]]
         used_symbols = []
-        for t in self.conversation_history:
+        for t in history:
             used_symbols.extend(t.get('symbols', []))
 
         icon_predictions = self.icon_predictor.predict_next_icons_by_context(
@@ -1064,29 +1204,39 @@ class AACEmotionPipeline:
             },
             'icon_recommendations': icon_predictions,
             'trend': trend,
-            'conversation_turn': len(self.conversation_history),
+            'conversation_turn': len(history),
         }
 
-    def undo_icon(self) -> Dict:
-        """增量模式: 撤销上一个icon"""
+    def undo_icon(self, state=None, history=None) -> Dict:
+        """增量模式: 撤销上一个icon
+
+        Args:
+            state: 可选，传入 IncrementalState 实现每会话独立状态。
+            history: 可选，该会话的 conversation_history list。
+        """
         if self.mode != 'incremental':
             raise RuntimeError("undo_icon() only works in incremental mode.")
 
-        success = self.incremental_state.undo()
-        current_seq = self.incremental_state.current_sequence
+        state = state if state is not None else self.incremental_state
+        history = history if history is not None else self.conversation_history
+
+        success = state.undo()
+        current_seq = state.current_sequence
 
         if success and current_seq:
-            # 重新预测
-            result = self.add_icon('__undo_rerun__')
+            # 重新预测（do_translate=False：undo 也是一次点击，保持即时）
+            result = self.add_icon('__undo_rerun__', state, history, do_translate=False)
             # 恢复正确序列（add_icon会多加一个，但我们不需要）
-            self.incremental_state.undo()  # 撤销add_icon内部添加的
+            state.undo()  # 撤销add_icon内部添加的
 
             # 手动重新预测而不修改状态
-            context_icons, context_cs = self.incremental_state.get_context_for_sasrec()
-            partial_translation = self.translator.translate(current_seq[-3:]) if len(current_seq) >= 2 else (
-                self.icon_predictor.ontology.get(current_seq[-1], {}).get('label', '') if current_seq else ''
+            context_icons, context_cs = state.get_context_for_sasrec()
+            _tail = current_seq[-3:] if len(current_seq) >= 2 else (
+                [current_seq[-1]] if current_seq else [])
+            partial_translation = ''.join(
+                self.icon_predictor.ontology.get(i, {}).get('label', i) for i in _tail
             )
-            emotion_result = self.analyzer.analyze(partial_translation, self.conversation_history)
+            emotion_result = self.analyzer.analyze(partial_translation, history)
 
             predictions = self.fused_predictor.predict_next(
                 current_sequence=context_icons,
@@ -1341,7 +1491,7 @@ def main():
     parser.add_argument('--aac_model_path', type=str,
                         default='./AAC2Text/checkpoints/aac_model')
     parser.add_argument('--aac_base_model_path', type=str,
-                        default='/home/user1/liuduanye/qwen/Qwen2_5-1_5B-Instruct')
+                        default='/home/user1/liuduanye/Meta-Llama-3-8B-Instruct')
 
     # EmotionClassify 模型路径
     parser.add_argument('--emotion_model_path', type=str,
@@ -1356,6 +1506,9 @@ def main():
     parser.add_argument('--mode', type=str, choices=['batch', 'incremental'], default='batch',
                         help='Pipeline mode: batch (complete sequence) or incremental (one icon at a time)')
     parser.add_argument('--device', type=str, default='cuda')
+    parser.add_argument('--log_path', type=str, default='./output/incremental_usage.jsonl',
+                        help='Path to append real-usage records (jsonl). Set --no_log to disable.')
+    parser.add_argument('--no_log', action='store_true', help='Disable usage logging')
 
     args = parser.parse_args()
 
@@ -1370,6 +1523,7 @@ def main():
         emotion_base_model_path=args.emotion_base_model_path,
         device=args.device,
         mode=mode,
+        log_path=None if args.no_log else args.log_path,
     )
 
     # 增量交互模式

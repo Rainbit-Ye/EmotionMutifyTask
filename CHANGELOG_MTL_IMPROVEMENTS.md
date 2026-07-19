@@ -1306,9 +1306,194 @@ review5000 下一图标预测在 **2-3 张图上下文 + 1157 候选** 现状下
 - `645d14d` fix(eval_human_reasonable): 放宽 CS 槽位顺序约束 + 改用官方 compute_metrics（修正自写 evaluate 低估 ~2× 的 bug）+ 移除无用 evaluate()/F 导入
 - 已 push 到 `origin/main`（github.com:Rainbit-Ye/EmotionMutifyTask.git）
 
+### 2026-07-17：端到端打通（选词预测 + 自然语言翻译 + 真实数据采集）
+
+**目标**：按"先不管正确率，先把整个流程跑通"的要求，让 `aac_emotion_pipeline.py` 的
+**incremental 模式**真正能跑：用户逐个点 icon → 实时预测下一个 icon（选词预测）
++ 自然语言翻译；并在真实使用中自动采集数据，供后续用真实数据重训、逐步优化。
+
+**打通前阻断**（均已修复）：
+1. `sentence_transformers` 未安装 → `AACIconPredictor._init_embeddings` 构造时 `import` 直接抛错，
+   整个 pipeline 启动即崩（连翻译都跑不了）。改为 try/except 包裹，缺包时
+   `embedding_model=None`，RAG 分支自动停用，不影响翻译/SASRec 主流程。
+2. 词表不匹配 → SASRec `load_state_dict` 崩溃。`_init_incremental_mode` 原先用
+   `build_item_vocabulary(全量本体=3295)` 建词表，但 `output/review5000/best_model.pt`
+   自含训练词表（item2idx=1158）。改为**优先直接用 checkpoint 自带的 item2idx/idx2item**，
+   `num_items = len(ck['item2idx']) - 1`，与模型尺寸严格一致。
+3. `config.json` 的 `sasrec.model_path` 指向不存在的 `./output/sasrec/best_model.pt`
+   → 改为 `./output/review5000/best_model.pt`；`fusion_alpha` 0.5→**1.0**（退化为纯 SASRec，
+   不依赖 sentence_transformers）；`max_seq_len` 50→**16**（与训练一致）。
+4. `main()` 的 AAC2Text 基座默认是 `Qwen2_5-1_5B-Instruct`（hidden=1536），但其 LoRA
+   (`AAC2Text/checkpoints/aac_model`) 的 `adapter_config.json` 声明基座为
+   **`/home/user1/liuduanye/Meta-Llama-3-8B-Instruct`**（hidden=4096）且磁盘存在。
+   默认基座尺寸不符导致 LoRA 无法正确加载 → 改为 Llama-3-8B 为默认基座。
+
+**真实数据采集（增量优化闭环）**：
+- `AACEmotionPipeline` 新增 `log_path` 参数（默认 `./output/incremental_usage.jsonl`，`None` 关闭）；
+  `main()` 新增 `--log_path` / `--no_log`。
+- `add_icon`：追加 `icon_add` 记录（prefix 上下文、chosen_icon、model_top_k 带分、partial_translation、emotion），
+  直接得到 (上下文→选定) 配对，未来可作重训序列，也可持续统计真实 top-k 命中率。
+- `commit_sequence`：追加 `commit` 记录（full_sequence、full_translation、emotion）。
+- 写入为 append jsonl，无外部依赖。
+
+**冒烟验证**（Emotion 环境，incremental）：`I → want_to → water`
+- 翻译：`I want to go home.`（局部）/ `I want water.`（完整/commit）✅
+- SASRec 加载自 review5000，词表取自 checkpoint，无 size mismatch ✅
+- 下一图标推荐非空（16 个候选，top 如 divide/forward/begin_start…）✅
+- 无 sentence_transformers 崩溃（仅告警）✅
+- `incremental_usage.jsonl` 写入 3×icon_add + 1×commit ✅
+
+**保留/未做**：不安装 sentence_transformers、不接 RAG（alpha=1.0 即纯 SASRec）；
+词表外 icon 暂按 PAD 处理，流程不崩，随真实数据重训自然扩展词表。
+
 #### 参考文献
 - Kang & McAuley, "Self-Attentive Sequential Recommendation", ICLR 2018 (SASRec)
 - Hu et al., "S-DPO: Simultaneous DPO for Multi-Negative Preference Alignment", NeurIPS 2024 (S-DP-O)
 - Bryan, "Colourful Semantics", 1997 (CS 语义角色体系)
 
 
+
+
+---
+
+## Web 部署（选词预测 + 自然语言翻译，前端可测）
+
+**日期**：2026-07-18
+**目标**：把 `AACEmotionPipeline`（增量模式）整套流程以网页形式部署，供多用户同时点击测试。
+
+### 架构
+- 后端 `web/server.py`（FastAPI + uvicorn，单文件）：
+  - **单 pipeline 实例**（SASRec + Llama-3-8B LoRA + RoBERTa）仅加载一次，GPU 权重共享。
+  - **每用户按 `X-Session-Id` 头隔离状态**：服务端维护 `SESSIONS[sid] = {state: IncrementalState, history: []}`，
+    所有推理调用 `PIPELINE.add_icon(icon_id, sess["state"], sess["history"], session_id=sid)`，
+    不再触碰单例的 `self.incremental_state`，彻底规避多用户状态串台。
+  - **`INFER_LOCK` 全局锁串行化所有模型推理**（GPU 不可并发 forward），保证并发正确。
+  - 真实使用数据继续落盘 `output/incremental_usage.jsonl`，每条带 `session_id`。
+  - 图标真实 PNG 由 `web/icon_map.py` 映射（`dataset_custom.json` + `_to` 动词补丁，约 3431 个），
+    经 `/api/icon/{icon_id}` 返回；缺失则 404，前端回退文字。
+  - 构建后的 `frontend/dist` 由 FastAPI `StaticFiles(html=True)` 在根路径 `/` 托管（单端口）。
+- 前端 `frontend/`（React 18 + Vite 5）：`api.js` 每浏览器生成并持久化一个 `sid`，
+  所有请求带 `X-Session-Id`；`App.jsx` 编排 当前句子气泡 / 模型推荐 / 全部图标调色板 / 情绪徽标 / 撤销·完成 / 深浅色主题。
+- 启动脚本 `web/run.sh`：`npm install && npm run build` 后起 uvicorn。
+  **端口 8001**（本机 8000 已被 `icon_game` 后端占用）；`CUDA_VISIBLE_DEVICES=3`（空闲卡）；
+  `CUDA_LAUNCH_BLOCKING=1` 让异步 CUDA 错误同步抛出，便于排查。
+
+### 修复：SASRec 越界崩溃（真实 bug，非偶发抖动）
+- **现象**：`/api/add` 首次即报 `CUDA error: device-side assert triggered`（ScatterGatherKernel index out of bounds），
+  且一旦触发会**毒化整张卡的 context**，此后所有请求（即便词表内 icon）都报同一错误。
+- **根因**：`fusion.py:_get_sasrec_scores` 用 `item2idx.get(icon, 0)` 把**词表外（OOV）icon 映射成 padding 0**。
+  当序列里全是 OOV（如 `water`，不在 SASRec 1158 词表内）时，`sasrec.py:forward` 中
+  `seq_lengths=(item_ids!=0).sum()=0` -> `last_positions=-1` -> `x.gather(1, idx)` 越界断言。
+  此前误判为“异步偶发抖动”，实际是确定性的真实 bug（无 `CUDA_LAUNCH_BLOCKING` 时被异步执行掩盖）。
+- **修复**：
+  1. `sasrec.py:forward`：`last_positions = (seq_lengths - 1).clamp(min=0)`，彻底杜绝 -1。
+  2. `fusion.py:_get_sasrec_scores`：序列无任何词表内 item（`not any(item_ids)`）时直接 `return {}`，
+     既避免崩溃也避免返回无意义的垃圾推荐。
+- **影响**：OOV icon（如 `water`）仍可正常翻译、上屏、记日志，仅“下一图标推荐”为空；
+  词表内 icon（如 `want_to`）正常给出 SASRec 推荐。后续用真实数据重训 SASRec 自然扩展词表。
+
+### 验证
+- `GET /` 返回前端 HTML；`GET /api/icon/water` 返回 `image/png`（5293 B）。
+- `POST /api/add`：`water`(OOV) 返回翻译不崩；`want_to`(词表内) 返回带分推荐（short_hair/volleyball… score=1.0）。
+- **并发隔离**：6 个并行会话各加各自 icon，序列互不串台；同一会话 `water->want_to->eat->drink` 正确累积为 4 个。
+- `POST /api/commit`：整句翻译 + trend 正常；`incremental_usage.jsonl` 正确写入 `session_id`。
+
+### 待办 / 备注
+- RAG 推荐仍因缺 `sentence_transformers` 关闭（alpha=1.0 纯 SASRec）；装后可恢复情感 RAG 推荐。
+- 翻译准确性不在本轮范围（用户：“先不管正确率”）；随真实测试数据回流逐步优化。
+- **未 git 提交**（用户：“先不提交”）。
+
+### 修正（2026-07-18 续）：翻译输出语言 = 英文 -> 中文
+- **现象**：网页点图标后翻译是英文（如 `The patient wants water.`）。
+- **根因两层**：
+  1. `aac_emotion_pipeline.py:AACTranslator.translate` 的 prompt 写死成
+     `Translate these AAC symbols into ONE simple English sentence: ...`（英文指令），
+     即便 LoRA 是中文权重，也被指令压成英文。
+  2. 更关键：`web/server.py` 的 `AAC_MODEL_PATH` 默认指向 `AAC2Text/checkpoints/aac_model`，
+     **这是英文 SFT 权重**（`config.yaml` 对应），与用户训练的中文权重无关。
+     用户训练的中文权重在 `aac_model_zh`（中文 SFT）与 `aac_dpo_zh*` 系列（中文 DPO）。
+- **DPO 必须叠在 SFT 之上加载（关键纠正，原"DPO 全面退化"结论错误）**：
+  最初实测 `aac_dpo_zh*` 对同样输入输出废话（`A simple one! 😊` 等），误判为"训崩"。
+  实为**加载方式错**——`AACTranslator` 原本只把 DPO LoRA 直接压在基座 Llama 上；
+  而 `scripts/test_zh.py` 的评测配方是 **先 `merge_and_unload()` 合并 SFT(`aac_model_zh`) 到基座，
+  再在其上 `from_pretrained` 加载 DPO**。直接压基座 → 退化；按评测配方 → 正常中文，
+  I→我 / U→你 人称正确，与评测 bertscore≈0.94（中配置）一致。**DPO 没崩**，中配置(beta=0.2)即用户指定最佳。
+- **修复**：
+  1. `translate` 的 prompt 改为与 `scripts/train_zh.py` 一致的中文指令：
+     `请把这些 AAC 图标序列翻译成一个简单的中文句子：{...}`。
+  2. `AACTranslator` 新增 `sft_model_path` 参数，存在且与主模型不同路径时先 `merge_and_unload()` 合并 SFT；
+     `AACEmotionPipeline` 透传 `aac_sft_model_path`；
+     `web/server.py` 默认 `AAC_MODEL=aac_dpo_zh_v2_mid` + `AAC_SFT_MODEL=aac_model_zh`
+     （即 SFT 合并 + DPO 中配置），并保留 `AAC_MODEL` 环境变量便于切到纯 SFT 等。
+- **验证**：`I→下周→飞机→吃→外卖` 整句 `下周我要坐飞机吃外卖。…`；`U→…` → `你下周坐飞机…` ✅
+- **待办**：无（DPO 中配置已可用，无需重训）。
+
+### 修正（2026-07-18 续2）：翻译"闲扯/重复/解释图标" -> 单句干净
+- **现象**：用户实测翻译把整段糊出来——重复句（"我的手机在户外响了。我的手机在外面响了。"）、
+  甚至回显图标含义（"hike_to表示…。mobile_phone_ring_tone表示…"）、幻觉概念（"思考"等）。
+  用户原话："我的 怎么思考也给放出来了？"
+- **根因（代码 bug）**：`aac_emotion_pipeline.py:translate` 的"只取第一句"截断
+  只匹配半角 `\n` 和 `.`，但 Llama-3 中文输出用的是**全角句号 `。`**（及 `！` `？` `；`）。
+  导致 `sep in response` 永为假，截断从不触发，模型一直生成到 `max_new_tokens=30` 上限，
+  把重复/解释/幻觉全吐出来。
+- **修复**：
+  1. 截断改用全角标点：`['\n','。','！','？','；']`，命中即 `response[:idx+len(sep)]` 保留句末点，只留第一句。
+  2. `generate` 加 `repetition_penalty=1.15` 抑制句内重复。
+- **验证（SFT 合并 + DPO 中配置）**：
+  - `hike_to+mobile_phone_ring_tone` -> `我在户外徒步旅行的时候手机响了。` ✅（原会回显图标含义）
+  - `I+hike_to+mobile_phone_ring_tone` -> `我在户外活动的时候手机响了。` ✅
+  - `I+下周+飞机+吃+外卖` -> `下周我要坐飞机吃外卖。` ✅（回归正常）
+- 属推理后处理 bug，与模型权重无关；重训不解决，改后处理即可。
+
+### 前端：I/U 高频人称词常驻快捷按钮
+- 新增 `frontend/src/components/Shortcuts.jsx`：始终展示在顶栏下方，按钮 `I（我）` / `U（你）`。
+- `App.jsx` 定义 `SHORTCUT_IDS=['I','U']`，从目录取 label/has_image；点击走同一 `handlePick` 流程
+  （即加入当前序列，与调色板选图标等价）。
+- `index.css` 加 `.shortcuts / .sc-btn` 样式（强调色左边框）。
+- 构建：`npm run build`（StaticFiles 按请求读盘，前端改动无需重启服务，浏览器刷新即见）。
+### 已知限制（2026-07-18 续3）：飞机/活动类只出陈述句，不出疑问句
+
+- **现象**：用户给出真实序列（如 `I plane` / `I next_week plane` / `plane`）并给出更自然的范本
+  `我的飞机几点降落？`，即期望模型在图标之外补出"疑问/意图"（降落、几点）。
+  当前模型实际输出：
+  - `I plane` → `我坐飞机。`
+  - `I next_week plane` → `我下周坐飞机去旅行。`
+  - `plane` → `他坐飞机去旅行。`
+  均为**忠实陈述句**，不含图标之外的"降落/几点"等概念。
+- **根因**：训练数据（SFT `aac_model_zh` + DPO `aac_dpo_zh_v2_mid` 的偏好对）**几乎全是陈述/描述句式**，
+  没有"图标→疑问句/意图补全"的样本。DPO 学的就是"不添加图标外的词"，因此模型只会字面串联图标含义。
+  这与上一节修掉"闲扯/幻觉"的取向一致——模型被对齐去"只翻图标、不添油加醋"。
+- **冲突点**：用户范本 `我的飞机几点降落？` 实际**引入了图标里没有的概念**（降落、几点），
+  与"不幻觉、忠实图标"原则相冲突。属数据分布缺失，非代码 bug。
+- **决策（用户选定"先记下，等重训"）**：
+  1. **当前行为保持**：翻译严格忠实图标，只出陈述句，不乱补疑问/意图。
+  2. **记为已知限制**：飞机/活动/时间这类表达，模型无法自发产出"我的飞机几点降落？"式疑问意图。
+  3. **留给重训解决**：后续若要支持疑问/意图补全，需要**在训练数据里补充疑问句样本**
+     （图标→疑问句的 SFT 数据，及"示意→自然疑问"的 DPO 偏好对），再重训对齐。
+  4. 本轮**不修改代码、不重训**，仅记录限制；服务继续以忠实陈述句对外。
+- **待办（重训时）**：
+  - 构造"图标序列→疑问句"训练样本（如 `I plane`→`我的飞机几点降落？` / `I next_week plane`→`我下周坐飞机去哪？`）。
+  - 评估是否需要在 DPO 偏好对里加入"忠实陈述 vs 自然疑问"的偏好信号，避免重训后答疑句被对齐回陈述。
+  - 若同时保留两种风格，考虑加一个生成模式开关（忠实 / 自然意图）。
+
+### 修正（2026-07-18 续4）：前端一直卡在"翻译中…"永不出现中文
+- **现象**：点 2 个以上图标后，气泡长时间显示"翻译中…"，轮询结束仍无中文；后端日志却能看到中文生成。
+  实为**新会话的翻译被饿死**——卡在轮询 10s 窗口之外才轮到它。
+- **根因（worker 线程空转，确定性强）**：`web/server.py:_translate_loop` 在翻译完一串后回到循环顶端，
+  `ev.wait(timeout=1.0)` 超时醒来 → 防抖判断"距上次点击已久"→ 直接重读 `TRANS_PENDING` 把**同一串再翻一遍**。
+  没有任何"本版本已翻译过"的判定，于是**每会话常驻线程永远在空转重翻同一句话**，
+  每次 ~4.6s 死占 `INFER_LOCK`。前期压测留下大量 `deb2/cc-*/br-*` 等陈旧会话，每个都有空转线程，
+  它们持续抢锁，把新浏览器会话的翻译排队到十几甚至几十秒后，**超出前端 10s 轮询**，故永远停在"翻译中…"。
+- **修复**：
+  1. `_translate_loop` 增加 `last_done_ver`：翻译成功的版本号记下来；下一轮若 `ver == last_done_ver`（无新点击）
+     **直接 `continue` 跳过**，绝不空转重翻。只有新点击使 `TRANS_VER` 自增才会触发一次新翻译。
+  2. 增加空闲退出：自上次点击起超过 `TRANS_IDLE_EXIT=600s` 仍无新版本 → 线程 `break` 退出，
+     避免陈旧会话线程无限堆积占内存；用户再点 `api_add` 会按需重建（`is_alive` 判断）。
+  3. 前端 `App.jsx:pollTranslation` 轮询窗口 25×400ms(10s) → 30×400ms(12s)，留出并发争锁余量。
+- **验证（重启清掉陈旧空转线程后）**：
+  - 单会话 `I plane`：5.5s 出 `我坐飞机。`；日志该会话仅 **1 次** `[TranslateWorker]` 写入。
+  - 防抖：`I plane water` 连点(0.3s 间隔) 只出 **1 句**最终翻译，无中间译文。
+  - 新版本：在第 4 个图标 `go` 后译文正确改为 `飞机起飞之后掉进水里了。`（新序列 `[plane,water,go]`）。
+  - 并发：3 个会话同时 `I+plane`，分别 5.5/9.5/13.5s 全部得到中文，日志仅 **3 次** worker 写入（无空转）。
+- **未 git 提交**（用户："先不提交"）。
+- **待办（可选）**：`_translate_loop` 当前用 `TRANS_PENDING[-3:]` 只翻最后 3 个图标；超长句子若要翻全序列可后续调整。
