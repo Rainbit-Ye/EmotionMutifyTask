@@ -1,0 +1,16 @@
+[
+  {
+    "checkpoint": "checkpoints/aac_dpo_zh_propicto",
+    "num_samples": 2999,
+    "bertscore": {
+      "bertscore_precision": 0.913404107093811,
+      "bertscore_recall": 0.9200011491775513,
+      "bertscore_f1": 0.9165796041488647
+    },
+    "bleu": {
+      "bleu": 4.238746576113534,
+      "chrf": 9.311843702014333
+    },
+    "name": "aac_dpo_zh_propicto"
+  }
+]

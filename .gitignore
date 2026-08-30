@@ -5,6 +5,7 @@ AAC2Text/checkpoints/aac_dpo_zh_v2_mid/
 AAC2Text/checkpoints/aac_dpo_zh_v2_strong/
 AAC2Text/checkpoints/aac_model/
 AAC2Text/checkpoints/aac_model_zh/
+AAC2Text/checkpoints/aac_dpo_zh_propicto/
 
 # 保留评估结果 JSON (checkpoints/eval_*.json 和 llm_judge_*.json 不忽略)
 

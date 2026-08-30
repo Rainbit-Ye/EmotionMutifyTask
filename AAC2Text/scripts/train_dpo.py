@@ -81,11 +81,13 @@ def main():
                         default='/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_dpo_zh')
     parser.add_argument('--beta', type=float, default=0.1, help='DPO beta')
     parser.add_argument('--epochs', type=int, default=3)
-    parser.add_argument('--batch-size', type=int, default=4)
-    parser.add_argument('--grad-accum', type=int, default=8)
+    parser.add_argument('--batch-size', type=int, default=1)
+    parser.add_argument('--grad-accum', type=int, default=32)
     parser.add_argument('--lr', type=float, default=5e-7)
-    parser.add_argument('--max-length', type=int, default=256)
-    parser.add_argument('--max-prompt-length', type=int, default=128)
+    parser.add_argument('--max-length', type=int, default=128)
+    parser.add_argument('--max-prompt-length', type=int, default=64)
+    parser.add_argument('--grad-checkpointing', action='store_true', default=True,
+                        help='开启梯度检查点以省显存(默认开)')
     parser.add_argument('--val-ratio', type=float, default=0.1)
     parser.add_argument('--seed', type=int, default=42)
     args = parser.parse_args()
@@ -111,7 +113,7 @@ def main():
     print(f"加载 SFT checkpoint 并合并 LoRA 到 base model: {args.sft_model}")
     base_model = AutoModelForCausalLM.from_pretrained(
         args.base_model,
-        torch_dtype=torch.bfloat16,
+        torch_dtype=torch.float16,
         trust_remote_code=True
     )
     from peft import PeftModel
@@ -149,7 +151,8 @@ def main():
         eval_strategy="steps",
         save_steps=50,
         save_total_limit=3,
-        bf16=True,
+        bf16=False,
+        fp16=True,
         optim="adamw_torch",
         report_to="none",
         remove_unused_columns=False,
@@ -159,7 +162,8 @@ def main():
         lr_scheduler_type="cosine",
         beta=args.beta,
         max_length=args.max_length,
-        gradient_checkpointing=False,
+        max_prompt_length=args.max_prompt_length,
+        gradient_checkpointing=args.grad_checkpointing,
     )
 
     # DPO Trainer (传 peft_config, trl 自动初始化新 LoRA; ref 用 disable_adapter)

@@ -1,0 +1,16 @@
+[
+  {
+    "checkpoint": "checkpoints/aac_model_zh",
+    "num_samples": 2999,
+    "bertscore": {
+      "bertscore_precision": 0.9127506017684937,
+      "bertscore_recall": 0.9199989438056946,
+      "bertscore_f1": 0.9162567257881165
+    },
+    "bleu": {
+      "bleu": 4.046208612716134,
+      "chrf": 9.177635283078969
+    },
+    "name": "aac_model_zh"
+  }
+]

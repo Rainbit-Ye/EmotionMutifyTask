@@ -1,0 +1,16 @@
+[
+  {
+    "checkpoint": "/home/user1/liuduanye/EmotionClassify/AAC2Text/checkpoints/aac_model_zh",
+    "num_samples": 2900,
+    "bertscore": {
+      "bertscore_precision": 0.9128268957138062,
+      "bertscore_recall": 0.9201350212097168,
+      "bertscore_f1": 0.9163619875907898
+    },
+    "bleu": {
+      "bleu": 3.9997459507061643,
+      "chrf": 9.179145969689724
+    },
+    "name": "SFT(propicto-eval)"
+  }
+]

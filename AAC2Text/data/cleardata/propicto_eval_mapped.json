@@ -1,0 +1,1110 @@
+[
+  {
+    "orig_idx": 96,
+    "labels": [
+      "in",
+      "one",
+      "house"
+    ],
+    "fr": "dans une maison",
+    "pictos": [
+      7034,
+      8474,
+      2317
+    ]
+  },
+  {
+    "orig_idx": 150,
+    "labels": [
+      "in",
+      "one",
+      "boat"
+    ],
+    "fr": "sur un bateau",
+    "pictos": [
+      7034,
+      8474,
+      6932
+    ]
+  },
+  {
+    "orig_idx": 191,
+    "labels": [
+      "neither",
+      "answer"
+    ],
+    "fr": "personne ne répond",
+    "pictos": [
+      11314,
+      9030
+    ]
+  },
+  {
+    "orig_idx": 243,
+    "labels": [
+      "seven",
+      "day",
+      "neither",
+      "more"
+    ],
+    "fr": "sept jours et pas plus",
+    "pictos": [
+      2633,
+      26799,
+      26941,
+      5508
+    ]
+  },
+  {
+    "orig_idx": 250,
+    "labels": [
+      "rain"
+    ],
+    "fr": "pluie va t'en",
+    "pictos": [
+      7148
+    ]
+  },
+  {
+    "orig_idx": 326,
+    "labels": [
+      "in",
+      "one",
+      "boat"
+    ],
+    "fr": "sur un bateau",
+    "pictos": [
+      7034,
+      8474,
+      6932
+    ]
+  },
+  {
+    "orig_idx": 328,
+    "labels": [
+      "one",
+      "bird"
+    ],
+    "fr": "un rossignol",
+    "pictos": [
+      8474,
+      2490
+    ]
+  },
+  {
+    "orig_idx": 549,
+    "labels": [
+      "seven",
+      "day",
+      "week"
+    ],
+    "fr": "sept jours par semaine",
+    "pictos": [
+      2633,
+      26799,
+      7244
+    ]
+  },
+  {
+    "orig_idx": 597,
+    "labels": [
+      "one",
+      "bird"
+    ],
+    "fr": "un rossignol",
+    "pictos": [
+      8474,
+      2490
+    ]
+  },
+  {
+    "orig_idx": 641,
+    "labels": [
+      "neither",
+      "answer"
+    ],
+    "fr": "personne ne répond",
+    "pictos": [
+      11314,
+      9030
+    ]
+  },
+  {
+    "orig_idx": 762,
+    "labels": [
+      "where",
+      "water"
+    ],
+    "fr": "où se trouve l'eau ",
+    "pictos": [
+      7764,
+      6889
+    ]
+  },
+  {
+    "orig_idx": 795,
+    "labels": [
+      "rain"
+    ],
+    "fr": "pluie va t'en",
+    "pictos": [
+      7148
+    ]
+  },
+  {
+    "orig_idx": 1067,
+    "labels": [
+      "seven",
+      "day",
+      "neither",
+      "more"
+    ],
+    "fr": "sept jours et pas plus",
+    "pictos": [
+      2633,
+      26799,
+      26941,
+      5508
+    ]
+  },
+  {
+    "orig_idx": 1071,
+    "labels": [
+      "seven",
+      "day",
+      "week"
+    ],
+    "fr": "sept jours par semaine",
+    "pictos": [
+      2633,
+      26799,
+      7244
+    ]
+  },
+  {
+    "orig_idx": 1238,
+    "labels": [
+      "neither",
+      "answer"
+    ],
+    "fr": "personne ne répond",
+    "pictos": [
+      11314,
+      9030
+    ]
+  },
+  {
+    "orig_idx": 1245,
+    "labels": [
+      "rain"
+    ],
+    "fr": "pluie va t'en",
+    "pictos": [
+      7148
+    ]
+  },
+  {
+    "orig_idx": 1247,
+    "labels": [
+      "where",
+      "water"
+    ],
+    "fr": "où se trouve l'eau ",
+    "pictos": [
+      7764,
+      6889
+    ]
+  },
+  {
+    "orig_idx": 1307,
+    "labels": [
+      "where",
+      "water"
+    ],
+    "fr": "où se trouve l'eau ",
+    "pictos": [
+      7764,
+      6889
+    ]
+  },
+  {
+    "orig_idx": 1566,
+    "labels": [
+      "neither",
+      "answer"
+    ],
+    "fr": "personne ne répond",
+    "pictos": [
+      11314,
+      9030
+    ]
+  },
+  {
+    "orig_idx": 1631,
+    "labels": [
+      "seven",
+      "day",
+      "week"
+    ],
+    "fr": "sept jours par semaine",
+    "pictos": [
+      2633,
+      26799,
+      7244
+    ]
+  },
+  {
+    "orig_idx": 1740,
+    "labels": [
+      "rain"
+    ],
+    "fr": "pluie va t'en",
+    "pictos": [
+      7148
+    ]
+  },
+  {
+    "orig_idx": 1827,
+    "labels": [
+      "whole",
+      "wood"
+    ],
+    "fr": "à tout moment une planche",
+    "pictos": [
+      5596,
+      6143
+    ]
+  },
+  {
+    "orig_idx": 1867,
+    "labels": [
+      "in",
+      "one",
+      "boat"
+    ],
+    "fr": "sur un bateau",
+    "pictos": [
+      7034,
+      8474,
+      6932
+    ]
+  },
+  {
+    "orig_idx": 1964,
+    "labels": [
+      "in",
+      "one",
+      "boat"
+    ],
+    "fr": "sur un bateau",
+    "pictos": [
+      7034,
+      8474,
+      6932
+    ]
+  },
+  {
+    "orig_idx": 2111,
+    "labels": [
+      "seven",
+      "day",
+      "neither",
+      "more"
+    ],
+    "fr": "sept jours et pas plus",
+    "pictos": [
+      2633,
+      26799,
+      26941,
+      5508
+    ]
+  },
+  {
+    "orig_idx": 2157,
+    "labels": [
+      "one",
+      "bird"
+    ],
+    "fr": "un rossignol",
+    "pictos": [
+      8474,
+      2490
+    ]
+  },
+  {
+    "orig_idx": 2241,
+    "labels": [
+      "seven",
+      "day",
+      "week"
+    ],
+    "fr": "sept jours par semaine",
+    "pictos": [
+      2633,
+      26799,
+      7244
+    ]
+  },
+  {
+    "orig_idx": 2268,
+    "labels": [
+      "where",
+      "water"
+    ],
+    "fr": "où se trouve l'eau ",
+    "pictos": [
+      7764,
+      6889
+    ]
+  },
+  {
+    "orig_idx": 2323,
+    "labels": [
+      "where",
+      "water"
+    ],
+    "fr": "où se trouve l'eau ",
+    "pictos": [
+      7764,
+      6889
+    ]
+  },
+  {
+    "orig_idx": 2617,
+    "labels": [
+      "in",
+      "one",
+      "boat"
+    ],
+    "fr": "sur un bateau",
+    "pictos": [
+      7034,
+      8474,
+      6932
+    ]
+  },
+  {
+    "orig_idx": 2688,
+    "labels": [
+      "where",
+      "water"
+    ],
+    "fr": "où se trouve l'eau ",
+    "pictos": [
+      7764,
+      6889
+    ]
+  },
+  {
+    "orig_idx": 2879,
+    "labels": [
+      "where",
+      "water"
+    ],
+    "fr": "où se trouve l'eau ",
+    "pictos": [
+      7764,
+      6889
+    ]
+  },
+  {
+    "orig_idx": 2895,
+    "labels": [
+      "in",
+      "one",
+      "boat"
+    ],
+    "fr": "sur un bateau",
+    "pictos": [
+      7034,
+      8474,
+      6932
+    ]
+  },
+  {
+    "orig_idx": 3004,
+    "labels": [
+      "in",
+      "one",
+      "house"
+    ],
+    "fr": "dans une maison",
+    "pictos": [
+      7034,
+      8474,
+      2317
+    ]
+  },
+  {
+    "orig_idx": 5,
+    "labels": [
+      "iron",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c’est comme ça qu’elle repassait quand je l’ai vue",
+    "pictos": [
+      26330,
+      31807,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 138,
+    "labels": [
+      "how",
+      "i_-_lower_case",
+      "take_care_of_,_to",
+      "take_care_of_,_to"
+    ],
+    "fr": "prends soin de lui comme moi je prends soin",
+    "pictos": [
+      12313,
+      2617,
+      11691,
+      11691
+    ]
+  },
+  {
+    "orig_idx": 140,
+    "labels": [
+      "when",
+      "finish",
+      "wait_to",
+      "oxygen_mask"
+    ],
+    "fr": "quand la fumée ne sort plus l'infirmière enlève mon masque",
+    "pictos": [
+      24053,
+      28429,
+      16697,
+      30740
+    ]
+  },
+  {
+    "orig_idx": 198,
+    "labels": [
+      "tv_drama"
+    ],
+    "fr": "un message de la télévision",
+    "pictos": [
+      25498
+    ]
+  },
+  {
+    "orig_idx": 225,
+    "labels": [
+      "how",
+      "i_-_lower_case",
+      "take_care_of_,_to",
+      "take_care_of_,_to"
+    ],
+    "fr": "prends soin de lui comme moi je prends soin",
+    "pictos": [
+      12313,
+      2617,
+      11691,
+      11691
+    ]
+  },
+  {
+    "orig_idx": 261,
+    "labels": [
+      "oxygen_mask",
+      "oxygen_mask",
+      "oxygen_mask"
+    ],
+    "fr": "elle me met le masque relié à l'oxygène",
+    "pictos": [
+      30740,
+      30751,
+      10317
+    ]
+  },
+  {
+    "orig_idx": 265,
+    "labels": [
+      "think_to",
+      "one",
+      "little"
+    ],
+    "fr": "il suffit de réfléchir un peu",
+    "pictos": [
+      8661,
+      2627,
+      5546
+    ]
+  },
+  {
+    "orig_idx": 315,
+    "labels": [
+      "cook_to",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c'est comme ça qu'elle cuisinait quand je l'ai vue",
+    "pictos": [
+      2342,
+      2617,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 420,
+    "labels": [
+      "think_to",
+      "one",
+      "little"
+    ],
+    "fr": "il suffit de réfléchir un peu",
+    "pictos": [
+      8661,
+      2627,
+      5546
+    ]
+  },
+  {
+    "orig_idx": 425,
+    "labels": [
+      "cook_to",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c'est comme ça qu'elle cuisinait quand je l'ai vue",
+    "pictos": [
+      2342,
+      2617,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 569,
+    "labels": [
+      "cook_to",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c'est comme ça qu'elle cuisinait quand je l'ai vue",
+    "pictos": [
+      2342,
+      2617,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 580,
+    "labels": [
+      "iron",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c’est comme ça qu’elle repassait quand je l’ai vue",
+    "pictos": [
+      26330,
+      31807,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 803,
+    "labels": [
+      "think_to",
+      "one",
+      "little"
+    ],
+    "fr": "il suffit de réfléchir un peu",
+    "pictos": [
+      8661,
+      2627,
+      5546
+    ]
+  },
+  {
+    "orig_idx": 892,
+    "labels": [
+      "tv_drama"
+    ],
+    "fr": "un message de la télévision",
+    "pictos": [
+      25498
+    ]
+  },
+  {
+    "orig_idx": 955,
+    "labels": [
+      "oxygen_mask",
+      "oxygen_mask",
+      "oxygen_mask"
+    ],
+    "fr": "elle me met le masque relié à l'oxygène",
+    "pictos": [
+      30740,
+      30751,
+      10317
+    ]
+  },
+  {
+    "orig_idx": 1005,
+    "labels": [
+      "at_key",
+      "planets",
+      "full"
+    ],
+    "fr": "au monde entier",
+    "pictos": [
+      7041,
+      30015,
+      5455
+    ]
+  },
+  {
+    "orig_idx": 1064,
+    "labels": [
+      "great",
+      "think_to"
+    ],
+    "fr": "chouette idée hein ",
+    "pictos": [
+      11599,
+      8661
+    ]
+  },
+  {
+    "orig_idx": 1177,
+    "labels": [
+      "tv_drama"
+    ],
+    "fr": "un message de la télévision",
+    "pictos": [
+      25498
+    ]
+  },
+  {
+    "orig_idx": 1201,
+    "labels": [
+      "at_key",
+      "planets",
+      "full"
+    ],
+    "fr": "au monde entier",
+    "pictos": [
+      7041,
+      30015,
+      5455
+    ]
+  },
+  {
+    "orig_idx": 1224,
+    "labels": [
+      "think_to",
+      "one",
+      "little"
+    ],
+    "fr": "il suffit de réfléchir un peu",
+    "pictos": [
+      8661,
+      2627,
+      5546
+    ]
+  },
+  {
+    "orig_idx": 1259,
+    "labels": [
+      "day",
+      "bathe_to",
+      "bathe_to",
+      "bathe_to",
+      "breakfast_time",
+      "breakfast_time",
+      "dress"
+    ],
+    "fr": "le matin je prends mon bain mon petit-déjeuner et je m'habille",
+    "pictos": [
+      7022,
+      2271,
+      2271,
+      2271,
+      4625,
+      4625,
+      2781
+    ]
+  },
+  {
+    "orig_idx": 1534,
+    "labels": [
+      "when",
+      "finish",
+      "wait_to",
+      "oxygen_mask"
+    ],
+    "fr": "quand la fumée ne sort plus l'infirmière enlève mon masque",
+    "pictos": [
+      24053,
+      28429,
+      16697,
+      30740
+    ]
+  },
+  {
+    "orig_idx": 1546,
+    "labels": [
+      "day",
+      "bathe_to",
+      "bathe_to",
+      "bathe_to",
+      "breakfast_time",
+      "breakfast_time",
+      "dress"
+    ],
+    "fr": "le matin je prends mon bain mon petit-déjeuner et je m'habille",
+    "pictos": [
+      7022,
+      2271,
+      2271,
+      2271,
+      4625,
+      4625,
+      2781
+    ]
+  },
+  {
+    "orig_idx": 1621,
+    "labels": [
+      "day",
+      "bathe_to",
+      "bathe_to",
+      "bathe_to",
+      "breakfast_time",
+      "breakfast_time",
+      "dress"
+    ],
+    "fr": "le matin je prends mon bain mon petit-déjeuner et je m'habille",
+    "pictos": [
+      7022,
+      2271,
+      2271,
+      2271,
+      4625,
+      4625,
+      2781
+    ]
+  },
+  {
+    "orig_idx": 1623,
+    "labels": [
+      "when",
+      "finish",
+      "wait_to",
+      "oxygen_mask"
+    ],
+    "fr": "quand la fumée ne sort plus l'infirmière enlève mon masque",
+    "pictos": [
+      24053,
+      28429,
+      16697,
+      30740
+    ]
+  },
+  {
+    "orig_idx": 1641,
+    "labels": [
+      "cook_to",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c'est comme ça qu'elle cuisinait quand je l'ai vue",
+    "pictos": [
+      2342,
+      2617,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 1669,
+    "labels": [
+      "iron",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c’est comme ça qu’elle repassait quand je l’ai vue",
+    "pictos": [
+      26330,
+      31807,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 1696,
+    "labels": [
+      "when",
+      "finish",
+      "wait_to",
+      "oxygen_mask"
+    ],
+    "fr": "quand la fumée ne sort plus l'infirmière enlève mon masque",
+    "pictos": [
+      24053,
+      28429,
+      16697,
+      30740
+    ]
+  },
+  {
+    "orig_idx": 1813,
+    "labels": [
+      "how",
+      "i_-_lower_case",
+      "take_care_of_,_to",
+      "take_care_of_,_to"
+    ],
+    "fr": "prends soin de lui comme moi je prends soin",
+    "pictos": [
+      12313,
+      2617,
+      11691,
+      11691
+    ]
+  },
+  {
+    "orig_idx": 1865,
+    "labels": [
+      "great",
+      "think_to"
+    ],
+    "fr": "chouette idée hein ",
+    "pictos": [
+      11599,
+      8661
+    ]
+  },
+  {
+    "orig_idx": 1930,
+    "labels": [
+      "when",
+      "finish",
+      "wait_to",
+      "oxygen_mask"
+    ],
+    "fr": "quand la fumée ne sort plus l'infirmière enlève mon masque",
+    "pictos": [
+      24053,
+      28429,
+      16697,
+      30740
+    ]
+  },
+  {
+    "orig_idx": 2007,
+    "labels": [
+      "oxygen_mask",
+      "oxygen_mask",
+      "oxygen_mask"
+    ],
+    "fr": "elle me met le masque relié à l'oxygène",
+    "pictos": [
+      30740,
+      30751,
+      10317
+    ]
+  },
+  {
+    "orig_idx": 2134,
+    "labels": [
+      "think_to",
+      "one",
+      "little"
+    ],
+    "fr": "il suffit de réfléchir un peu",
+    "pictos": [
+      8661,
+      2627,
+      5546
+    ]
+  },
+  {
+    "orig_idx": 2200,
+    "labels": [
+      "when",
+      "finish",
+      "wait_to",
+      "oxygen_mask"
+    ],
+    "fr": "quand la fumée ne sort plus l'infirmière enlève mon masque",
+    "pictos": [
+      24053,
+      28429,
+      16697,
+      30740
+    ]
+  },
+  {
+    "orig_idx": 2210,
+    "labels": [
+      "at_key",
+      "planets",
+      "full"
+    ],
+    "fr": "au monde entier",
+    "pictos": [
+      7041,
+      30015,
+      5455
+    ]
+  },
+  {
+    "orig_idx": 2361,
+    "labels": [
+      "when",
+      "finish",
+      "wait_to",
+      "oxygen_mask"
+    ],
+    "fr": "quand la fumée ne sort plus l'infirmière enlève mon masque",
+    "pictos": [
+      24053,
+      28429,
+      16697,
+      30740
+    ]
+  },
+  {
+    "orig_idx": 2369,
+    "labels": [
+      "cook_to",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c'est comme ça qu'elle cuisinait quand je l'ai vue",
+    "pictos": [
+      2342,
+      2617,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 2413,
+    "labels": [
+      "iron",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c’est comme ça qu’elle repassait quand je l’ai vue",
+    "pictos": [
+      26330,
+      31807,
+      6564
+    ]
+  },
+  {
+    "orig_idx": 2481,
+    "labels": [
+      "great",
+      "think_to"
+    ],
+    "fr": "chouette idée hein ",
+    "pictos": [
+      11599,
+      8661
+    ]
+  },
+  {
+    "orig_idx": 2554,
+    "labels": [
+      "how",
+      "i_-_lower_case",
+      "take_care_of_,_to",
+      "take_care_of_,_to"
+    ],
+    "fr": "prends soin de lui comme moi je prends soin",
+    "pictos": [
+      12313,
+      2617,
+      11691,
+      11691
+    ]
+  },
+  {
+    "orig_idx": 2572,
+    "labels": [
+      "how",
+      "i_-_lower_case",
+      "take_care_of_,_to",
+      "take_care_of_,_to"
+    ],
+    "fr": "prends soin de lui comme moi je prends soin",
+    "pictos": [
+      12313,
+      2617,
+      11691,
+      11691
+    ]
+  },
+  {
+    "orig_idx": 2694,
+    "labels": [
+      "great",
+      "think_to"
+    ],
+    "fr": "chouette idée hein ",
+    "pictos": [
+      11599,
+      8661
+    ]
+  },
+  {
+    "orig_idx": 2766,
+    "labels": [
+      "at_key",
+      "planets",
+      "full"
+    ],
+    "fr": "au monde entier",
+    "pictos": [
+      7041,
+      30015,
+      5455
+    ]
+  },
+  {
+    "orig_idx": 2881,
+    "labels": [
+      "at_key",
+      "planets",
+      "full"
+    ],
+    "fr": "au monde entier",
+    "pictos": [
+      7041,
+      30015,
+      5455
+    ]
+  },
+  {
+    "orig_idx": 2934,
+    "labels": [
+      "think_to",
+      "one",
+      "little"
+    ],
+    "fr": "il suffit de réfléchir un peu",
+    "pictos": [
+      8661,
+      2627,
+      5546
+    ]
+  },
+  {
+    "orig_idx": 2938,
+    "labels": [
+      "cook_to",
+      "i_-_lower_case",
+      "watch"
+    ],
+    "fr": "c'est comme ça qu'elle cuisinait quand je l'ai vue",
+    "pictos": [
+      2342,
+      2617,
+      6564
+    ]
+  }
+]
